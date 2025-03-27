@@ -25,8 +25,8 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "false",
-        "APP_URL": "https://XXXXXXX.vercel.app",
-        "APP_KEY": "XXXXXXXXXXXXX",
+        "APP_URL": "https://wepayit.vercel.app/",
+        "APP_KEY": "base64:73TTFTiHZmIALAaAZWQaOwBtTJFVopP3WAvagtQaGUc=",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
