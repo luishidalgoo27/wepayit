@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('pagos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('gasto_id')->nullable()->constrained('gastos')->nullOnDelete();
-            $table->foreignId('payer_id')->constrained('usuarios')->cascadeOnDelete();
-            $table->decimal('cantidad', 10, 2);
+            $table->unsignedBigInteger('gasto_id');
+            $table->unsignedBigInteger('payer_id');
+            $table->foreign('gasto_id')->references('id')->on('gastos');
+            $table->foreign('payer_id')->references('id')->on('users');
+            $table->integer('cantidad');
             $table->string('metodo_pago');
             $table->date('fecha_pago');
             $table->enum('estado', ['pendiente', 'pagado', 'fallido'])->default('pendiente');

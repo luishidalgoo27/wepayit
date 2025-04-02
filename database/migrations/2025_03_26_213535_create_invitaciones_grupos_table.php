@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('invitaciones_grupos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('group_id')->constrained('grupos')->cascadeOnDelete();
-            $table->foreignId('user_id')->nullable()->constrained('usuarios')->nullOnDelete();
+            $table->unsignedBigInteger('group_id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('group_id')->references('id')->on('grupos')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('email_invitado');
             $table->enum('estado', ['pendiente', 'aceptado', 'rechazado'])->default('pendiente');
             $table->timestamps();

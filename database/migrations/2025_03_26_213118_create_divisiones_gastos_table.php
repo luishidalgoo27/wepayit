@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('divisiones_gastos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('gasto_id')->constrained('gastos')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('usuarios')->cascadeOnDelete();
-            $table->decimal('cantidad_asignada', 10, 2);
+            $table->unsignedBigInteger('gasto_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('gasto_id')->references('id')->on('gastos');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('cantidad_asignada');
             $table->enum('estado', ['pendiente', 'pagado', 'ajustado'])->default('pendiente');
             $table->timestamps();
         });

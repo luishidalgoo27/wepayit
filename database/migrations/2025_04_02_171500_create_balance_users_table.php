@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pagos_users', function (Blueprint $table) {
+        Schema::create('balance_users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pago_id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('pago_id')->references('id')->on('pagos');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('balance_id');
+            $table->unsignedBigInteger('deudor_id');
+            $table->unsignedBigInteger('creditor_id');
+            $table->foreign('balance_id')->references('id')->on('balances');
+            $table->foreign('deudor_id')->references('id')->on('users');
+            $table->foreign('creditor_id')->references('id')->on('users');
             $table->integer('cantidad');
             $table->enum('estado', ['pendiente', 'pagado'])->default('pendiente');
-            $table->date('fecha_pago');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pago_users');
+        Schema::dropIfExists('balance_users');
     }
 };

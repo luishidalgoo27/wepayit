@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('telefono')->nullable();
             $table->string('preferencia_idioma')->default('es');
             $table->boolean('notificaciones_activas')->default(true);
-            $table->boolean('activo')->default(true);
+            $table->boolean('premium')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

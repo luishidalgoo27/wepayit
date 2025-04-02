@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('gastos', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
-            $table->decimal('cantidad', 10, 2);
+            $table->integer('cantidad');
             $table->string('tipo_moneda')->default('EUR');
             $table->unsignedBigInteger('pagado_por');
-            $table->unsignedBigInteger('solicitado_por');
             $table->unsignedBigInteger('group_id');
             $table->date('fecha');
             $table->text('descripcion')->nullable();
@@ -29,7 +28,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('pagado_por')->references('id')->on('users');
-            $table->foreign('solicitado_por')->references('id')->on('users');
             $table->foreign('group_id')->references('id')->on('grupos');
         });
     }

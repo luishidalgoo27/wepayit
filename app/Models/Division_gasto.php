@@ -11,11 +11,13 @@ class Division_gasto extends Model {
     protected $table = 'divisiones_gastos';
     protected $fillable = ['gasto_id', 'user_id', 'cantidad_asignada', 'estado'];
 
-    public function gasto() {
+    public function gasto()
+    {
         return $this->belongsTo(Gasto::class);
     }
 
-    public function usuario() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }
