@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('foto')->nullable();
+            $table->unsignedBigInteger('owner_id');
             $table->string('moneda');
+            $table->foreign('owner_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

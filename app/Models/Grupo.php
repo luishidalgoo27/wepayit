@@ -9,18 +9,16 @@ class Grupo extends Model {
     use HasFactory;
 
     protected $table = 'grupos';
-    protected $fillable = ['nombre', 'foto', 'owner_id', 'moneda'];
+    protected $fillable = ['nombre', 'foto', 'owner_id', 'moneda', 'estado'];
 
-    public function usuarios() {
-        return $this->belongsToMany(User::class, 'grupo_usuarios');
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
     }
 
-    public function gastos() {
+    public function gastos()
+    {
         return $this->hasMany(Gasto::class);
-    }
-
-    public function propietario() {
-        return $this->belongsTo(User::class, 'owner_id');
     }
 }
 
