@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pagos_users', function (Blueprint $table) {
+        Schema::create('records', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pago_id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('pago_id')->references('id')->on('pagos');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('cantidad');
-            $table->enum('estado', ['pendiente', 'pagado'])->default('pendiente');
-            $table->date('fecha_pago');
+            $table->string('type');
+            $table->string('description');
+            $table->integer('amount');
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pago_users');
+        Schema::dropIfExists('records');
     }
 };

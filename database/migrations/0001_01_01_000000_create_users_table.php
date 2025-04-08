@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('avatar')->nullable();
-            $table->string('telefono')->nullable();
-            $table->string('preferencia_idioma')->default('es');
-            $table->boolean('notificaciones_activas')->default(true);
+            $table->string('telephone')->nullable();
+            $table->string('languague')->default('es');
+            $table->boolean('active_notifications')->default(true);
             $table->boolean('premium')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
