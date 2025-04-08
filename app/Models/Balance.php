@@ -11,6 +11,6 @@ class Balance extends Model
 
     public function group()
     {
-        return $this->belongsTo(Grupo::class);
+        return $this->belongsTo(Group::class);
     }
 }
