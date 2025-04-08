@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('balance_users', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('balance_id');
-            $table->unsignedBigInteger('deudor_id');
+            $table->unsignedBigInteger('debtor_id');
             $table->unsignedBigInteger('creditor_id');
             $table->foreign('balance_id')->references('id')->on('balances');
-            $table->foreign('deudor_id')->references('id')->on('users');
+            $table->foreign('debtor_id')->references('id')->on('users');
             $table->foreign('creditor_id')->references('id')->on('users');
-            $table->integer('cantidad');
-            $table->enum('estado', ['pendiente', 'pagado'])->default('pendiente');
+            $table->integer('amount');
+            $table->enum('status', ['pending', 'paid'])->default('pending');
             $table->timestamps();
         });
     }
