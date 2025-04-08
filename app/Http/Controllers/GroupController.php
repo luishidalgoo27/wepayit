@@ -19,4 +19,10 @@ class GroupController extends Controller
         $group = $this->groupService->create($req);
         return response()->json($group, 201);
     }
+
+    public function get()
+    {   
+        $groups = $this->groupService->get();
+        return response()->json($groups, 201);
+    }
 }

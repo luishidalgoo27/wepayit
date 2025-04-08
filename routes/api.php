@@ -15,7 +15,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
     
     Route::post('/group', [GroupController::class, 'create']);
-    
+    Route::get('/group', [GroupController::class, 'get']);
 
 
 });
