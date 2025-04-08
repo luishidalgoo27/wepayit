@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('historiales', function (Blueprint $table) {
+        Schema::create('expenses_divisions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('expense_id');
             $table->unsignedBigInteger('user_id');
+            $table->foreign('expense_id')->references('id')->on('expenses');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('tipo');
-            $table->string('descripcion');
-            $table->integer('cantidad');
-            $table->date('fecha');
+            $table->integer('assigned_amount');
+            $table->enum('status', ['pending', 'paid'])->default('pending');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('historials');
+        Schema::dropIfExists('expenses_divisions');
     }
 };

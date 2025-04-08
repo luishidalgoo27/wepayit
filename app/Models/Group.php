@@ -5,20 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Grupo extends Model {
+class Group extends Model {
     use HasFactory;
 
-    protected $table = 'grupos';
-    protected $fillable = ['nombre', 'foto', 'owner_id', 'moneda', 'estado'];
+    protected $table = 'groups';
+
+    protected $fillable = [
+        'name',
+        'photo',
+        'owner_id',
+        'coin',
+    ];
 
     public function owner()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function gastos()
+    public function expenses()
     {
-        return $this->hasMany(Gasto::class);
+        return $this->hasMany(Expense::class);
     }
 }
 
