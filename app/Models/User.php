@@ -18,10 +18,10 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $table = 'usuarios';
+    protected $table = 'users';
     protected $fillable = [
-        'name', 'email', 'password', 'avatar', 'telefono',
-        'preferencia_idioma', 'notificaciones_activas', 'premium'
+        'name', 'email', 'password', 'avatar', 'telephone',
+        'languague', 'active_notifications', 'premium'
     ];
 
     /**
@@ -34,24 +34,81 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function grupos() {
-        return $this->belongsToMany(Grupo::class, 'grupo_usuarios');
+    public function ownedGroups()
+    {
+        return $this->hasMany(Group::class, 'owner_id');
     }
 
-    public function gastosPagados() {
-        return $this->hasMany(Gasto::class, 'pagado_por');
+    
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'user_groups');
     }
 
-    public function gastosSolicitados() {
-        return $this->hasMany(Gasto::class, 'solicitado_por');
+    
+    public function paidExpenses()
+    {
+        return $this->hasMany(Expense::class, 'paid_by');
     }
 
-    public function pagos() {
-        return $this->hasMany(Pago::class, 'payer_id');
+
+    public function expenseDivisions()
+    {
+        return $this->hasMany(Expense_division::class);
     }
 
-    public function notificaciones() {
-        return $this->hasMany(Notificacion::class);
+    
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'payer_id');
+    }
+
+   
+    public function paymentsInvolved()
+    {
+        return $this->hasMany(Payment_user::class);
+    }
+
+   
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    
+    public function groupInvitations()
+    {
+        return $this->hasMany(Invitation::class);
+    }
+
+   
+    public function sentPaymentRequests()
+    {
+        return $this->hasMany(Payment_request::class, 'applicant_id');
+    }
+
+    
+    public function receivedPaymentRequests()
+    {
+        return $this->hasMany(Payment_request::class, 'recipient_id');
+    }
+
+    
+    public function records()
+    {
+        return $this->hasMany(Record::class);
+    }
+
+    
+    public function balancesAsDebtor()
+    {
+        return $this->hasMany(Balance_user::class, 'debtor_id');
+    }
+
+   
+    public function balancesAsCreditor()
+    {
+        return $this->hasMany(Balance_user::class, 'creditor_id');
     }
 
     /**
