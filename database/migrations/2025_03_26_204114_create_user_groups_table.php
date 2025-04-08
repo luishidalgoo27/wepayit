@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('divisiones_gastos', function (Blueprint $table) {
+        Schema::create('user_groups', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('gasto_id');
+            $table->unsignedBigInteger('group_id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('gasto_id')->references('id')->on('gastos');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('cantidad_asignada');
-            $table->enum('estado', ['pendiente', 'pagado', 'ajustado'])->default('pendiente');
             $table->timestamps();
+
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('division_gastos');
+        Schema::dropIfExists('user_groups');
     }
 };

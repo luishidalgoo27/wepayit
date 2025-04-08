@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_grupos', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('group_id');
             $table->unsignedBigInteger('user_id');
-            $table->date('fecha_ingreso')->default('now');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->text('message');
+            $table->enum('type', ['payment reminder', 'new expense']);
+            $table->enum('status', ['read', 'unread'])->default('unread');
+            $table->date('send_date');
             $table->timestamps();
-
-            $table->foreign('group_id')->references('id')->on('grupos')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_grupos');
+        Schema::dropIfExists('notifications');
     }
 };

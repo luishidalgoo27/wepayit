@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('invitaciones_grupos', function (Blueprint $table) {
+        Schema::create('payments_users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('group_id');
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('group_id')->references('id')->on('grupos')->onDelete('cascade');
+            $table->unsignedBigInteger('expense_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('expense_id')->references('id')->on('expenses');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('email_invitado');
-            $table->enum('estado', ['pendiente', 'aceptado', 'rechazado'])->default('pendiente');
+            $table->integer('amount');
+            $table->enum('status', ['pending', 'paid'])->default('pending');
+            $table->date('expense_date');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('invitaciones_grupos');
+        Schema::dropIfExists('payments_users');
     }
 };
