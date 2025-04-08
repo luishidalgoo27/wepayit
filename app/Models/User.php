@@ -17,10 +17,10 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    protected $table = 'usuarios';
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name', 'email', 'password', 'avatar', 'telefono',
+        'preferencia_idioma', 'notificaciones_activas', 'premium'
     ];
 
     /**
@@ -32,6 +32,26 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function grupos() {
+        return $this->belongsToMany(Grupo::class, 'grupo_usuarios');
+    }
+
+    public function gastosPagados() {
+        return $this->hasMany(Gasto::class, 'pagado_por');
+    }
+
+    public function gastosSolicitados() {
+        return $this->hasMany(Gasto::class, 'solicitado_por');
+    }
+
+    public function pagos() {
+        return $this->hasMany(Pago::class, 'payer_id');
+    }
+
+    public function notificaciones() {
+        return $this->hasMany(Notificacion::class);
+    }
 
     /**
      * Get the attributes that should be cast.
