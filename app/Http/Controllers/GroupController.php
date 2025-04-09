@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GroupDeleteUserRequest;
 use App\Http\Requests\GroupInvitationRequest;
 use App\Http\Requests\GroupRequest;
 use App\Services\GroupService;
@@ -32,4 +33,16 @@ class GroupController extends Controller
         $user = $this->groupService->addUser($req);
         return response()->json($user, 201);
     }
+
+    public function acceptInvitation(String $code)
+    {
+        $data = $this->groupService->acceptInvitation($code);
+        return response()->json($data, 200);
+    }
+
+    /* public function deleteUser(GroupDeleteUserRequest $req)
+    {
+        $user = $this->groupService->deleteUser($req);
+        return response()->json($user, 201);
+    } */
 }
