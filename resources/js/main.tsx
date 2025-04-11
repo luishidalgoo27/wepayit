@@ -1,24 +1,12 @@
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import NavBar from "@/components/NavBar";
-import Footer from "./components/Footer";
-import ErrorPage from "./pages/Error/ErrorPage";
-import HomePage from "./pages/Home/HomePage";
-
-
-const AppLayout = () => {
-    return(
-        <>
-            <NavBar />
-            <Outlet />
-            <Footer />
-        </>
-    )
-}
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { DefaultLayout } from "@/layouts/DefaultLayout/DefaultLayout";
+import ErrorPage from "@/pages/Error/ErrorPage";
+import HomePage from "@/pages/Home/HomePage";
 
 const router = createBrowserRouter([
     {
-        element: <AppLayout />,
+        element: <DefaultLayout />,
         errorElement: <ErrorPage />,
         children: [
             { path: "/", element: <HomePage /> },
