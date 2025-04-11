@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const ErrorPage = () => {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex flex-col items-center justify-center p-4">
+        <div className="min-h-screen bg-linear-to-br from-blue-50 to-gray-100 flex flex-col items-center justify-center p-4">
             <div className="max-w-md w-full bg-white rounded-xl shadow-lg overflow-hidden p-8 text-center">
                 <div className="flex justify-center mb-6">
                     <svg
