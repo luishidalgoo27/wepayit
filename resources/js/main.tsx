@@ -1,9 +1,10 @@
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import NavBar from "./components/NavBar";
+import NavBar from "@/components/NavBar";
 import Footer from "./components/Footer";
 import ErrorPage from "./pages/Error/ErrorPage";
 import HomePage from "./pages/Home/HomePage";
+
 
 const AppLayout = () => {
     return(
@@ -25,6 +26,6 @@ const router = createBrowserRouter([
     }
 ])
 
-createRoot(document.getElementById("root")).render(
+createRoot(document.getElementById('root')!).render( 
     <RouterProvider router={router} />
-);
+)
