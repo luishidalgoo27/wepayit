@@ -1,4 +1,4 @@
-export const AppFooter = () => {
+export const Footer = () => {
     return(
         <footer>
             

@@ -1,19 +1,10 @@
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { DefaultLayout } from "@/layouts/DefaultLayout/DefaultLayout";
-import ErrorPage from "@/pages/Error/ErrorPage";
-import HomePage from "@/pages/Home/HomePage";
-
-const router = createBrowserRouter([
-    {
-        element: <DefaultLayout />,
-        errorElement: <ErrorPage />,
-        children: [
-            { path: "/", element: <HomePage /> },
-        ]
-    }
-])
+import { Routes as Router } from "@/Routes";
+import { Provider } from "react-redux";
+import { store } from "@/redux/store";
 
 createRoot(document.getElementById('root')!).render( 
-    <RouterProvider router={router} />
+    <Provider store={store}>
+        <Router />
+    </Provider>
 )
