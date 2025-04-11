@@ -1,12 +1,7 @@
 export default function HomePage() {
     return (
-        <main>
-            <div className="min-h-screen">
-                <div className="p-4">
-                    <h1 className="text-2xl font-bold">Mi Aplicación</h1>
-                    <p>Este texto cambiará según el tema seleccionado.</p>
-                </div>
-            </div>
+        <main className="container mx-auto p-4">
+            <h1>ESTO ES HOME PAGE</h1>
         </main>
     )
 }
