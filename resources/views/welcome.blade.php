@@ -1,14 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <title>WePayIt</title>
     @viteReactRefresh
-    @vite(['resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/main.tsx'])
   </head>
-  <body>
-    <div id="root"></div>
+  <body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+    <div id="root"> </div>
   </body>
 </html>
