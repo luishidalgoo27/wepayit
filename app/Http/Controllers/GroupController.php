@@ -6,15 +6,14 @@ use App\Http\Requests\GroupDeleteUserRequest;
 use App\Http\Requests\GroupInvitationRequest;
 use App\Http\Requests\GroupRequest;
 use App\Services\GroupService;
+use App\Services\InvitationService;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
     public function __construct(
         private GroupService $groupService,
-        ) {
-        $this->groupService = $groupService; 
-    }
+        ) {}
 
     public function create(GroupRequest $req)
     {   
@@ -28,21 +27,9 @@ class GroupController extends Controller
         return response()->json($groups, 201);
     }
 
-    public function addUser(GroupInvitationRequest $req)
+    public function deleteUser(GroupDeleteUserRequest $req)
     {
-        $user = $this->groupService->addUser($req);
-        return response()->json($user, 201);
+        $this->groupService->deleteUser($req);
+        return response()->json(['message', 'User deleted sucessfully']);
     }
-
-    public function acceptInvitation(String $code)
-    {
-        $data = $this->groupService->acceptInvitation($code);
-        return response()->json($data, 200);
-    }
-
-    /* public function deleteUser(GroupDeleteUserRequest $req)
-    {
-        $user = $this->groupService->deleteUser($req);
-        return response()->json($user, 201);
-    } */
 }
