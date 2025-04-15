@@ -2,16 +2,17 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Group;
 use App\Models\Invitation;
 use App\Models\User_group;
+use Illuminate\Support\Str;
 use App\Utils\GroupInvitation;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\GroupDeleteUserRequest;
 use App\Http\Requests\GroupInvitationRequest;
 
-class InvitationService
+class UserGroupService
 {
     public function __construct( 
         private Group $group,
@@ -70,6 +71,32 @@ class InvitationService
         $invitation->delete();
 
         return response()->json(['message' => 'You have successfully joined the group']);
+    }
+
+    public function deleteUser(GroupDeleteUserRequest $req)
+    {
+
+        $group = $this->group::find($req->group_id);
+        
+        if (!$group){
+            return response()->json(['message', 'Group not found'], 404);
+        }
+
+        if($group->owner_id !== Auth::id()){
+            return response()->json(['message', 'You dont have permission to make this action'], 404);
+        }
+        
+        $userGroup = $this->user_group::where('group_id', $req->group_id)
+        ->where('user_id', $req->user_id)
+        ->first();
+
+        if (!$userGroup){
+            return response()->json(['message', 'The user does not belong to the group'], 404);
+        }
+        
+        $userGroup->delete();
+
+        return response()->json($userGroup, 200);
     }
 }
 ?>
