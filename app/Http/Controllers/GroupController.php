@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GroupDeleteUserRequest;
-use App\Http\Requests\GroupInvitationRequest;
-use App\Http\Requests\GroupRequest;
+use App\Http\Requests\GroupDeleteRequest;
 use App\Services\GroupService;
-use App\Services\InvitationService;
-use Illuminate\Http\Request;
+use App\Http\Requests\GroupRequest;
+use App\Http\Requests\GroupUpdateRequest;
+
 
 class GroupController extends Controller
 {
@@ -21,15 +20,22 @@ class GroupController extends Controller
         return response()->json($group, 201);
     }
 
-    public function get()
+    public function getGroupsUser()
     {   
-        $groups = $this->groupService->get();
+        $groups = $this->groupService->getGroupsUser();
         return response()->json($groups, 201);
     }
 
-    public function deleteUser(GroupDeleteUserRequest $req)
+    public function update(GroupUpdateRequest $req)
     {
-        $this->groupService->deleteUser($req);
-        return response()->json(['message', 'User deleted sucessfully']);
+        $group = $this->groupService->update($req);
+        return response()->json($group, 201);
     }
+
+    public function delete(GroupDeleteRequest $req)
+    {
+        $group = $this->groupService->delete($req);
+        return response()->json($group, 201);
+    }
+    
 }
