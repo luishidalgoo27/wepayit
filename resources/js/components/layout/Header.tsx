@@ -6,6 +6,7 @@ const LINKS = [
     { path: '/', name: 'Home' },
     { path: '/grupos', name: 'Grupos' },
     { path: '/gastos', name: 'Gastos' },
+    { path: '/crearGrupo', name: 'crearGrupo' },
 ]
 
 export const Header = () => {
