@@ -1,34 +1,36 @@
+import { Link } from "react-router-dom"
+
 export const GruposPage = () => {
-    return(
+    return (
         <main className="container mx-auto p-4">
             <div className="px-4 space-y-4 mt-6">
-                <div className="bg-emerald-100 text-black rounded-xl flex items-center p-4 space-x-4 shadow-md">
+                <Link to="/gastos" className="bg-emerald-100 text-black rounded-xl flex items-center p-4 space-x-4 shadow-md">
 
                     <div>
-                        <h2 className="font-semibold">PK2</h2>
-                        <p className="text-sm">Pedro Ángel te debe 40€</p>
+                        <h2 className="font-semibold">Vacaciones mallorca</h2>
+                        <p className="text-sm">Grupo para el viaje a mallorca</p>
                     </div>
-                </div>
+                </Link>
 
-                <div className="bg-emerald-100 text-black rounded-xl flex items-center p-4 space-x-4 shadow-md">
+                <Link to="/gastos" className="bg-emerald-100 text-black rounded-xl flex items-center p-4 space-x-4 shadow-md">
 
                     <div>
-                        <h2 className="font-semibold">PK2</h2>
-                        <p className="text-sm">Pedro Ángel te debe 40€</p>
+                        <h2 className="font-semibold">Comida familiar</h2>
+                        <p className="text-sm">Grupo para la comida en familia</p>
                     </div>
-                </div>
+                </Link>
 
-                <div className="bg-emerald-100 text-black rounded-xl flex items-center p-4 space-x-4 shadow-md">
+                <Link to="/gastos" className="bg-emerald-100 text-black rounded-xl flex items-center p-4 space-x-4 shadow-md">
 
                     <div>
-                        <h2 className="font-semibold">PK2</h2>
-                        <p className="text-sm">Pedro Ángel te debe 40€</p>
+                        <h2 className="font-semibold">Piso de estudiantes</h2>
+                        <p className="text-sm">Grupo para gestionar los gastos del piso</p>
                     </div>
-                </div>
+                </Link>
 
-                <button className="w-full bg-emerald-100 text-black rounded-xl py-2 mt-2 shadow-md hover:bg-emerald-200">
-                    + Añadir gasto
-                </button>
+                <Link to='/crearGrupo' className="bg-emerald-100 text-black hover:bg-emerald-200 rounded-xl py-2 mt-2 shadow-md">
+                    + Crear nuevo grupo
+                </Link>
             </div>
         </main>
     )
