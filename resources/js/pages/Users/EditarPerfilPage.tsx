@@ -1,4 +1,4 @@
-export default function EditarPerfilPage() {
+export const EditarPerfilPage = () => {
     return (
         <main className="container mx-auto p-4">
 
@@ -8,15 +8,15 @@ export default function EditarPerfilPage() {
                 <p className="text-sm text-gray-200 mb-6">rafa@gmail.com</p>
 
                 <div className="w-full max-w-md space-y-3">
-                <input type="text" placeholder="Editar nombre" className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none" />
-                <input type="text" placeholder="Editar apellidos" className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none" />
-                <input type="text" placeholder="Editar calle" className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none" />
-                <input type="text" placeholder="Editar" className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none" />
-                <input type="text" placeholder="Editar" className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none" />
-                <input type="text" placeholder="Editar" className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none" />
-                <button className="w-full bg-emerald-100 text-black rounded-xl py-2 mt-2 shadow-md hover:bg-emerald-200">
-                    Editar
-                </button>
+                    <input type="text" placeholder="Editar nombre" className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none" />
+                    <input type="text" placeholder="Editar apellidos" className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none" />
+                    <input type="text" placeholder="Editar calle" className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none" />
+                    <input type="text" placeholder="Editar" className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none" />
+                    <input type="text" placeholder="Editar" className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none" />
+                    <input type="text" placeholder="Editar" className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none" />
+                    <button className="w-full bg-emerald-100 text-black rounded-xl py-2 mt-2 shadow-md hover:bg-emerald-200">
+                        Editar
+                    </button>
                 </div>
             </div>
         </main>
