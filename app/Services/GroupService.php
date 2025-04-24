@@ -2,18 +2,15 @@
 
 namespace App\Services;
 
-use App\Http\Requests\GroupDeleteUserRequest;
+use App\Http\Requests\GroupDeleteRequest;
 use App\Models\Group;
 use App\Models\Invitation;
 use App\Models\User_group;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Utils\GroupInvitation;
 use App\Http\Requests\GroupRequest;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\GroupRepository;
-use App\Http\Requests\GroupInvitationRequest;
+use App\Http\Requests\GroupUpdateRequest;
+
 
 class GroupService
 {
@@ -23,11 +20,6 @@ class GroupService
         private GroupInvitation $groupInvitation,
         private Invitation $invitation
     ){}
-        
-    public function getAll(): array
-    {
-        return $this->group::all()->toArray();
-    }
 
     public function create(GroupRequest $req)
     {
@@ -46,75 +38,46 @@ class GroupService
         return $group;
     }
 
-    public function get()
+    public function getGroupsUser()
     {
         $idUser = Auth::id();
         $groups = $this->user_group::where('user_id', $idUser)->get();
         return $groups;
     }
 
-    public function addUser(GroupInvitationRequest $req)
+    public function update(GroupUpdateRequest $req)
     {
-        $code = Str::uuid();
+        $group = $this->group::find($req->group_id);
 
-       $invitation = $this->invitation::create([
-            'group_id'  => $req->group_id,
-            'user_id'   => Auth::id(),
-            'guest_email'   => $req->guest_email,
-            'invitation_code'   => $code,
+        if (!$group) {
+            return response()->json(['message', 'Group not found'], 404);
+        } 
+
+        $group->update([
+            'name' => $req->name ?? $group->name,
+            'photo' => $req->photo ?? $group->photo,
+            'coin' => $req->coin ?? $group->coin
         ]);
 
-        Log::info('Invitación creada: ', $invitation->toArray());
-
-        try {
-            $this->groupInvitation->send($invitation);
-        } catch (\Exception $e) {
-            abort(500, 'Error enviando correo: ' . $e->getMessage());
-        }
-        
-        return $invitation;
+        return $group;
     }
 
-    public function acceptInvitation(String $code)
+    public function delete(GroupDeleteRequest $req)
     {
-        $invitation = $this->invitation::where('invitation_code', $code)->first();
+        $group = $this->group::find($req->group_id);
         
-        if (!$invitation) {
-            abort(404, 'Invitation not found');
+        if (!$group) {
+            return response()->json(['message', 'Group not found'], 404);
+        } 
+
+        if ($group->owner_id !== Auth::id()) {
+            return response()->json(['message' => 'You do not have permission to delete this group'], 403);
         }
 
-        if ($invitation->guest_email !== Auth::user()->email){
-            abort(403, 'Oops, this invitation is not for you');
-        }
+        $group->delete();
 
-        $alreadyInGroup = $this->user_group::where('group_id', $invitation->group_id)
-            ->where('user_id', Auth::id())
-            ->exists();
-
-        if ($alreadyInGroup) {
-            return response()->json(['message' => 'You already belong to this group']);
-        }
-
-        $this->user_group::create([
-            'group_id' => $invitation->group_id,
-            'user_id' => Auth::id()
-        ]);
-
-        $invitation->delete();
-
-        return response()->json(['message' => 'You have successfully joined the group']);
+        return $group;
     }
-
-    /* public function deleteUser(GroupDeleteUserRequest $req)
-    {
-        if($this->user_group->owner_id === Auth::id()){
-            $user = $this->user_group::where('user_id', $req->user_id);
-            $this->user_group::delete([$user]);
-        } else {
-
-        }
-
-    } */
 
 }
 ?>
