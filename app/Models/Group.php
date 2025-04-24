@@ -14,7 +14,6 @@ class Group extends Model {
         'name',
         'photo',
         'owner_id',
-        'coin',
     ];
 
     public function owner()
