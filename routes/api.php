@@ -2,8 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\ExpensesController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserGroupController;
 
 Route::post('/register', [AuthController::class, 'createUser']);
 Route::post('/login', [AuthController::class, 'loginUser']);
@@ -14,11 +17,20 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return $request->user();
     });
     
-    Route::post('/group', [GroupController::class, 'create']);
-    Route::get('/group', [GroupController::class, 'get']);
+    Route::post('/updateUser', [UserController::class, 'update']);
     
-    Route::post('/invitation', [GroupController::class, 'addUser']);
-    Route::get('/invitations/accept/{code}', [GroupController::class, 'acceptInvitation']);
-    Route::post('/deleteUser', [GroupController::class, 'deleteUser']);
+    Route::get('/groups', [GroupController::class, 'getGroupsUser']);
+    Route::post('/group', [GroupController::class, 'create']);
+    Route::patch('/group', [GroupController::class, 'update']);
+    Route::delete('/group', [GroupController::class, 'delete']);
+
+    Route::post('/deleteUser', [UserGroupController::class, 'deleteUser']);
+    
+    Route::post('/invitation', [UserGroupController::class, 'addUser']);
+    Route::get('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
+
+    Route::post('/expense', [ExpensesController::class, 'create']);
+    
+
 });
 
