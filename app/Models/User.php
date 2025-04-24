@@ -21,7 +21,7 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $fillable = [
         'name', 'email', 'password', 'avatar', 'telephone',
-        'languague', 'active_notifications', 'premium'
+        'language', 'active_notifications', 'premium'
     ];
 
     /**
@@ -79,24 +79,6 @@ class User extends Authenticatable
     public function groupInvitations()
     {
         return $this->hasMany(Invitation::class);
-    }
-
-   
-    public function sentPaymentRequests()
-    {
-        return $this->hasMany(Payment_request::class, 'applicant_id');
-    }
-
-    
-    public function receivedPaymentRequests()
-    {
-        return $this->hasMany(Payment_request::class, 'recipient_id');
-    }
-
-    
-    public function records()
-    {
-        return $this->hasMany(Record::class);
     }
 
     
