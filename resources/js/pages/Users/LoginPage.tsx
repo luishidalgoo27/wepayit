@@ -1,14 +1,15 @@
-export default function LoginPage() {
-    return (
-      <main className="container mx-auto p-4">
+export const LoginPage = () => {
+  return (
+    <main className="container mx-auto p-4">
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
 
-          <h2 className="mt-10 text-center text-2xl leading-9 font-bold tracking-tight text-gray-900">
+          <h2 className="
+           text-center text-2xl leading-9 font-bold tracking-tight text-gray-900">
             Inicia sesion con tu cuenta
           </h2>
         </div>
-  
+
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6">
             <div>
@@ -22,7 +23,7 @@ export default function LoginPage() {
                   id="email"
                   autoComplete="email"
                   required
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm leading-6"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm leading-6"
                 />
               </div>
             </div>
@@ -45,11 +46,11 @@ export default function LoginPage() {
                   id="password"
                   autoComplete="current-password"
                   required
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm leading-6"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm leading-6"
                 />
               </div>
             </div>
- 
+
             <div>
               <button
                 type="submit"
@@ -59,11 +60,10 @@ export default function LoginPage() {
               </button>
             </div>
           </form>
-  
+
 
         </div>
       </div>
-      </main>
-    );
-  }
-  
+    </main>
+  );
+}
