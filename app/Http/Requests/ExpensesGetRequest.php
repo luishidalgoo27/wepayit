@@ -6,14 +6,14 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class GroupUpdateRequest extends FormRequest
+class ExpensesGetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,13 +24,9 @@ class GroupUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'group_id' => 'required|exists:groups,id',
-            'name' => 'string|nullable',
-            'photo' => 'string|nullable',
-            'coin' => 'string|nullable'
+            //
         ];
     }
-
 
     /**
      * Mensajes de error personalizados para las reglas de validación.
@@ -40,14 +36,9 @@ class GroupUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'group_id.required' => 'El ID del grupo es obligatorio.',
-            'group_id.exists'   => 'El grupo especificado no existe.',
-            'name.string'       => 'El nombre debe ser una cadena de texto.',
-            'photo.string'      => 'La foto debe ser una cadena de texto.',
-            'coin.string'       => 'La moneda debe ser una cadena de texto.',
+           
         ];
     }
-
 
     /**
      * En caso de que falle la validación, devuelve un error JSON.
