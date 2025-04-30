@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('currency_type')->default('EUR');
             $table->unsignedBigInteger('paid_by');
             $table->unsignedBigInteger('group_id');
-            $table->date('date');
+            $table->date('date');   
             $table->text('description')->nullable();
             $table->string('category')->nullable();
             $table->string('receipt_url')->nullable();

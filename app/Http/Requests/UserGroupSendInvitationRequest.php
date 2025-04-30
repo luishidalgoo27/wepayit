@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class GroupRequest extends FormRequest
+class UserGroupSendInvitationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,20 @@ class GroupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:50',
-            'photo' => 'string|max:255',
-            'coin' => 'required|string'
+            'group_id' => 'integer|exists:groups,id',
+            'guest_email' => 'required|email|exists:users,email'
         ];
     }
 
-        /**
+    public function messages(): array
+    {
+        return [
+            'group_id.exists' => 'El grupo seleccionado no existe.',
+            'guest_user_id.exists' => 'El usuario que estás intentando invitar no existe.',
+        ];
+    }
+
+    /**
      * En caso de que falle la validación, devuelve un error JSON.
      *
      * @param Validator $validator

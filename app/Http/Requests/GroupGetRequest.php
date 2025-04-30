@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class GroupUpdateRequest extends FormRequest
+class GroupGetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,9 @@ class GroupUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'group_id' => 'required|exists:groups,id',
-            'name' => 'string|nullable',
-            'photo' => 'string|nullable',
-            'coin' => 'string|nullable'
+            'user_id' => 'integer|exists:users,id'
         ];
     }
-
 
     /**
      * Mensajes de error personalizados para las reglas de validación.
@@ -40,11 +36,8 @@ class GroupUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'group_id.required' => 'El ID del grupo es obligatorio.',
-            'group_id.exists'   => 'El grupo especificado no existe.',
-            'name.string'       => 'El nombre debe ser una cadena de texto.',
-            'photo.string'      => 'La foto debe ser una cadena de texto.',
-            'coin.string'       => 'La moneda debe ser una cadena de texto.',
+            'user_id.integer' => 'El ID del usuario debe ser un número entero.',
+            'user_id.exists'  => 'El usuario especificado no existe en el sistema.',
         ];
     }
 
