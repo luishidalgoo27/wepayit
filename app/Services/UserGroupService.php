@@ -9,8 +9,8 @@ use Illuminate\Support\Str;
 use App\Utils\GroupInvitation;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\GroupDeleteUserRequest;
-use App\Http\Requests\GroupInvitationRequest;
+use App\Http\Requests\UserGroupDeleteRequest;
+use App\Http\Requests\UserGroupSendInvitationRequest;
 
 class UserGroupService
 {
@@ -21,7 +21,7 @@ class UserGroupService
         private Invitation $invitation
     ){}
         
-    public function addUser(GroupInvitationRequest $req)
+    public function sendInvitation(UserGroupSendInvitationRequest $req)
     {
         $code = Str::uuid();
 
@@ -73,7 +73,7 @@ class UserGroupService
         return response()->json(['message' => 'You have successfully joined the group']);
     }
 
-    public function deleteUser(GroupDeleteUserRequest $req)
+    public function deleteUser(UserGroupDeleteRequest $req)
     {
 
         $group = $this->group::find($req->group_id);
