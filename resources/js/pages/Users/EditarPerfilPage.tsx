@@ -1,10 +1,10 @@
 export const EditarPerfilPage = () => {
     return (
-        <main className="container mx-auto p-4">
+        <main className="bg-gradient-to-b from-[#00110F] to-[#164236]  container mx-auto p-4">
 
             <div className="flex flex-col items-center ">
 
-                <h2 className="text-lg font-bold mt-4 text-center">RAFAEL LÓPEZ GÓMEZ</h2>
+                <h2 className="text-lg text-gray-400 font-bold mt-4 text-center">RAFAEL LÓPEZ GÓMEZ</h2>
                 <p className="text-sm text-gray-200 mb-6">rafa@gmail.com</p>
 
                 <div className="w-full max-w-md space-y-3">
