@@ -1,35 +1,35 @@
 export const GastosPage = () => {
     return (
-        <main className="container mx-auto p-4">
-            <div className="px-4 space-y-4 mt-6">
-                <div className="bg-emerald-100 text-black rounded-xl flex items-center p-4 space-x-4 shadow-md">
+        <main className="bg-gradient-to-b from-[#00110F] to-[#164236] min-h-screen flex flex-col items-center py-10   container mx-auto p-4">
+            <div class="w-11/12 max-w-md space-y-4">
+                <div class="flex items-center bg-[#D5F3EA] rounded-xl p-4 shadow-md">
 
                     <div>
-                        <h2 className="font-semibold">PK2</h2>
-                        <p className="text-sm">Pedro Ángel te debe 40€</p>
+                        <p class="font-semibold">PK2</p>
+                        <p class="text-sm">Pedro Ángel te debe 40€</p>
                     </div>
                 </div>
 
-                <div className="bg-emerald-100 text-black rounded-xl flex items-center p-4 space-x-4 shadow-md">
+                <div class="flex items-center bg-[#D5F3EA] rounded-xl p-4 shadow-md">
 
                     <div>
-                        <h2 className="font-semibold">PK2</h2>
-                        <p className="text-sm">Pedro Ángel te debe 40€</p>
+                        <p class="font-semibold">PK2</p>
+                        <p class="text-sm">Pedro Ángel te debe 40€</p>
                     </div>
                 </div>
 
-                <div className="bg-emerald-100 text-black rounded-xl flex items-center p-4 space-x-4 shadow-md">
+                <div class="flex items-center bg-[#D5F3EA] rounded-xl p-4 shadow-md">
 
                     <div>
-                        <h2 className="font-semibold">PK2</h2>
-                        <p className="text-sm">Pedro Ángel te debe 40€</p>
+                        <p class="font-semibold">PK2</p>
+                        <p class="text-sm">Pedro Ángel te debe 40€</p>
                     </div>
                 </div>
 
-                <button className="w-full bg-emerald-100 text-black rounded-xl py-2 mt-2 shadow-md hover:bg-emerald-200">
+                <button class="w-full bg-[#D5F3EA] text-center py-3 rounded-xl font-semibold hover:bg-[#b9e6d8] transition">
                     + Añadir gasto
                 </button>
             </div>
         </main>
-    )
-}
+    );
+};
