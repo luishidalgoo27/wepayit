@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class GroupUpdateRequest extends FormRequest
+class UserGroupDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,10 @@ class GroupUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'group_id' => 'required|exists:groups,id',
-            'name' => 'string|nullable',
-            'photo' => 'string|nullable',
-            'coin' => 'string|nullable'
+            'group_id' => 'integer|exists:groups,id',
+            'user_id' => 'integer|exists:users,id'
         ];
     }
-
 
     /**
      * Mensajes de error personalizados para las reglas de validación.
@@ -40,16 +37,14 @@ class GroupUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'group_id.required' => 'El ID del grupo es obligatorio.',
-            'group_id.exists'   => 'El grupo especificado no existe.',
-            'name.string'       => 'El nombre debe ser una cadena de texto.',
-            'photo.string'      => 'La foto debe ser una cadena de texto.',
-            'coin.string'       => 'La moneda debe ser una cadena de texto.',
+            'group_id.integer' => 'El ID del grupo debe ser un número entero.',
+            'group_id.exists'  => 'El grupo seleccionado no existe.',
+            'user_id.integer'  => 'El ID del usuario debe ser un número entero.',
+            'user_id.exists'   => 'El usuario seleccionado no existe.',
         ];
     }
 
-
-    /**
+    /** 
      * En caso de que falle la validación, devuelve un error JSON.
      *
      * @param Validator $validator
@@ -61,5 +56,5 @@ class GroupUpdateRequest extends FormRequest
             'message' => 'Error de validación',
             'errors'  => $validator->errors()
         ], 422));
-    }
+    } 
 }
