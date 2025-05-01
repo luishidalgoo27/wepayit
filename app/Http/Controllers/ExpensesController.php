@@ -13,7 +13,8 @@ class ExpensesController extends Controller
     public function __construct(private ExpensesService $expensesService) {}
 
     public function getExpenses(ExpensesGetRequest $req){
-
+        $expenses = $this->expensesService->getExpenses($req);
+        return response()->json($expenses);
     }
 
     public function create(ExpensesCreateRequest $req)
@@ -21,4 +22,6 @@ class ExpensesController extends Controller
         $expense = $this->expensesService->create($req);
         return response()->json($expense);
     }
+
+
 }

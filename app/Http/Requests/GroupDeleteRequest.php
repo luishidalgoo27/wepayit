@@ -24,7 +24,7 @@ class GroupDeleteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'group_id' => 'required'
+            'group_id' => 'required|integer'
         ];
     }
 
