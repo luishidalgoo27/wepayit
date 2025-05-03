@@ -1,6 +1,6 @@
 export const GastosPage = () => {
     return (
-        <main className="bg-gradient-to-b from-[#00110F] to-[#164236] min-h-screen flex flex-col items-center py-10   container mx-auto p-4">
+        <main className="bg-gradient-to-b from-[#00110F] to-[#164236] min-h-screen flex flex-col items-center py-10    mx-auto p-4">
             <div class="w-11/12 max-w-md space-y-4">
                 <div class="flex items-center bg-[#D5F3EA] rounded-xl p-4 shadow-md">
 

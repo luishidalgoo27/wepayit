@@ -1,6 +1,6 @@
 export const InvitacionPage = () => {
     return (
-        <main className="min-h-screen bg-gradient-to-b from-[#00110F] to-[#164236] flex flex-col items-center justify-center text-white px-4  container mx-auto p-4">
+        <main className="min-h-screen bg-gradient-to-b from-[#00110F] to-[#164236] flex flex-col items-center justify-center text-white px-4   mx-auto p-4">
             <h1 className="text-center text-lg font-bold mb-8">
                 PULSA ESTE BOTÓN PARA UNIRTE AL GRUPO DE ...
             </h1>
