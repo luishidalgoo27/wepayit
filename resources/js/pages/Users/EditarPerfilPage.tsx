@@ -1,6 +1,6 @@
 export const EditarPerfilPage = () => {
     return (
-        <main className="bg-gradient-to-b from-[#00110F] to-[#164236]  container mx-auto p-4">
+        <main className="bg-gradient-to-b from-[#00110F] to-[#164236]   mx-auto p-4">
 
             <div className="flex flex-col items-center ">
 
