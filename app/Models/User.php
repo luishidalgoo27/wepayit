@@ -21,7 +21,7 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $fillable = [
         'name', 'email', 'password', 'avatar', 'telephone',
-        'language', 'active_notifications', 'premium'
+        'language', 'active_notifications', 'premium', 'username'
     ];
 
     /**
@@ -69,29 +69,12 @@ class User extends Authenticatable
         return $this->hasMany(Payment_user::class);
     }
 
-   
-    public function notifications()
-    {
-        return $this->hasMany(Notification::class);
-    }
-
     
     public function groupInvitations()
     {
         return $this->hasMany(Invitation::class);
     }
 
-    
-    public function balancesAsDebtor()
-    {
-        return $this->hasMany(Balance_user::class, 'debtor_id');
-    }
-
-   
-    public function balancesAsCreditor()
-    {
-        return $this->hasMany(Balance_user::class, 'creditor_id');
-    }
 
     /**
      * Get the attributes that should be cast.
