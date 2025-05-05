@@ -22,9 +22,10 @@ class AuthController extends Controller
             //Validated
             $validateUser = Validator::make($request->all(),
             [
-                'name' => 'required',
+                'name' => 'required|string',
                 'email' => 'required|email|unique:users,email',
-                'password' => 'required'
+                'password' => 'required',
+                'username' => 'required|string|unique:users,username'
             ]);
 
             if($validateUser->fails()){
@@ -38,7 +39,8 @@ class AuthController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'username' => $request->username
             ]);
 
             return response()->json([
@@ -46,6 +48,7 @@ class AuthController extends Controller
                 'id' => $user->id,
                 'email' => $user->email,
                 'name' => $user->name,
+                'username' => $user->username,
                 'message' => 'User Logged In Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
