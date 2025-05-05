@@ -2,10 +2,13 @@ import { Navigate, Outlet } from "react-router-dom";
 import useGetUser from "@/hooks/useGetUser";
 
 export const ProtectedRoute = () => {
-  const { user } = useGetUser();
+  const { user, isLoading } = useGetUser();
+
+  if (isLoading) {
+    return <div>Cargando...</div>;
+  }
 
   if (!user) {
-    console.log("Usuario no encontrado, redirigiendo");
     return <Navigate to="/login" replace />;
   }
 

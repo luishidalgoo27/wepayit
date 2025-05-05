@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { login } from "@/services/auth"; // asegúrate que la ruta sea correcta
+import { login } from "@/services/auth";
 import { useNavigate } from "react-router-dom";
 import useGetUser from "@/hooks/useGetUser";
 
