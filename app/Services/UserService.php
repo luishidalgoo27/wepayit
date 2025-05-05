@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserUpdateRequest;
 
@@ -30,5 +31,10 @@ class UserService
 
         return response()->json($user, 201);
     }
+
+    public function getUser(Request $request){
+        return $request->user();
+    }
+
 }
 ?>

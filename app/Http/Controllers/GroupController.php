@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GroupDeleteRequest;
 use App\Services\GroupService;
-use App\Http\Requests\GroupRequest;
+use App\Http\Requests\GroupGetRequest;
+use App\Http\Requests\GroupCreateRequest;
+use App\Http\Requests\GroupDeleteRequest;
 use App\Http\Requests\GroupUpdateRequest;
 
 
@@ -12,17 +13,17 @@ class GroupController extends Controller
 {
     public function __construct(
         private GroupService $groupService,
-        ) {}
+    ) {}
 
-    public function create(GroupRequest $req)
+    public function create(GroupCreateRequest $req)
     {   
         $group = $this->groupService->create($req);
         return response()->json($group, 201);
     }
 
-    public function getGroupsUser()
+    public function getGroupsUser(GroupGetRequest $req)
     {   
-        $groups = $this->groupService->getGroupsUser();
+        $groups = $this->groupService->getGroupsUser($req);
         return response()->json($groups, 201);
     }
 
