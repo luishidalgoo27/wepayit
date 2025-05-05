@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class GroupDeleteRequest extends FormRequest
+class UserGroupAcceptInvitationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,10 @@ class GroupDeleteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'group_id' => 'required|integer'
+            'invitation_code' => 'required|string'
         ];
     }
+
 
     /**
      * Mensajes de error personalizados para las reglas de validación.
@@ -36,9 +37,11 @@ class GroupDeleteRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'group_id.required' => 'El ID del grupo es obligatorio.',
+            'invitation_code.required' => 'El código de invitación es obligatorio.',
+            'invitation_code.string'   => 'El código de invitación debe ser una cadena de texto.',
         ];
     }
+
 
     /**
      * En caso de que falle la validación, devuelve un error JSON.

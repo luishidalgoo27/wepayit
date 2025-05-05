@@ -11,26 +11,21 @@ use App\Http\Controllers\UserGroupController;
 Route::post('/register', [AuthController::class, 'createUser']);
 Route::post('/login', [AuthController::class, 'loginUser']);
 
-
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-    
-    Route::post('/updateUser', [UserController::class, 'update']);
+    Route::get('/user', [UserController::class, 'getUser']);
+    Route::patch('/updateUser', [UserController::class, 'update']);
     
     Route::get('/groups', [GroupController::class, 'getGroupsUser']);
     Route::post('/group', [GroupController::class, 'create']);
     Route::patch('/group', [GroupController::class, 'update']);
     Route::delete('/group', [GroupController::class, 'delete']);
-
-    Route::post('/deleteUser', [UserGroupController::class, 'deleteUser']);
     
-    Route::post('/invitation', [UserGroupController::class, 'addUser']);
+    Route::delete('/deleteUser', [UserGroupController::class, 'deleteUser']);
+    
+    Route::post('/invitation', [UserGroupController::class, 'sendInvitation']);
     Route::get('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
-
     Route::post('/expense', [ExpensesController::class, 'create']);
-    
+    Route::get('/expense', [ExpensesController::class, 'getExpenses']);
+
 
 });
-
