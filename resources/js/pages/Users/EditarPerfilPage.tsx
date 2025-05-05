@@ -12,6 +12,8 @@ type FormState = {
 
 export const EditarPerfilPage = () => {
   const { user, mutate } = useGetUser();
+    return (
+        <main className="bg-gradient-to-b from-[#00110F] to-[#164236]   mx-auto p-4">
 
   const [form, setForm] = useState<FormState>({
     name: "",
@@ -19,6 +21,8 @@ export const EditarPerfilPage = () => {
   });
 
   const [loading, setLoading] = useState(false);
+                <h2 className="text-lg text-gray-400 font-bold mt-4 text-center">RAFAEL LÓPEZ GÓMEZ</h2>
+                <p className="text-sm text-gray-200 mb-6">rafa@gmail.com</p>
 
   useEffect(() => {
     if (user) {
