@@ -7,7 +7,7 @@
     @viteReactRefresh
     @vite(['resources/css/app.css', 'resources/js/main.tsx'])
   </head>
-  <body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
-    <div id="root"> </div>
+  <body class="bg-gradient-to-b from-[#a9e6d3] to-[#257c6a] text-primary-light dark:bg-gradient-to-b dark:from-[#00110F] dark:to-[#164236] dark:text-primary-dark">
+    <div id="root"></div>
   </body>
 </html>
