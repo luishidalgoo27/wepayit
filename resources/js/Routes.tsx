@@ -20,10 +20,10 @@ const router = createBrowserRouter([
 
   // Rutas protegidas con layout
   {
-    element: <ProtectedRoute />, // verifica que haya usuario
+    element: <ProtectedRoute />,
     children: [
       {
-        element: <DefaultLayout />, // aplica layout solo si está autenticado
+        element: <DefaultLayout />, 
         errorElement: <ErrorPage />,
         children: [
           { path: "/", element: <HomePage /> },
