@@ -24,7 +24,7 @@ class GroupUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'group_id' => 'required|exists:groups,id',
+            'group_id' => 'required|integer|exists:groups,id',
             'name' => 'string|nullable',
             'photo' => 'string|nullable',
             'coin' => 'string|nullable'

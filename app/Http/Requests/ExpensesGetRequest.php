@@ -13,7 +13,7 @@ class ExpensesGetRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,10 +24,12 @@ class ExpensesGetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'group_id' => 'required|integer|exists:groups,id'
         ];
     }
 
+
+    
     /**
      * Mensajes de error personalizados para las reglas de validación.
      *
@@ -36,7 +38,9 @@ class ExpensesGetRequest extends FormRequest
     public function messages(): array
     {
         return [
-           
+            'group_id.required'   => 'El campo de grupo es obligatorio.',
+            'group_id.integer'    => 'El ID del grupo debe ser un número entero.',
+            'group_id.exists'     => 'El grupo especificado no existe en nuestra base de datos.',
         ];
     }
 
