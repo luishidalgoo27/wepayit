@@ -8,24 +8,36 @@ import { EditarPerfilPage } from "./pages/Users/EditarPerfilPage";
 import { InvitacionPage } from "./pages/Users/InvitacionPage";
 import { LoginPage } from "./pages/Users/LoginPage";
 import { GastosPage } from "./pages/Gastos/GastosPage";
-
+import { ProtectedRoute } from "@/layouts/ProtectedRoute";
 
 const router = createBrowserRouter([
-    {
-        element: <DefaultLayout />,
+  // Ruta pública sin layout
+  {
+    path: "/login",
+    element: <LoginPage />,
+    errorElement: <ErrorPage />,
+  },
+
+  // Rutas protegidas con layout
+  {
+    element: <ProtectedRoute />, // verifica que haya usuario
+    children: [
+      {
+        element: <DefaultLayout />, // aplica layout solo si está autenticado
         errorElement: <ErrorPage />,
         children: [
-            { path: "/", element: <HomePage /> },
-            { path: "/grupos", element: <GruposPage /> },
-            { path: "/crearGrupo", element: <CrearGruposPage /> },
-            { path: "/gastos", element: <GastosPage /> },
-            { path: "/editProfile", element: <EditarPerfilPage /> },
-            { path: "/invitation", element: <InvitacionPage /> },
-            { path: "/login", element: <LoginPage /> },
-        ]
-    }
-])
+          { path: "/", element: <HomePage /> },
+          { path: "/grupos", element: <GruposPage /> },
+          { path: "/crearGrupo", element: <CrearGruposPage /> },
+          { path: "/gastos", element: <GastosPage /> },
+          { path: "/editProfile", element: <EditarPerfilPage /> },
+          { path: "/invitation", element: <InvitacionPage /> },
+        ],
+      },
+    ],
+  },
+]);
 
 export const Routes = () => {
-    return <RouterProvider router={router} />
-}
+  return <RouterProvider router={router} />;
+};
