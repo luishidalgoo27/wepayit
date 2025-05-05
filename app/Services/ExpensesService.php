@@ -6,6 +6,7 @@ use App\Models\Expense;
 use App\Http\reqs\Expensesreq;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ExpensesCreateRequest;
+use App\Http\Requests\ExpensesGetRequest;
 
 class ExpensesService
 {
@@ -29,5 +30,13 @@ class ExpensesService
 
         return $expense;
     }
+
+    public function getExpenses(ExpensesGetRequest $req)
+    {
+        $expenses = Expense::where('group_id', $req->group_id)->get();
+        return $expenses;
+    }
+
+    
 }
 ?>
