@@ -1,36 +1,55 @@
+import { ImagePlus, FolderKanban, BadgeEuro } from "lucide-react";
+
 export const CrearGruposPage = () => {
-    return (
-        <main className="min-h-screen bg-gradient-to-b from-[#00110F] to-[#11443C] flex items-center justify-center p-4">
-            <div className="w-full max-w-md bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-md space-y-4">
-                <h1 className="text-center text-2xl text-white font-semibold">Crear Grupo</h1>
-                
-                <input 
-                    type="text" 
-                    placeholder="Nombre" 
-                    className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none" 
-                />
+  return (
+    <main className="container mx-auto py-16 px-4 min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl space-y-6 border border-white/20">
+        <h1 className="text-center text-3xl font-bold text-white mb-4">Crear nuevo grupo</h1>
 
-                <select 
-                    className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none"
-                > 
-                    <option value="">Euro</option>
-                    <option value="">Dólar</option>
-                    <option value="">Libra</option>
-                    <option value="">Peseta</option>
-                </select>
+        {/* Nombre del grupo */}
+        <div className="relative">
+          <FolderKanban className="absolute left-3 top-3 text-emerald-700" size={20} />
+          <input
+            type="text"
+            placeholder="Nombre del grupo"
+            className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
+          />
+        </div>
 
-                <input 
-                    type="file" 
-                    id="fotoGrupo" 
-                    className="w-full bg-emerald-100 text-black px-4 py-2 rounded cursor-pointer"
-                />
+        {/* Moneda */}
+        <div className="relative">
+          <BadgeEuro className="absolute left-3 top-2 text-emerald-700" size={20} />
+          <select className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition">
+            <option value="euro">Euro</option>
+            <option value="dolar">Dólar</option>
+            <option value="libra">Libra</option>
+            <option value="peseta">Peseta</option>
+          </select>
+        </div>
 
-                <button 
-                    className="w-full bg-emerald-100 text-black rounded-xl py-2 shadow-md hover:bg-emerald-200 font-semibold"
-                >
-                    Crear Grupo
-                </button>
-            </div>
-        </main>
-    )
-}
+        {/* Imagen */}
+        <div className="space-y-2">
+          <label
+            htmlFor="fotoGrupo"
+            className="flex items-center justify-center gap-2 w-full bg-emerald-100 text-black px-4 py-2 rounded-xl cursor-pointer hover:bg-emerald-200 transition"
+          >
+            <ImagePlus size={20} />
+            <span>Subir imagen del grupo</span>
+          </label>
+          <input
+            type="file"
+            id="fotoGrupo"
+            className="hidden"
+          />
+        </div>
+
+        {/* Botón */}
+        <button
+          className="w-full bg-emerald-100 text-black rounded-xl py-2 font-semibold shadow-md hover:bg-emerald-200 transition"
+        >
+          Crear Grupo
+        </button>
+      </div>
+    </main>
+  );
+};
