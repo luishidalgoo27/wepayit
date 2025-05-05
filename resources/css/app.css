@@ -5,8 +5,8 @@
 
 @theme {
     /* Paleta de colores principal */
-    --color-primary: #4361ee;
-    --color-primary-dark: #3a56d4;
+    --color-primary-light: #1d443c;
+    --color-primary-dark: #f2fbf8;
     --color-secondary: #7209b7;
     --color-accent: #4cc9f0;
     --color-success: #4ade80;

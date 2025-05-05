@@ -12,8 +12,6 @@ type FormState = {
 
 export const EditarPerfilPage = () => {
   const { user, mutate } = useGetUser();
-    return (
-        <main className="bg-gradient-to-b from-[#00110F] to-[#164236]   mx-auto p-4">
 
   const [form, setForm] = useState<FormState>({
     name: "",
@@ -21,8 +19,6 @@ export const EditarPerfilPage = () => {
   });
 
   const [loading, setLoading] = useState(false);
-                <h2 className="text-lg text-gray-400 font-bold mt-4 text-center">RAFAEL LÓPEZ GÓMEZ</h2>
-                <p className="text-sm text-gray-200 mb-6">rafa@gmail.com</p>
 
   useEffect(() => {
     if (user) {
@@ -42,7 +38,7 @@ export const EditarPerfilPage = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      await api.put("/user", form); 
+      await api.put("/user", form);
       await mutate();
       toast.success("Perfil actualizado correctamente");
     } catch (error) {
@@ -54,7 +50,7 @@ export const EditarPerfilPage = () => {
   };
 
   return (
-    <main className="container mx-auto p-4">
+    <main className="container mx-auto py-10 px-4 min-h-screen">
       <div className="flex flex-col items-center">
         <h2 className="text-lg font-bold mt-4 text-center">
           {user?.name}
@@ -66,7 +62,7 @@ export const EditarPerfilPage = () => {
           className="w-full max-w-md space-y-3"
         >
           <div>
-            <label htmlFor="name">Nombre</label>
+            <label htmlFor="name" className="text-white">Nombre</label>
             <input
               type="text"
               id="name"
@@ -78,7 +74,7 @@ export const EditarPerfilPage = () => {
           </div>
 
           <div>
-            <label htmlFor="telephone">Teléfono</label>
+            <label htmlFor="telephone" className="text-white">Teléfono</label>
             <input
               type="tel"
               id="telephone"
