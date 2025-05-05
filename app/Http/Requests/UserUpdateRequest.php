@@ -27,7 +27,8 @@ class UserUpdateRequest extends FormRequest
             'name' => 'string',
             'avatar' => 'string|nullable',
             'telephone' => 'integer|nullable',
-            'languague' => 'string'
+            'languague' => 'string',
+            'username' => 'string|unique:users,username'
         ];
     }
 
@@ -44,6 +45,8 @@ class UserUpdateRequest extends FormRequest
             'avatar.string'      => 'El avatar debe ser una cadena de texto.',
             'telephone.integer'  => 'El teléfono debe ser un número.',
             'languague.string'   => 'El idioma debe ser una cadena de texto.',
+            'username.string'   => 'El nombre de usuario debe ser una cadena de texto.',
+            'username.unique'   => 'Este nombre de usuario ya está en uso.',
         ];
     }
 
