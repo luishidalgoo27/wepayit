@@ -12,7 +12,7 @@ const LINKS = [
 export const Header = () => {
     return (
         <header className="sticky top-0 z-50 shadow-lg">
-            <nav className="container mx-auto px-4 py-3 flex items-center justify-between bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+            <nav className=" mx-auto px-4 py-3 flex items-center justify-between bg-black text-[#A9E6D3] dark:bg-gray-900 dark:text-gray-100">
                 <div className="flex items-center">
                     <Link to='/' className="text-2xl font-bold">WePayIt</Link>
                 </div>
@@ -26,8 +26,8 @@ export const Header = () => {
                         ))}
                     </ul>
                 </div>
-
                 <div>
+                <button type="submit" className=" rounded-full bg-[#8FE3C2] px-4 py-2  font-semibold text-white hover:bg-[#7dd8b4] transition mr-10">Registrate</button>
                     <ThemeToggle />
                 </div>
             </nav>
