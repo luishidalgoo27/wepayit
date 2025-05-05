@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreign('expense_id')->references('id')->on('expenses');
             $table->foreign('payer_id')->references('id')->on('users');
             $table->integer('amount');
-            $table->string('payment_method');
             $table->date('payment_date');
             $table->enum('status', ['pending', 'paid','failed'])->default('pending');
             $table->timestamps();

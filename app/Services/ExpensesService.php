@@ -3,14 +3,14 @@
 namespace App\Services;
 
 use App\Models\Expense;
-use App\Http\reqs\Expensesreq;
+use App\Models\Expense_division;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ExpensesCreateRequest;
 use App\Http\Requests\ExpensesGetRequest;
 
 class ExpensesService
 {
-    public function __construct(private Expense $expense) {}
+    public function __construct(private Expense $expense, private Expense_division $expenseDivision) {}
 
     public function create(ExpensesCreateRequest $req)
     {
@@ -28,6 +28,14 @@ class ExpensesService
             'frecuency'     => $req->frecuency,
         ]);
 
+        foreach ($req->users_division as $user) {
+            $this->expenseDivision->create([
+                'expense_id' => $expense->id,
+                'user_id' => $user['user_id'],
+                'assigned_amount' => $user['assigned_amount'],
+            ]);
+        }
+        
         return $expense;
     }
 
