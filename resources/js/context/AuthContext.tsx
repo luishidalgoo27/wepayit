@@ -7,7 +7,7 @@ const API = "http://localhost/api";
 type AuthContextType = {
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
+  register: (username:string, name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
 };
 
@@ -30,8 +30,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsAuthenticated(true);
   };
 
-  const register = async (name: string, email: string, password: string) => {
-    const res = await axios.post(`${API}/register`, { name, email, password });
+  const register = async (username: string, name: string, email: string, password: string) => {
+    const res = await axios.post(`${API}/register`, { username, name, email, password });
     const { token } = res.data;
 
     if (!token) {
