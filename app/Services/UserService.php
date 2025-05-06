@@ -26,7 +26,8 @@ class UserService
             'name' => $req->name ?? $user->name,
             'avatar' => $req->avatar ?? $user->avatar,
             'telephone' => $req->telephone ?? $user->telephone,
-            'languague' => $req->language ?? $user->languague
+            'languague' => $req->language ?? $user->languague,
+            'username' => $req->username ?? $user->username
         ]);
 
         return response()->json($user, 201);
