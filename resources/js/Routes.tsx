@@ -1,21 +1,33 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { DefaultLayout } from "@/layouts/DefaultLayout";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import { ErrorPage } from "@/pages/Error/ErrorPage";
+import { PublicRoute } from "./layouts/PublicRoute";
 import { HomePage } from "@/pages/Home/HomePage";
-import { GruposPage } from "./pages/Groups/GruposPage";
-import { CrearGruposPage } from "./pages/Groups/CrearGruposPage";
-import { EditarPerfilPage } from "./pages/Users/EditarPerfilPage";
-import { InvitacionPage } from "./pages/Users/InvitacionPage";
+import { RegisterPage } from "./pages/Users/RegisterPage";
 import { LoginPage } from "./pages/Users/LoginPage";
-import { GastosPage } from "./pages/Gastos/GastosPage";
 import { ProtectedRoute } from "@/layouts/ProtectedRoute";
+import { UserLayout } from "@/layouts/UserLayout";
+import { GroupsPage } from "./pages/Groups/GroupsPage";
+import { CreateGroupPage } from "./pages/Groups/CreateGroupPage";
+import { EditProfilePage } from "./pages/Users/EditProfilePage";
+import { InvitacionPage } from "./pages/Users/InvitacionPage";
+import { ExpensesPage } from "./pages/Expenses/ExpensesPage";
+import { GuestLayout } from "./layouts/GuestLayout";
 
 const router = createBrowserRouter([
-  // Ruta pública sin layout
+  // Rutas públicas
   {
-    path: "/login",
-    element: <LoginPage />,
-    errorElement: <ErrorPage />,
+    element: <PublicRoute />,
+    children: [
+      {
+        element: <GuestLayout />,
+        errorElement: <ErrorPage />,
+        children: [
+          { path: "/", element: <HomePage /> },
+          { path: "/register",element: <RegisterPage /> },
+          { path: "/login", element: <LoginPage /> },
+        ]
+      }
+    ]
   },
 
   // Rutas protegidas con layout
@@ -23,19 +35,19 @@ const router = createBrowserRouter([
     element: <ProtectedRoute />,
     children: [
       {
-        element: <DefaultLayout />, 
+        element: <UserLayout />, 
         errorElement: <ErrorPage />,
         children: [
-          { path: "/", element: <HomePage /> },
-          { path: "/grupos", element: <GruposPage /> },
-          { path: "/crearGrupo", element: <CrearGruposPage /> },
-          { path: "/gastos", element: <GastosPage /> },
-          { path: "/editProfile", element: <EditarPerfilPage /> },
+          { path: "/groups", element: <GroupsPage /> },
+          { path: "/groups/create-group", element: <CreateGroupPage /> },
+          { path: "/expenses", element: <ExpensesPage /> },
+          { path: "/user/edit-profile", element: <EditProfilePage /> },
           { path: "/invitation", element: <InvitacionPage /> },
         ],
       },
     ],
   },
+  { path: "*", element: <Navigate to="/dashboard" replace /> },
 ]);
 
 export const Routes = () => {

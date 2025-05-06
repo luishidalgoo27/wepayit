@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { login } from "@/services/auth";
-import { useNavigate } from "react-router-dom";
+import { register } from "@/services/auth";
+import { Link, useNavigate } from "react-router-dom";
 import useGetUser from "@/hooks/useGetUser";
 import toast from "react-hot-toast";
 
-export const LoginPage = () => {
+export const RegisterPage = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -17,12 +18,12 @@ export const LoginPage = () => {
     setError(null);
 
     try {
-      await login(email, password);
+      await register(name, email, password);
       await mutate();
-      toast.success("Has iniciado sesión correctamente");
-      navigate("/groups");
+      toast.success("Te has registrado correctamente");
+      navigate("/");
     } catch (err: any) {
-      const message = err.message || "Error desconocido";
+      const message = "Error al registrarse";
       setError(message);
       toast.error(message);
     }
@@ -32,10 +33,28 @@ export const LoginPage = () => {
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1e293b] to-[#0f172a] px-4">
       <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-xl">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Inicia sesión en <span className="text-[#8FE3C2]">Wepayit</span>
+          Crear cuenta en <span className="text-[#8FE3C2]">Wepayit</span>
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              Nombre
+            </label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autoComplete="name"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className={`mt-1 w-full px-4 py-2 rounded-md border ${
+                error ? "border-red-400" : "border-gray-300"
+              } focus:ring-[#8FE3C2] focus:border-[#8FE3C2]`}
+            />
+          </div>
+
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Correo electrónico
@@ -67,7 +86,7 @@ export const LoginPage = () => {
               id="password"
               name="password"
               type="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -85,15 +104,15 @@ export const LoginPage = () => {
             type="submit"
             className="w-full py-2 px-4 bg-[#8FE3C2] text-white font-semibold rounded-full hover:bg-[#7dd8b4] transition"
           >
-            Iniciar sesión
+            Registrarse
           </button>
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-600">
-          ¿No tienes cuenta?{" "}
-          <a href="/register" className="text-[#8FE3C2] hover:underline font-medium">
-            Regístrate
-          </a>
+          ¿Ya tienes una cuenta?{" "}
+          <Link to="/login" className="text-[#8FE3C2] hover:underline font-medium">
+            Inicia sesión
+          </Link>
         </p>
       </div>
     </main>
