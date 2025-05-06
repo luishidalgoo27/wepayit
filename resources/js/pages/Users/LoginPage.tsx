@@ -29,7 +29,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#00110F] to-[#164236] flex flex-col justify-center px-6 py-12">
+    <main className="container mx-auto py-10 px-4 min-h-screen">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm text-center">
         <h2 className="text-2xl font-bold tracking-tight text-white">
           Inicia sesión con tu cuenta
