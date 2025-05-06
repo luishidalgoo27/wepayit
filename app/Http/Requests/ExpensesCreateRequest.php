@@ -36,6 +36,9 @@ class ExpensesCreateRequest extends FormRequest
             'state'         => 'nullable|string|max:100',
             'recurrent'     => 'boolean',
             'frecuency'     => 'nullable|string|max:50',
+            'users_division' => 'required|array|min:1',
+            'users_division.*.user_id' => 'required|exists:users,id',
+            'users_division.*.assigned_amount' => 'required|integer',
         ];
     }
 
@@ -80,6 +83,13 @@ class ExpensesCreateRequest extends FormRequest
 
             'frecuency.string'       => 'La frecuencia debe ser una cadena de texto.',
             'frecuency.max'          => 'La frecuencia no puede tener más de 50 caracteres.',
+
+            'users_division.required' => 'Debes proporcionar al menos un usuario.',
+            'users_division.array' => 'Usuarios debe ser un array.',
+            'users_division.*.user_id.required' => 'Cada entrada debe tener un user_id.',
+            'users_division.*.user_id.exists' => 'El user_id debe existir en la base de datos.',
+            'users_division.*.assigned_amount.required' => 'Cada entrada debe tener una cantidad asignada.',
+            'users_division.*.assigned_amount.integer' => 'La cantidad debe ser un número entero.',
         ];
     }
 
