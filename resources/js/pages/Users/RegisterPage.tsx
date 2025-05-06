@@ -5,6 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 
 export const RegisterPage = () => {
   const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -16,7 +17,7 @@ export const RegisterPage = () => {
     setError(null);
 
     try {
-      await register(name, email, password);
+      await register(username, name, email, password);
       toast.success("Te has registrado correctamente");
     } catch (err: any) {
       const message = err.message || "Error al registrarse";
@@ -45,6 +46,24 @@ export const RegisterPage = () => {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
+              className={`mt-1 w-full px-4 py-2 rounded-md border ${
+                error ? "border-red-400" : "border-gray-300"
+              } focus:ring-[#8FE3C2] focus:border-[#8FE3C2]`}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+              Usuario
+            </label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              autoComplete="username"
+              required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className={`mt-1 w-full px-4 py-2 rounded-md border ${
                 error ? "border-red-400" : "border-gray-300"
               } focus:ring-[#8FE3C2] focus:border-[#8FE3C2]`}

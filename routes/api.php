@@ -8,8 +8,8 @@ use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserGroupController;
 
-Route::post('/register', [AuthController::class, 'createUser']);
-Route::post('/login', [AuthController::class, 'loginUser']);
+Route::post('/register', [AuthController::class, 'createUser'])->name('auth.register');
+Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
