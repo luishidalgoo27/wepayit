@@ -17,7 +17,7 @@ export const RegisterPage = () => {
     setError(null);
 
     try {
-      await register(name, email, password);
+      await register(username, name, email, password);
       toast.success("Te has registrado correctamente");
     } catch (err: any) {
       const message = "Error al registrarse";
