@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { register } from "@/services/auth";
-import { Link, useNavigate } from "react-router-dom";
-import useGetUser from "@/hooks/useGetUser";
+import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useAuth } from "@/context/AuthContext";
 
 export const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -10,8 +9,7 @@ export const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const navigate = useNavigate();
-  const { mutate } = useGetUser();
+  const { register } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,11 +17,9 @@ export const RegisterPage = () => {
 
     try {
       await register(name, email, password);
-      await mutate();
       toast.success("Te has registrado correctamente");
-      navigate("/");
     } catch (err: any) {
-      const message = "Error al registrarse";
+      const message = err.message || "Error al registrarse";
       setError(message);
       toast.error(message);
     }

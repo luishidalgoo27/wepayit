@@ -1,21 +1,9 @@
+// layouts/ProtectedRoute.tsx
 import { Navigate, Outlet } from "react-router-dom";
-import useGetUser from "@/hooks/useGetUser";
-import { LoaderCircle } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 export const ProtectedRoute = () => {
-  const { user, isLoading } = useGetUser();
+  const { isAuthenticated } = useAuth();
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <LoaderCircle className="animate-spin h-10 w-10 text-blue-600" />
-      </div>
-    );
-  }
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return <Outlet />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
 };

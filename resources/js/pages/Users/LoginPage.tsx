@@ -1,16 +1,14 @@
 import { useState } from "react";
-import { login } from "@/services/auth";
-import { useNavigate } from "react-router-dom";
-import useGetUser from "@/hooks/useGetUser";
 import toast from "react-hot-toast";
+import { useAuth } from "@/context/AuthContext";
+import { Link } from "react-router-dom";
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const navigate = useNavigate();
-  const { mutate } = useGetUser();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,9 +16,7 @@ export const LoginPage = () => {
 
     try {
       await login(email, password);
-      await mutate();
       toast.success("Has iniciado sesión correctamente");
-      navigate("/groups");
     } catch (err: any) {
       const message = err.message || "Error desconocido";
       setError(message);
@@ -91,9 +87,9 @@ export const LoginPage = () => {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           ¿No tienes cuenta?{" "}
-          <a href="/register" className="text-[#8FE3C2] hover:underline font-medium">
+          <Link to="/register" className="text-[#8FE3C2] hover:underline font-medium">
             Regístrate
-          </a>
+          </Link>
         </p>
       </div>
     </main>
