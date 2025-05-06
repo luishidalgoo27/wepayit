@@ -2,7 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import useGetUser from "@/hooks/useGetUser";
 import { LoaderCircle } from "lucide-react";
 
-export const ProtectedRoute = () => {
+export const PublicRoute = () => {
   const { user, isLoading } = useGetUser();
 
   if (isLoading) {
@@ -13,8 +13,8 @@ export const ProtectedRoute = () => {
     );
   }
 
-  if (!user) {
-    return <Navigate to="/login" replace />;
+  if (user) {
+    return <Navigate to="/groups" replace />;
   }
 
   return <Outlet />;

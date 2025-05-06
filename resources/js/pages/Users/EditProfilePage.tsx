@@ -3,18 +3,12 @@ import useGetUser from "@/hooks/useGetUser";
 import api from "@/utils/api";
 import toast from "react-hot-toast";
 import { UserCog } from "lucide-react";
+import { EditUserForm } from "@/types/user";
 
-const inputClassName = "w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none";
-
-type FormState = {
-  name: string;
-  telephone: string;
-};
-
-export const EditarPerfilPage = () => {
+export const EditProfilePage = () => {
   const { user, mutate } = useGetUser();
 
-  const [form, setForm] = useState<FormState>({
+  const [form, setForm] = useState<EditUserForm>({
     name: "",
     telephone: "",
   });
@@ -71,7 +65,7 @@ export const EditarPerfilPage = () => {
               type="text"
               id="name"
               name="name"
-              className={inputClassName}
+              className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none"
               value={form.name}
               onChange={handleChange}
             />
@@ -83,7 +77,7 @@ export const EditarPerfilPage = () => {
               type="tel"
               id="telephone"
               name="telephone"
-              className={inputClassName}
+              className="w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none"
               value={form.telephone}
               onChange={handleChange}
             />
