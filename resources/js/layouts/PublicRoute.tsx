@@ -1,9 +1,9 @@
-// layouts/ProtectedRoute.tsx
+// layouts/PublicRoute.tsx
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 
-export const ProtectedRoute = () => {
+export const PublicRoute = () => {
   const { isAuthenticated } = useAuth();
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+  return isAuthenticated ? <Navigate to="/groups" replace /> : <Outlet />;
 };
