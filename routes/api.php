@@ -13,7 +13,7 @@ Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
-    Route::put('/user', [UserController::class, 'update']);
+    Route::patch('/user', [UserController::class, 'update']);
     
     Route::get('/groups', [GroupController::class, 'getGroupsUser']);
     Route::post('/group', [GroupController::class, 'create']);
