@@ -1,8 +1,7 @@
 // context/AuthContext.tsx
 import { createContext, useContext, useState } from "react";
 import axios from "axios";
-
-const API = "http://localhost/api";
+import { API_URL } from "@/config";
 
 type AuthContextType = {
   isAuthenticated: boolean;
@@ -19,7 +18,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   const login = async (email: string, password: string) => {
-    const res = await axios.post(`${API}/login`, { email, password });
+    const res = await axios.post(`${API_URL}/login`, { email, password });
     const { token } = res.data;
 
     if (!token) {
@@ -31,7 +30,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const register = async (username: string, name: string, email: string, password: string) => {
-    const res = await axios.post(`${API}/register`, { username, name, email, password });
+    const res = await axios.post(`${API_URL}/register`, { username, name, email, password });
     const { token } = res.data;
 
     if (!token) {
