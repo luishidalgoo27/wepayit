@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-export const GruposPage = () => {
+export const GroupsPage = () => {
     return (
         <main className="min-h-screen bg-gradient-to-b from-[#00110F] to-[#164236] flex justify-center py-10   mx-auto p-4">
             <div className="w-11/12 max-w-md space-y-4">
