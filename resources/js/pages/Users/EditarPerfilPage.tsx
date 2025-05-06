@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useGetUser from "@/hooks/useGetUser";
 import api from "@/utils/api";
 import toast from "react-hot-toast";
+import { UserCog } from "lucide-react";
 
 const inputClassName = "w-full bg-emerald-100 text-black px-4 py-2 rounded focus:outline-none";
 
@@ -50,12 +51,15 @@ export const EditarPerfilPage = () => {
   };
 
   return (
-    <main className="container mx-auto py-10 px-4 min-h-screen">
-      <div className="flex flex-col items-center">
-        <h2 className="text-lg font-bold mt-4 text-center">
-          {user?.name}
-        </h2>
-        <p className="text-sm text-gray-200 mb-6">{user?.email}</p>
+    <main className="container mx-auto py-16 px-4 min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl space-y-6 border border-white/20">
+        <div className="flex flex-col justify-center items-center">
+          <UserCog className="h-10 w-10" />
+          <h2 className="text-lg font-bold mt-4">
+            Editar Perfil
+          </h2>
+          <p className="text-sm text-gray-200 mb-6">{user?.email}</p>
+        </div>
 
         <form
           onSubmit={handleSubmit}
