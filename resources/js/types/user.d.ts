@@ -11,3 +11,8 @@ export interface User {
   created_at: "2025-05-01T10:24:18.000000Z",
   updated_at: "2025-05-01T10:24:18.000000Z" */
 }
+
+export interface EditUserForm {
+  name: string,
+  telephone: string,
+}

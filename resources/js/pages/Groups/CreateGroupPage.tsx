@@ -1,6 +1,6 @@
 import { ImagePlus, FolderKanban, BadgeEuro } from "lucide-react";
 
-export const CrearGruposPage = () => {
+export const CreateGroupPage = () => {
   return (
     <main className="container mx-auto py-16 px-4 min-h-screen flex items-center justify-center">
       <div className="w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl space-y-6 border border-white/20">
