@@ -20,7 +20,7 @@ export const RegisterPage = () => {
       await register(username, name, email, password);
       toast.success("Te has registrado correctamente");
     } catch (err: any) {
-      const message = "Error al registrarse";
+      const message = err.message || "Error al registrarse";
       setError(message);
       toast.error(message);
     }
