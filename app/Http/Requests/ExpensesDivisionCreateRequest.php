@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ExpensesDivisionCreateRequest extends FormRequest
 {
@@ -38,5 +40,19 @@ class ExpensesDivisionCreateRequest extends FormRequest
             'users_division.*.assigned_amount.required' => 'Cada entrada debe tener una cantidad asignada.',
             'users_division.*.assigned_amount.integer' => 'La cantidad debe ser un número entero.',
         ];
+    }
+
+     /**
+     * En caso de que falle la validación, devuelve un error JSON.
+     *
+     * @param Validator $validator
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status'  => false,
+            'message' => 'Error de validación',
+            'errors'  => $validator->errors()
+        ], 422));
     }
 }
