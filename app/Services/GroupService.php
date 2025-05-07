@@ -41,8 +41,8 @@ class GroupService
 
     public function getGroupsUser(GroupGetRequest $req)
     {
-        $idUser = Auth::id();
-        $groups = $this->user_group::where('user_id', $idUser)->get();
+        $user = Auth::user();
+        $groups = $user->groups;
         return $groups;
     }
 
