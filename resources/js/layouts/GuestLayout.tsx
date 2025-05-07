@@ -4,9 +4,11 @@ import { Outlet } from "react-router-dom"
 
 export const GuestLayout = () => {
     return(
-        <>
+        <div className="flex flex-col min-h-screen">  
             <Header />
-            <Outlet />
-        </>
+            <main className="flex-1 container mx-auto py-4">
+                <Outlet />
+            </main>    
+        </div>
     )
 }

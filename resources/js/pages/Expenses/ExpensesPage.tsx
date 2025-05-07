@@ -27,23 +27,21 @@ export const ExpensesPage = () => {
         loadExpenses()
     }, [])
     
-    return (
-        <main className="bg-gradient-to-b from-[#00110F] to-[#164236] min-h-screen flex flex-col items-center py-10    mx-auto p-4">
-            <div className="w-11/12 max-w-md space-y-4">
-                {
-                    expenses.map((expense, index) => (
-                        <div key={index} className="flex items-center bg-[#D5F3EA] rounded-xl p-4 shadow-md">
-                            <div>
-                                <p className="font-semibold">{expense.title}</p>
-                                <p className="text-sm">{expense.amount}</p>
-                            </div>
+    return (  
+        <div className="container max-w-4xl mx-auto py-8 space-y-6">
+            {
+                expenses.map((expense, index) => (
+                    <div key={index} className="flex items-center bg-[#D5F3EA] rounded-xl p-4 shadow-md">
+                        <div>
+                            <p className="font-semibold">{expense.title}</p>
+                            <p className="text-sm">{expense.amount}</p>
                         </div>
-                    ))
-                }
-                <button className="w-full bg-[#D5F3EA] text-center py-3 rounded-xl font-semibold hover:bg-[#b9e6d8] transition">
-                    + Añadir gasto
-                </button>
-            </div>
-        </main>
+                    </div>
+                ))
+            }
+            <button className="w-full bg-[#D5F3EA] text-center py-3 rounded-xl font-semibold hover:bg-[#b9e6d8] transition">
+                + Añadir gasto
+            </button>
+        </div>  
     );
 };

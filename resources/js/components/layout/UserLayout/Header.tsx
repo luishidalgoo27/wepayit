@@ -18,7 +18,7 @@ export const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 bg-[#0C2724] shadow-md text-white">
-      <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
+      <nav className="container mx-auto py-4 flex items-center justify-between">
         {/* Logo */}
         <Link
           to="/groups"

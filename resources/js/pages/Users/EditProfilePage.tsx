@@ -46,8 +46,7 @@ export const EditProfilePage = () => {
   if (!user) return null;
 
   return (
-    <main className="container mx-auto py-16 px-4 min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl space-y-6 border border-white/20">
+      <div className="container max-w-md mx-auto py-8 space-y-6 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20">
         <div className="flex flex-col justify-center items-center">
           <UserCog className="h-10 w-10" />
           <h2 className="text-lg font-bold mt-4">Editar Perfil</h2>
@@ -87,6 +86,5 @@ export const EditProfilePage = () => {
           </button>
         </form>
       </div>
-    </main>
   );
 };

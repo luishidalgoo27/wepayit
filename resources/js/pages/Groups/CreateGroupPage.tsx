@@ -2,8 +2,7 @@ import { ImagePlus, FolderKanban, BadgeEuro } from "lucide-react";
 
 export const CreateGroupPage = () => {
   return (
-    <main className="container mx-auto py-16 px-4 min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl space-y-6 border border-white/20">
+      <div className="container max-w-xl mx-auto py-8 space-y-6 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20">
         <h1 className="text-center text-3xl font-bold text-white mb-4">Crear nuevo grupo</h1>
 
         {/* Nombre del grupo */}
@@ -49,7 +48,6 @@ export const CreateGroupPage = () => {
         >
           Crear Grupo
         </button>
-      </div>
-    </main>
+      </div> 
   );
 };
