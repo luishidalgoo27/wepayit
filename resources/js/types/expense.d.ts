@@ -8,3 +8,11 @@ export interface Expense {
     category: string,
     receipt_url: string
 }
+
+export interface ExpenseDivision {
+    id: number,
+    expense_id: number, 
+    user_id: number,
+    assigned_amount: number,
+    status: boolean
+}
