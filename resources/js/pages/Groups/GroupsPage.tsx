@@ -23,7 +23,7 @@ export const GroupsPage = () => {
 
     return (
         <div className="container max-w-4xl mx-auto py-8 space-y-6"> {/* La propiedad max-w-4xl define el tamaño del witdh */}
-            <h1 className="text-center text-3xl font-bold text-white mb-4">Tus grupos</h1>
+            <h1 className="text-center text-3xl font-bold  mb-4">Tus grupos</h1>
 
             <div className="grid gap-4 sm:grid-cols-2">
                 {groups.map((group) => (
@@ -40,7 +40,7 @@ export const GroupsPage = () => {
 
             <Link
                 to="/groups/create-group"
-                className="block w-full text-center bg-yellow-400 hover:bg-yellow-300 text-black font-semibold py-3 rounded-xl transition shadow-md"
+                className="block w-full text-center bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950 hover:bg-500 text-100 dark:text-200 font-semibold py-3 rounded-xl transition shadow-md"
             >
                 + Crear nuevo grupo
             </Link>
