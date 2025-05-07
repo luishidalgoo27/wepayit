@@ -5,18 +5,25 @@
 
 @theme {
     /* Paleta de colores principal */
-    --color-primary-light: #1d443c;
-    --color-primary-dark: #f2fbf8;
-    --color-secondary: #7209b7;
-    --color-accent: #4cc9f0;
-    --color-success: #4ade80;
-    --color-warning: #fbbf24;
-    --color-danger: #f87171;
-    --color-dark: #1e293b;
-    --color-light: #f8fafc;
-    --color-gray: #94a3b8;
-    --color-gray-light: #e2e8f0;
+    --color-primary-dark: #1d443c;
+    --color-primary-light: #f2fbf8;
+
+    --color-50:#f2fbf8;
+    --color-100:#d4f3e8;
+    --color-200:#a9e6d3;
+    --color-300:#76d2b8;
+    --color-400:#57bca3;
+    --color-500:#319b83;
+    --color-600:#257c6a;
+    --color-700:#216457;
+    --color-800: #1e5147;
+    --color-900: #1d443c;
+    --color-950: #0c2724;
     
+
+    --color-header-dark: #0C2724;
+    --color-footer-dark:#0C2724;
+    --color-footer-light:#257c6a;
     /* Tipografía */
     --font-primary: 'Poppins', sans-serif;
     --font-secondary: 'Inter', sans-serif;
