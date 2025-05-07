@@ -11,7 +11,6 @@ use App\Http\Controllers\UserGroupController;
 
 Route::post('/register', [AuthController::class, 'createUser'])->name('auth.register');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
-Route::post('/converter', [ConverterController::class, 'convert']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
@@ -28,4 +27,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
     Route::post('/expense', [ExpensesController::class, 'create']);
     Route::post('/expense', [ExpensesController::class, 'getExpenses']);
+    
+    Route::post('/converter', [ConverterController::class, 'convert']);
 });
