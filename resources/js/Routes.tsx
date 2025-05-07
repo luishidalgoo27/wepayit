@@ -10,17 +10,17 @@ import { GroupsPage } from "./pages/Groups/GroupsPage";
 import { CreateGroupPage } from "./pages/Groups/CreateGroupPage";
 import { EditProfilePage } from "./pages/Users/EditProfilePage";
 import { InvitacionPage } from "./pages/Users/InvitacionPage";
-import { ExpensesPage } from "./pages/Expenses/ExpensesPage";
+import { ExpensesPage, loader as ExpensesLoader } from "./pages/Expenses/ExpensesPage";
 import { GuestLayout } from "./layouts/GuestLayout";
 
 const router = createBrowserRouter([
   // Rutas públicas
   {
     element: <PublicRoute />,
+    errorElement: <ErrorPage />,
     children: [
       {
         element: <GuestLayout />,
-        errorElement: <ErrorPage />,
         children: [
           { path: "/", element: <HomePage /> },
           { path: "/register",element: <RegisterPage /> },
@@ -33,21 +33,21 @@ const router = createBrowserRouter([
   // Rutas protegidas con layout
   {
     element: <ProtectedRoute />,
+    errorElement: <ErrorPage />,
     children: [
       {
         element: <UserLayout />, 
-        errorElement: <ErrorPage />,
         children: [
           { path: "/groups", element: <GroupsPage /> },
           { path: "/groups/create-group", element: <CreateGroupPage /> },
-          { path: "/expenses", element: <ExpensesPage /> },
+          { path: "/groups/:id/expenses", element: <ExpensesPage />, loader: ExpensesLoader},
           { path: "/user/edit-profile", element: <EditProfilePage /> },
           { path: "/invitation", element: <InvitacionPage /> },
         ],
       },
     ],
   },
-  { path: "*", element: <Navigate to="/dashboard" replace /> },
+/*   { path: "*", element: <Navigate to="/" replace /> }, */
 ]);
 
 export const Routes = () => {

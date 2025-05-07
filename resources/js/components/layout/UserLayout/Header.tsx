@@ -1,6 +1,6 @@
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
-
+import { LogOut, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 const NAV_LINKS = [
@@ -9,48 +9,56 @@ const NAV_LINKS = [
 
 export const Header = () => {
   const navigate = useNavigate();
-  const {logout} = useAuth()
+  const { logout } = useAuth();
 
   const handleLogout = () => {
-    logout()
+    logout();
     navigate("/login");
   };
 
   return (
-    <header className="sticky top-0 z-50 shadow-lg bg-[#0C2724] text-white">
-      <nav className="container mx-auto px-4 py-3 flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-[#0C2724] shadow-md text-white">
+      <nav className="container mx-auto py-4 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center">
-          <Link to="/groups" className="text-2xl font-bold text-white">WePayIt</Link>
-        </div>
+        <Link
+          to="/groups"
+          className="text-2xl font-bold tracking-wide hover:text-teal-200 transition-colors"
+        >
+          WePayIt
+        </Link>
 
-        {/* Nav Links */}
-        <ul className="flex gap-4">
+        {/* Navigation Links */}
+        <ul className="flex items-center gap-6">
           {NAV_LINKS.map((link, index) => (
             <li key={index}>
-              <Link to={link.path} className="hover:underline">
+              <Link
+                to={link.path}
+                className="text-white hover:text-teal-300 transition-colors font-medium"
+              >
                 {link.name}
               </Link>
             </li>
           ))}
         </ul>
 
-        {/* Actions: Theme, Profile, Logout */}
-        <div className="flex items-center gap-4">
+        {/* Actions */}
+        <div className="flex items-center gap-3">
           <ThemeToggle />
 
           <Link
             to="/user/edit-profile"
-            className="bg-white text-[#0C2724] px-3 py-1 rounded hover:bg-gray-100 transition"
+            className="p-2 rounded-full bg-white text-[#0C2724] hover:bg-gray-300 transition"
+            title="Perfil"
           >
-            Perfil
+            <User size={20} />
           </Link>
 
           <button
             onClick={handleLogout}
-            className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
+            className="p-2 rounded-full bg-red-600 hover:bg-red-700 transition text-white"
+            title="Cerrar sesión"
           >
-            Cerrar sesión
+            <LogOut size={20} />
           </button>
         </div>
       </nav>

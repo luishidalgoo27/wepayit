@@ -1,36 +1,49 @@
+import { getGroups } from "@/services/groups"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import toast from "react-hot-toast"
+import { Group } from "@/types/group"
 
 export const GroupsPage = () => {
+    const [groups, setGroups] = useState<Group[]>([])
+
+    useEffect(() => {
+        const loadGroups = async () => {
+            try {
+                const data = await getGroups();
+                setGroups(data);
+            } catch (error) {
+                toast.error("Error al cargar los grupos");
+                console.error(error);
+            }
+        }
+
+        loadGroups();
+    }, [])
+
     return (
-        <main className="min-h-screen bg-gradient-to-b from-[#00110F] to-[#164236] flex justify-center py-10   mx-auto p-4">
-            <div className="w-11/12 max-w-md space-y-4">
-                <Link to="/gastos" className="bg-[#D5F3EA] text-black rounded-xl flex  p-4 w-xl  shadow-md">
-                    <div>
-                        <h2 className="font-semibold">Vacaciones mallorca</h2>
-                        <p className="text-sm">Grupo para el viaje a mallorca</p>
-                    </div>
-                </Link>
+        <div className="container max-w-4xl mx-auto py-8 space-y-6"> {/* La propiedad max-w-4xl define el tamaño del witdh */}
+            <h1 className="text-center text-3xl font-bold text-white mb-4">Tus grupos</h1>
 
-                <Link to="/gastos" className="bg-[#D5F3EA] text-black rounded-xl flex items-center p-4 w-xl shadow-md">
-
-                    <div>
-                        <h2 className="font-semibold">Comida familiar</h2>
-                        <p className="text-sm">Grupo para la comida en familia</p>
-                    </div>
-                </Link>
-
-                <Link to="/gastos" className="bg-[#D5F3EA] text-black rounded-xl flex items-center p-4 w-xl shadow-md">
-
-                    <div>
-                        <h2 className="font-semibold">Piso de estudiantes</h2>
-                        <p className="text-sm">Grupo para gestionar los gastos del piso</p>
-                    </div>
-                </Link>
-
-                <Link to="/crearGrupo" className="block text-center bg-[#D5F3EA] text-black hover:bg-[#b9e6d8] rounded-xl py-3 mt-2 w-xl  shadow-md font-semibold transition">
-                    + Crear nuevo grupo
-                </Link>
+            <div className="grid gap-4 sm:grid-cols-2">
+                {groups.map((group) => (
+                    <Link
+                        key={group.id}
+                        to={`/groups/${group.id}/expenses`}
+                        className="bg-white hover:bg-gray-100 transition border border-gray-200 rounded-2xl p-4 shadow-sm flex flex-col gap-1"
+                    >
+                        <h2 className="text-lg font-semibold text-gray-800">{group.name}</h2>
+                        <p className="text-sm text-gray-500">{group.description || "Sin descripción"}</p>
+                    </Link>
+                ))}
             </div>
-        </main>
+
+            <Link
+                to="/groups/create-group"
+                className="block w-full text-center bg-yellow-400 hover:bg-yellow-300 text-black font-semibold py-3 rounded-xl transition shadow-md"
+            >
+                + Crear nuevo grupo
+            </Link>
+        </div>
     )
 }
