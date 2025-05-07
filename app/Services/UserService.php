@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserUpdateRequest;
 
@@ -25,10 +26,16 @@ class UserService
             'name' => $req->name ?? $user->name,
             'avatar' => $req->avatar ?? $user->avatar,
             'telephone' => $req->telephone ?? $user->telephone,
-            'languague' => $req->language ?? $user->languague
+            'languague' => $req->language ?? $user->languague,
+            'username' => $req->username ?? $user->username
         ]);
 
         return response()->json($user, 201);
     }
+
+    public function getUser(Request $request){
+        return $request->user();
+    }
+
 }
 ?>

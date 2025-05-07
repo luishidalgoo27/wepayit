@@ -7,9 +7,10 @@ use App\Models\Group;
 use App\Models\Invitation;
 use App\Models\User_group;
 use App\Utils\GroupInvitation;
-use App\Http\Requests\GroupRequest;
+use App\Http\Requests\GroupCreateRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\GroupUpdateRequest;
+use App\Http\Requests\GroupGetRequest;
 
 
 class GroupService
@@ -21,7 +22,7 @@ class GroupService
         private Invitation $invitation
     ){}
 
-    public function create(GroupRequest $req)
+    public function create(GroupCreateRequest $req)
     {
         $group = $this->group::create([
             'name' => $req->name,
@@ -38,10 +39,10 @@ class GroupService
         return $group;
     }
 
-    public function getGroupsUser()
+    public function getGroupsUser(GroupGetRequest $req)
     {
-        $idUser = Auth::id();
-        $groups = $this->user_group::where('user_id', $idUser)->get();
+        $user = Auth::user();
+        $groups = $user->groups;
         return $groups;
     }
 

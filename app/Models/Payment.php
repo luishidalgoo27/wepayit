@@ -14,7 +14,6 @@ class Payment extends Model {
         'expense_id',
         'payer_id',
         'amount',
-        'payment_method',
         'payment_date',
         'status',
     ];
