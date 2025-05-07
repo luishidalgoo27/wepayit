@@ -17,14 +17,14 @@ export const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0C2724] shadow-md text-white">
+    <header className="sticky top-0 z-50 bg-200 dark:bg-header-dark shadow-md pl-7 pr-7 ">
       <nav className="container mx-auto py-4 flex items-center justify-between">
         {/* Logo */}
         <Link
           to="/groups"
-          className="text-2xl font-bold tracking-wide hover:text-teal-200 transition-colors"
+          className="text-2xl font-bold tracking-wide hover:text-600 transition-colors"
         >
-          WePayIt
+          <img src="/public/wepayitlightlogo.png" className="w-15 h-auto" alt="" />
         </Link>
 
         {/* Navigation Links */}
@@ -33,7 +33,7 @@ export const Header = () => {
             <li key={index}>
               <Link
                 to={link.path}
-                className="text-white hover:text-teal-300 transition-colors font-medium"
+                className=" hover:text-600 transition-colors font-medium"
               >
                 {link.name}
               </Link>
@@ -55,7 +55,7 @@ export const Header = () => {
 
           <button
             onClick={handleLogout}
-            className="p-2 rounded-full bg-red-600 hover:bg-red-700 transition text-white"
+            className="p-2 rounded-full bg-red-600 hover:bg-red-700 transition "
             title="Cerrar sesión"
           >
             <LogOut size={20} />
