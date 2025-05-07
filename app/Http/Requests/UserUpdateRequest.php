@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserUpdateRequest extends FormRequest
 {
@@ -25,7 +27,41 @@ class UserUpdateRequest extends FormRequest
             'name' => 'string',
             'avatar' => 'string|nullable',
             'telephone' => 'integer|nullable',
-            'languague' => 'string'
+            'languague' => 'string',
+            'username' => 'string|unique:users,username'
         ];
+    }
+
+
+    /**
+     * Mensajes de error personalizados para las reglas de validación.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'name.string'        => 'El nombre debe ser una cadena de texto.',
+            'avatar.string'      => 'El avatar debe ser una cadena de texto.',
+            'telephone.integer'  => 'El teléfono debe ser un número.',
+            'languague.string'   => 'El idioma debe ser una cadena de texto.',
+            'username.string'   => 'El nombre de usuario debe ser una cadena de texto.',
+            'username.unique'   => 'Este nombre de usuario ya está en uso.',
+        ];
+    }
+
+
+    /**
+     * En caso de que falle la validación, devuelve un error JSON.
+     *
+     * @param Validator $validator
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status'  => false,
+            'message' => 'Error de validación',
+            'errors'  => $validator->errors()
+        ], 422));
     }
 }

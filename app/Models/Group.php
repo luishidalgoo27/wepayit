@@ -13,8 +13,9 @@ class Group extends Model {
     protected $fillable = [
         'name',
         'photo',
+        'description',
+        'currency_type',
         'owner_id',
-        'coin',
     ];
 
     public function owner()

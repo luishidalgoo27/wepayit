@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->text('description')->nullable();
+            $table->string('currency_type')->default('EUR');
             $table->string('photo')->nullable();
             $table->unsignedBigInteger('owner_id');
-            $table->string('coin');
             $table->foreign('owner_id')->references('id')->on('users');
             $table->timestamps();
         });
