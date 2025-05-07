@@ -1,12 +1,18 @@
-import { User } from "@/types/user";
+import { API_URL } from "@/config";
 import api from "@/utils/api";
+import { User } from "@/types/user";
 
 export const getUser = async (): Promise<User> => {
-  const res = await api.get<User>("/user");
-  return res.data;
-}
+  const res = await api.get(`${API_URL}/user`);
+  return res.data
+};
 
 export const updateUser = async (): Promise<User> => {
-    const res = await api.put<User>(`/user`);
+    const res = await api.put<User>(`${API_URL}/user`);
     return res.data;
+};
+
+export const deleteUser = async (): Promise<User> => {
+  const res = await api.delete<User>(`${API_URL}/user`);
+  return res.data;
 };
