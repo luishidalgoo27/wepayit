@@ -16,6 +16,7 @@ class Expense extends Model {
         'paid_by',
         'group_id',
         'date',
+        'currency_type',
         'description',
         'category',
         'receipt_url',
