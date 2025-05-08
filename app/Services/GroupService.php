@@ -28,7 +28,9 @@ class GroupService
             'name' => $req->name,
             'photo' => $req->photo,
             'owner_id' => Auth::id(),
-            'coin' => $req->coin         
+            'currency_type' => $req->currency_type,
+            'description' => $req->description,
+                     
         ]);
 
         $this->user_group::create([
