@@ -59,7 +59,8 @@ class GroupService
         $group->update([
             'name' => $req->name ?? $group->name,
             'photo' => $req->photo ?? $group->photo,
-            'coin' => $req->coin ?? $group->coin
+            'currency_type' => $req->currency_type ?? $group->currency_type,
+            'description' => $req->description ?? $group->description,
         ]);
 
         return $group;
