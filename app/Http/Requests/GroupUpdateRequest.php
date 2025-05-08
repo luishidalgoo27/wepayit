@@ -27,7 +27,8 @@ class GroupUpdateRequest extends FormRequest
             'group_id' => 'required|integer|exists:groups,id',
             'name' => 'string|nullable',
             'photo' => 'string|nullable',
-            'coin' => 'string|nullable'
+            'currency_type' => 'required|string',
+            'description' => 'nullable|string|max:255'
         ];
     }
 
@@ -42,9 +43,17 @@ class GroupUpdateRequest extends FormRequest
         return [
             'group_id.required' => 'El ID del grupo es obligatorio.',
             'group_id.exists'   => 'El grupo especificado no existe.',
+            
             'name.string'       => 'El nombre debe ser una cadena de texto.',
+            
             'photo.string'      => 'La foto debe ser una cadena de texto.',
-            'coin.string'       => 'La moneda debe ser una cadena de texto.',
+            
+            'currency_type.required' => 'El tipo de moneda es obligatorio.',
+            'currency_type.string'   => 'El tipo de moneda debe ser una cadena de texto.',
+            
+            'description.nullable' => 'La descripcion puede ser null',
+            'description.string' => 'La descripcion debe ser una cadena de texto',
+            'description.max' => 'La descripcion no puede pasar de los 255 caracteres'
         ];
     }
 
