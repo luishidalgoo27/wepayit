@@ -26,6 +26,7 @@ class GroupService
     {
         $group = $this->group::create([
             'name' => $req->name,
+            'description' => $req->description,
             'photo' => $req->photo,
             'owner_id' => Auth::id(),
             'coin' => $req->coin         
