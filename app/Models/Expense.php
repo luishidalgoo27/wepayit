@@ -13,10 +13,10 @@ class Expense extends Model {
     protected $fillable = [
         'title',
         'amount',
-        'currency_type',
         'paid_by',
         'group_id',
         'date',
+        'currency_type',
         'description',
         'category',
         'receipt_url',
