@@ -28,18 +28,18 @@ export const Header = () => {
         </Link>
 
         {/* Navigation Links */}
-        <ul className="flex items-center gap-6">
-          {NAV_LINKS.map((link, index) => (
-            <li key={index}>
-              <Link
-                to={link.path}
-                className=" hover:text-600 transition-colors font-medium"
-              >
-                {link.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+          <ul className="flex items-center gap-6">
+            {NAV_LINKS.map((link, index) => (
+              <li key={index}>
+                <Link
+                  to={link.path}
+                  className=" hover:text-600 transition-colors font-medium"
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
         {/* Actions */}
         <div className="flex items-center gap-3">
@@ -47,7 +47,7 @@ export const Header = () => {
 
           <Link
             to="/user/edit-profile"
-            className="p-2 rounded-full bg-white text-[#0C2724] hover:bg-gray-300 transition"
+            className="p-2 rounded-full bg-100 text-[#0C2724] hover:bg-gray-300 transition"
             title="Perfil"
           >
             <User size={20} />
