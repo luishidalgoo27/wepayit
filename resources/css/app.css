@@ -27,7 +27,7 @@
     /* Tipografía */
     --font-primary: 'Poppins', sans-serif;
     --font-secondary: 'Inter', sans-serif;
-}
+} usando esta paleta de colores
 
 body {
     font-family: var(--font-primary);
