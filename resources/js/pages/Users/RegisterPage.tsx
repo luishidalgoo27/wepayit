@@ -28,7 +28,7 @@ export const RegisterPage = () => {
 
   return (
     <main className="min-h-screen flex items-center justify-center px-4">
-      <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-xl">
+      <div className="w-full max-w-md p-8 bg-50 rounded-2xl shadow-xl">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Crear cuenta en <span className="text-[#8FE3C2]">Wepayit</span>
         </h2>
