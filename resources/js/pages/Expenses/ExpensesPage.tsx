@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
+import { Link, LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 import { getExpenses } from "@/services/expenses";
 import toast from "react-hot-toast";
 import { Expense } from "@/types/expense";
@@ -7,7 +7,7 @@ import { Expense } from "@/types/expense";
 export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: string }> {
     const id = params.id!;
     return { id };
-  }
+}
 
 export const ExpensesPage = () => {
     const [expenses, setExpenses] = useState<Expense[]>([])
@@ -39,9 +39,11 @@ export const ExpensesPage = () => {
                     </div>
                 ))
             }
-            <button className="w-full bg-[#D5F3EA] text-center py-3 rounded-xl font-semibold hover:bg-[#b9e6d8] transition">
+            <Link 
+                to={`/groups/${id}/expenses/create-expense`}
+                className="w-full bg-[#D5F3EA] text-center py-3 rounded-xl font-semibold hover:bg-[#b9e6d8] transition">
                 + Añadir gasto
-            </button>
+            </Link>
         </div>  
     );
 };

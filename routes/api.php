@@ -26,7 +26,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/invitation', [UserGroupController::class, 'sendInvitation']);
     Route::get('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
     Route::post('/expense', [ExpensesController::class, 'create']);
-    Route::post('/expense', [ExpensesController::class, 'getExpenses']);
+    Route::post('/expenses', [ExpensesController::class, 'getExpenses']);
     
     Route::post('/converter', [ConverterController::class, 'convert']);
 });

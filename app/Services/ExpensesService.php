@@ -21,7 +21,7 @@ class ExpensesService
             'currency_type' => $req->currency_type,
             'paid_by'       => Auth::id(),
             'group_id'      => $req->group_id,
-            'date'          => now()->format('Y-m-d'),
+            'date'          => $req->date,
             'description'   => $req->description,
             'category'      => $req->category,
             'receipt_url'   => $req->receipt_url,
