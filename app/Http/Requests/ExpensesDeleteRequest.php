@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class GroupUpdateRequest extends FormRequest
+class ExpensesDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,9 @@ class GroupUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'group_id' => 'required|integer|exists:groups,id',
-            'name' => 'string|nullable',
-            'photo' => 'string|nullable',
-            'currency_type' => 'required|string',
-            'description' => 'nullable|string|max:255'
+            'expense_id' => 'required|integer|exists:expenses,id'
         ];
     }
-
 
     /**
      * Mensajes de error personalizados para las reglas de validación.
@@ -41,22 +36,10 @@ class GroupUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'group_id.required' => 'El ID del grupo es obligatorio.',
-            'group_id.exists'   => 'El grupo especificado no existe.',
-            
-            'name.string'       => 'El nombre debe ser una cadena de texto.',
-            
-            'photo.string'      => 'La foto debe ser una cadena de texto.',
-            
-            'currency_type.required' => 'El tipo de moneda es obligatorio.',
-            'currency_type.string'   => 'El tipo de moneda debe ser una cadena de texto.',
-            
-            'description.nullable' => 'La descripcion puede ser null',
-            'description.string' => 'La descripcion debe ser una cadena de texto',
-            'description.max' => 'La descripcion no puede pasar de los 255 caracteres'
+            'expense_id.required' => 'El ID del gasto es obligatorio.',
+            'expense_id.exists' => 'El gasto no existe'
         ];
     }
-
 
     /**
      * En caso de que falle la validación, devuelve un error JSON.
