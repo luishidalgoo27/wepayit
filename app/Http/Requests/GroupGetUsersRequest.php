@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class GroupGetRequest extends FormRequest
+class GroupGetUsersRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,23 +24,19 @@ class GroupGetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'integer|exists:users,id'
+            'id' => 'required|integer|exists:groups,id'
         ];
     }
 
-    /**
-     * Mensajes de error personalizados para las reglas de validación.
-     *
-     * @return array<string, string>
-     */
     public function messages(): array
     {
-        return [
-            'user_id.integer' => 'El ID del usuario debe ser un número entero.',
-            'user_id.exists'  => 'El usuario especificado no existe en el sistema.',
+        return
+        [
+            'id.required' => 'El id debe ser obligatorio',
+            'id.integer' => 'El id debe ser un entero',
+            'id.exists' => 'El grupo seleccionado no existe'
         ];
     }
-
 
     /**
      * En caso de que falle la validación, devuelve un error JSON.
