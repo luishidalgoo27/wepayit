@@ -6,9 +6,10 @@ use App\Models\Expense;
 use App\Models\Payment;
 use App\Models\Expense_division;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ExpensesGetRequest;
 use App\Http\Requests\ExpensesCreateRequest;
+use App\Http\Requests\ExpensesGetRequest;
 use App\Http\Requests\ExpensesUpdateRequest;
+use App\Http\Requests\ExpensesDeleteRequest;
 
 class ExpensesService
 {
@@ -86,6 +87,12 @@ class ExpensesService
         }
 
         return $expense;
+    }
+
+    public function delete(ExpensesDeleteRequest $req)
+    {
+        $expense = Expense::where('id', $req->expense_id)->delete();
+        return response()->json($expense, 200);
     }
 
 

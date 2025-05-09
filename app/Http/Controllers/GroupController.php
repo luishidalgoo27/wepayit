@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\GroupService;
-use App\Http\Requests\GroupGetRequest;
 use App\Http\Requests\GroupCreateRequest;
 use App\Http\Requests\GroupDeleteRequest;
 use App\Http\Requests\GroupGetUsersRequest;
