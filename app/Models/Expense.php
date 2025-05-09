@@ -18,7 +18,7 @@ class Expense extends Model {
         'date',
         'currency_type',
         'description',
-        'category',
+        'category_id',
         'receipt_url',
         'state',
         'recurrent',
@@ -33,5 +33,10 @@ class Expense extends Model {
     public function group()
     {
         return $this->belongsTo(Group::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }
