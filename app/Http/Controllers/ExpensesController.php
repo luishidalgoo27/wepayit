@@ -7,6 +7,7 @@ use App\Services\ExpensesService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ExpensesGetRequest;
 use App\Http\Requests\ExpensesCreateRequest;
+use App\Http\Requests\ExpensesUpdateRequest;
 
 class ExpensesController extends Controller
 {
@@ -21,6 +22,12 @@ class ExpensesController extends Controller
     {
         $expense = $this->expensesService->create($req);
         return response()->json($expense);
+    }
+
+    public function update(ExpensesUpdateRequest $req)
+    {
+        $expense = $this->expensesService->update($req);
+        return response()->json($expense, 200);
     }
 
 
