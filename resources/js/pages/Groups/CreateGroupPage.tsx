@@ -1,28 +1,78 @@
-import { createGroup } from "@/services/groups";
-import { ImagePlus, FolderKanban, BadgeEuro, Type } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
+import { createExpense } from "@/services/expenses";
+import { getUsersByGroup } from "@/services/users"; // <-- crea esta función en tu servicio
+import { Expense } from "@/types/expense";
+import { FolderKanban, BadgeEuro, Calendar, Type, FileText, Users } from "lucide-react";
 import toast from "react-hot-toast";
 
-export const CreateGroupPage = () => {
-  const [name, setName] = useState("");
+export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: string }> {
+  const id = params.id!;
+  return { id };
+}
+
+export const CreateExpensePage = () => {
+  const { id } = useLoaderData() as { id: string };
+  const [title, setTitle] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [date, setDate] = useState("");
   const [currency, setCurrency] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState<File | null>(null); 
+  const [category, setCategory] = useState("");
+  const [receipt, setReceipt] = useState("");
+  const [users, setUsers] = useState<{ id: string; name: string }[]>([]);
+  const [usersDivision, setUsersDivision] = useState([{ user_id: "", assigned_amount: 0 }]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await getUsersByGroup(id);
+        setUsers(response);
+      } catch (err) {
+        toast.error("Error al cargar usuarios");
+      }
+    };
+    fetchUsers();
+  }, [id]);
+
+  const handleUserDivisionChange = (index: number, field: "user_id" | "assigned_amount", value: any) => {
+    const updated = [...usersDivision];
+    updated[index][field] = value;
+    setUsersDivision(updated);
+  };
+
+  const handleAddUserDivision = () => {
+    setUsersDivision([...usersDivision, { user_id: "", assigned_amount: 0 }]);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const newExpense: Expense = {
+      title,
+      amount,
+      currency_type: currency,
+      date,
+      description,
+      category,
+      receipt_url: receipt,
+      group_id: id,
+      users_division: usersDivision,
+    };
+
     try {
-      await createGroup(name, currency, description);
-      toast.success("Grupo creado correctamente");
-      // Limpiar campos si quieres
-      setName("");
+      await createExpense(newExpense);
+      toast.success("Gasto creado correctamente");
+      setTitle("");
+      setAmount(0);
+      setDate("");
       setCurrency("");
       setDescription("");
-      setImage(null);
+      setCategory("");
+      setReceipt("");
+      setUsersDivision([{ user_id: "", assigned_amount: 0 }]);
     } catch (err: any) {
-      const message = err.message || "Error desconocido";
-      toast.error(message);
+      toast.error(err.message || "Error al crear gasto");
     }
   };
 
@@ -31,21 +81,40 @@ export const CreateGroupPage = () => {
       onSubmit={handleSubmit}
       className="container max-w-xl mx-auto py-8 space-y-6 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20 mt-24"
     >
-      <h1 className="text-center text-3xl font-bold mb-4">Crear nuevo grupo</h1>
+      <h1 className="text-center text-3xl font-bold mb-4">Crear nuevo gasto</h1>
 
-      {/* Nombre del grupo */}
       <div className="relative">
         <FolderKanban className="absolute left-3 top-3 text-emerald-700" size={20} />
         <input
           type="text"
-          placeholder="Nombre del grupo"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          placeholder="Título del gasto"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
         />
       </div>
 
-      {/* Moneda */}
+      <div className="relative">
+        <BadgeEuro className="absolute left-3 top-3 text-emerald-700" size={20} />
+        <input
+          type="number"
+          placeholder="Cantidad"
+          value={amount}
+          onChange={(e) => setAmount(Number(e.target.value))}
+          className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
+        />
+      </div>
+
+      <div className="relative">
+        <Calendar className="absolute left-3 top-3 text-emerald-700" size={20} />
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
+        />
+      </div>
+
       <div className="relative">
         <BadgeEuro className="absolute left-3 top-2 text-emerald-700" size={20} />
         <select
@@ -61,41 +130,77 @@ export const CreateGroupPage = () => {
         </select>
       </div>
 
-      {/* Descripción */}
       <div className="relative">
-        <Type className="absolute left-3 top-2 text-emerald-700" size={20} />
-        <textarea
-          placeholder="Descripción del grupo ..."
+        <Type className="absolute left-3 top-3 text-emerald-700" size={20} />
+        <input
+          type="text"
+          placeholder="Categoría"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl"
+        />
+      </div>
+
+      <div className="relative">
+        <FileText className="absolute left-3 top-3 text-emerald-700" size={20} />
+        <input
+          type="text"
+          placeholder="Descripción"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
-          rows={4}
+          className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl"
         />
       </div>
 
-      {/* Imagen */}
-      <div className="space-y-2">
-        <label
-          htmlFor="fotoGrupo"
-          className="flex items-center justify-center gap-2 w-full bg-emerald-100 text-black px-4 py-2 rounded-xl cursor-pointer hover:bg-emerald-200 transition"
-        >
-          <ImagePlus size={20} />
-          <span>Subir imagen del grupo</span>
-        </label>
+      <div className="relative">
         <input
-          type="file"
-          id="fotoGrupo"
-          onChange={(e) => setImage(e.target.files?.[0] || null)}
-          className="hidden"
+          type="text"
+          placeholder="URL del recibo (opcional)"
+          value={receipt}
+          onChange={(e) => setReceipt(e.target.value)}
+          className="w-full bg-emerald-100 text-black px-4 py-2 rounded-xl"
         />
       </div>
 
-      {/* Botón */}
+      <div className="space-y-2">
+        <label className="block font-semibold text-black flex items-center gap-2">
+          <Users size={18} className="text-emerald-700" /> División entre usuarios:
+        </label>
+        {usersDivision.map((user, index) => (
+          <div key={index} className="flex gap-2">
+            <select
+              value={user.user_id}
+              onChange={(e) => handleUserDivisionChange(index, "user_id", e.target.value)}
+              className="w-1/2 bg-emerald-100 text-black px-4 py-2 rounded-xl"
+            >
+              <option value="">Selecciona usuario</option>
+              {users.map((u) => (
+                <option key={u.id} value={u.id}>{u.name}</option>
+              ))}
+            </select>
+            <input
+              type="number"
+              placeholder="Cantidad asignada"
+              value={user.assigned_amount}
+              onChange={(e) => handleUserDivisionChange(index, "assigned_amount", Number(e.target.value))}
+              className="w-1/2 bg-emerald-100 text-black px-4 py-2 rounded-xl"
+            />
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={handleAddUserDivision}
+          className="text-sm text-emerald-700 underline"
+        >
+          + Añadir usuario
+        </button>
+      </div>
+
       <button
         type="submit"
         className="w-full bg-emerald-100 text-black rounded-xl py-2 font-semibold shadow-md hover:bg-emerald-200 transition"
       >
-        Crear Grupo
+        Crear Gasto
       </button>
     </form>
   );
