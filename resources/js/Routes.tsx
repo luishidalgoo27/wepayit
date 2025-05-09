@@ -12,6 +12,7 @@ import { EditProfilePage } from "./pages/Users/EditProfilePage";
 import { InvitacionPage } from "./pages/Users/InvitacionPage";
 import { ExpensesPage, loader as ExpensesLoader } from "./pages/Expenses/ExpensesPage";
 import { GuestLayout } from "./layouts/GuestLayout";
+import { CreateExpensePage, loader as CreateExpenseLoader } from "./pages/Expenses/CreateExpense";
 
 const router = createBrowserRouter([
   // Rutas públicas
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
           { path: "/groups", element: <GroupsPage /> },
           { path: "/groups/create-group", element: <CreateGroupPage /> },
           { path: "/groups/:id/expenses", element: <ExpensesPage />, loader: ExpensesLoader},
+          { path: "/groups/:id/expenses/create-expense", element: <CreateExpensePage />, loader: CreateExpenseLoader},
           { path: "/user/edit-profile", element: <EditProfilePage /> },
           { path: "/invitation", element: <InvitacionPage /> },
         ],
