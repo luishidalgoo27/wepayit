@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('group_id');
             $table->date('date');   
             $table->text('description')->nullable();
-            $table->string('category')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->string('receipt_url')->nullable();
             $table->enum('state', ['pending', 'closed'])->default('pending');
             $table->boolean('recurrent')->default(false);
@@ -29,6 +29,7 @@ return new class extends Migration
 
             $table->foreign('paid_by')->references('id')->on('users');
             $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
