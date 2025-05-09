@@ -6,6 +6,7 @@ use App\Services\GroupService;
 use App\Http\Requests\GroupGetRequest;
 use App\Http\Requests\GroupCreateRequest;
 use App\Http\Requests\GroupDeleteRequest;
+use App\Http\Requests\GroupGetUsersRequest;
 use App\Http\Requests\GroupUpdateRequest;
 
 
@@ -21,10 +22,16 @@ class GroupController extends Controller
         return response()->json($group, 201);
     }
 
-    public function getGroupsUser(GroupGetRequest $req)
+    public function getGroupsUser()
     {   
-        $groups = $this->groupService->getGroupsUser($req);
+        $groups = $this->groupService->getGroupsUser();
         return response()->json($groups, 201);
+    }
+
+    public function getUsers(GroupGetUsersRequest $req)
+    {
+        $users = $this->groupService->getUsers($req);
+        return response()->json($users, 200);
     }
 
     public function update(GroupUpdateRequest $req)

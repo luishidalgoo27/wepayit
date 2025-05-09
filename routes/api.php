@@ -20,7 +20,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/group', [GroupController::class, 'create']);
     Route::patch('/group', [GroupController::class, 'update']);
     Route::delete('/group', [GroupController::class, 'delete']);
-    
+    Route::get('/getUsers', [GroupController::class, 'getUsers']);
+
     Route::delete('/deleteUser', [UserGroupController::class, 'deleteUser']);
     
     Route::post('/invitation', [UserGroupController::class, 'sendInvitation']);
