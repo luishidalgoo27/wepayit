@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 import { createExpense } from "@/services/expenses";
-import { getUsersByGroup } from "@/services/users"; // <-- crea esta función en tu servicio
+import { getUsersByGroup } from "@/services/user"; // <-- crea esta función en tu servicio
 import { Expense } from "@/types/expense";
 import { FolderKanban, BadgeEuro, Calendar, Type, FileText, Users } from "lucide-react";
 import toast from "react-hot-toast";
