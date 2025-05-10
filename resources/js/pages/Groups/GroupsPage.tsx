@@ -23,16 +23,25 @@ export const GroupsPage = () => {
 
     return (
         <div className="container max-w-4xl mx-auto py-8 space-y-6"> {/* La propiedad max-w-4xl define el tamaño del witdh */}
-            <h1 className="text-center text-3xl font-bold  mb-4">Tus grupos</h1>
+            <h1 className="text-left text-5xl font-bold  mb-4">wepayit <span className="text-lg font-medium">by Medac</span></h1>
 
             <div className="grid gap-4 sm:grid-cols-2">
                 {groups.map((group) => (
                     <Link
                         key={group.id}
                         to={`/groups/${group.id}/expenses`}
-                        className="bg-white hover:bg-gray-100 transition border border-gray-200 rounded-2xl p-4 shadow-sm flex flex-col gap-1"
+                        className="bg-white hover:bg-gray-100 hover:translate-y-0.5 transition border border-gray-200 rounded-2xl p-4 shadow-sm flex flex-col gap-2"
                     >
-                        <h2 className="text-lg font-semibold text-gray-800">{group.name}</h2>
+                        <div className="flex items-center gap-4">    
+                            {    
+                                group.photo 
+                                ?   <img className="w-10 h-10 rounded-full" src={group.photo} alt="Rounded avatar"></img>
+                                :   <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                                        <svg className="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                                    </div>
+                            }
+                            <h2 className="text-xl font-semibold text-gray-800">{group.name}</h2>
+                        </div>
                         <p className="text-sm text-gray-500">{group.description || "Sin descripción"}</p>
                     </Link>
                 ))}
@@ -40,9 +49,9 @@ export const GroupsPage = () => {
 
             <Link
                 to="/groups/create-group"
-                className="block w-full text-center bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950 hover:bg-500 text-100 dark:text-200 font-semibold py-3 rounded-xl transition shadow-md"
+                className="hover:translate-y-0.5 block w-full text-center bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950 hover:bg-500 text-100 dark:text-200 font-semibold py-3 rounded-xl transition shadow-md"
             >
-                + Crear nuevo grupo
+                + Nuevo wepayit
             </Link>
         </div>
     )
