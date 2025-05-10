@@ -30,7 +30,7 @@ export const CreateExpensePage = () => {
         setUsersDivision(
             users.map((user) => ({
                 user_id: user.id,
-                assigned_amount: 0,
+                assigned_amount: amount % users.length,
                 selected: false,
             }))
         );
@@ -146,13 +146,17 @@ export const CreateExpensePage = () => {
 
             <div className="relative">
                 <Type className="absolute left-3 top-3 text-emerald-700" size={20} />
-                <input
-                    type="text"
-                    placeholder="Categoría"
+                <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl"
-                />
+                    className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
+                >
+                    <option value="">Selecciona una categoría</option>
+                    <option value="Comida">Comida</option>
+                    <option value="Ropa">Ropa</option>
+                    <option value="Cine">Cine</option>
+                    <option value="Viaje">Viaje</option>
+                </select>
             </div>
 
             <div className="relative">

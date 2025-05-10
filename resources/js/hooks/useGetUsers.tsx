@@ -21,5 +21,4 @@ export const useGetUsers = (id: string) => {
     }, [])
 
     return { users }
-    
 }
