@@ -1,6 +1,7 @@
-export interface UserDivision {
-    user_id: string;
-    assigned_amount: number;
+export interface UserDivision { 
+    user_id: number, 
+    assigned_amount: number, 
+    selected: boolean 
 }
 
 export interface Expense {
