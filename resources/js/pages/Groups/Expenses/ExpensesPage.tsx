@@ -1,10 +1,5 @@
 import { Link, LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 import { useGetExpenses } from "@/hooks/useGetExpenses";
-import { useGetGroup } from "@/hooks/useGetGroup";
-import { useGetDivisions } from "@/hooks/useGetDivisions";
-import { useEffect, useState } from "react";
-import { useGetUser } from "@/hooks/useGetUser";
-import { GroupHeader } from "@/components/ui/GroupHeader";
 
 export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: string }> {
     const id = params.id!;
@@ -14,11 +9,6 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: stri
 export const ExpensesPage = () => {
     const { id } = useLoaderData() as { id: string };
     const { expenses } = useGetExpenses(id);
-    const { group } = useGetGroup(id);
-    const { divisions } = useGetDivisions(id);
-    const { user } = useGetUser();
-
-    
 
     return (
         <>
@@ -70,7 +60,7 @@ export const ExpensesPage = () => {
 
             {/* Boton añadir gasto */}
             <Link
-                to={`/groups/${id}/expenses/create-expense`}
+                to={`/groups/${id}/create-expense`}
                 className="hover:translate-y-0.5 block w-full text-center bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950 hover:bg-500 text-100 dark:text-200 font-semibold py-3 rounded-xl transition shadow-md"
             >
                 + Añadir gasto
