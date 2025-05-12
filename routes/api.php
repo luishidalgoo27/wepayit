@@ -11,9 +11,6 @@ use App\Http\Controllers\UserGroupController;
 
 Route::post('/register', [AuthController::class, 'createUser'])->name('auth.register');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
-Route::patch('/expense', [ExpensesController::class, 'update']);
-Route::post('/expense', [ExpensesController::class, 'create']);
-Route::delete('/expense', [ExpensesController::class, 'delete']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
@@ -21,16 +18,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::get('/groups', [GroupController::class, 'getGroupsUser']);
     Route::post('/group', [GroupController::class, 'create']);
-    Route::patch('/group', [GroupController::class, 'update']);
+    Route::put('/group', [GroupController::class, 'update']);
     Route::delete('/group', [GroupController::class, 'delete']);
-    Route::get('/getUsers', [GroupController::class, 'getUsers']);
+    Route::post('/getUsers', [GroupController::class, 'getUsers']);
     
     Route::delete('/deleteUser', [UserGroupController::class, 'deleteUser']);
     
     Route::post('/invitation', [UserGroupController::class, 'sendInvitation']);
     Route::get('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
     
-    Route::get('/expense', [ExpensesController::class, 'getExpenses']);
+    Route::post('/expenses', [ExpensesController::class, 'getExpenses']);
+    Route::post('/expense', [ExpensesController::class, 'create']);
+    Route::put('/expense', [ExpensesController::class, 'update']);
+    Route::delete('/expense', [ExpensesController::class, 'delete']);
 
     Route::post('/converter', [ConverterController::class, 'convert']);
 });
