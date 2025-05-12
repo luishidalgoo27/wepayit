@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserUpdateRequest;
-use App\Services\UserService;
 use Illuminate\Http\Request;
+use App\Services\UserService;
+use App\Http\Requests\UserUpdateRequest;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class UserController extends Controller
 {
@@ -21,4 +22,25 @@ class UserController extends Controller
         $user = $this->userService->getUser($request);
         return response()->json($user, 200);
     }
+
+    public function uploadImage(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|max:2048',
+        ]);
+
+        if (!$request->hasFile('image')) {
+            return response()->json(['error' => 'No se recibió archivo'], 400);
+        }
+
+        $image = $request->file('image');
+
+        $uploadedFileUrl = Cloudinary::upload($image->getRealPath())->getSecurePath();
+
+        return response()->json([
+            'url' => $uploadedFileUrl,
+        ]);
+    }
+
+
 }
