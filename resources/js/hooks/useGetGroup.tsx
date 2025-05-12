@@ -18,7 +18,7 @@ export const useGetGroup = (id:string) => {
 
     useEffect(() => {
         fetchGroup()
-    }, [group])
+    }, [])
     
     return { group }
 }

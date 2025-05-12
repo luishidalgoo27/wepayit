@@ -29,7 +29,7 @@ export const GroupsPage = () => {
                 {groups.map((group) => (
                     <Link
                         key={group.id}
-                        to={`/groups/${group.id}/expenses`}
+                        to={`/groups/${group.id}`}
                         className="bg-white hover:bg-gray-100 hover:translate-y-0.5 transition border border-gray-200 rounded-2xl p-4 shadow-sm flex flex-col gap-2"
                     >
                         <div className="flex items-center gap-4">    
