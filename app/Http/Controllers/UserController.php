@@ -21,7 +21,7 @@ class UserController extends Controller
     public function update(UserUpdateRequest $req)
     {
         $user = $this->userService->update($req);
-        return response()->json($user, 200);
+        return response()->json(['user' => $user,'message', 'User Updated Sucessfully']);
     }
 
     public function getUser(Request $request){

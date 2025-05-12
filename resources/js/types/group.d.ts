@@ -7,6 +7,15 @@ export interface Group {
     owner_id: number
 }
 
+export interface CreateGroup {
+    id: number,
+    name: string,
+    description: string|null,
+    currency_type: string
+    photo: string|null
+    owner_id: number
+}
+
 export interface UserGroup {
     id: number,
     group_id: number,
