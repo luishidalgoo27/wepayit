@@ -6,10 +6,11 @@ use App\Models\Expense;
 use App\Models\Payment;
 use App\Models\Expense_division;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ExpensesCreateRequest;
 use App\Http\Requests\ExpensesGetRequest;
-use App\Http\Requests\ExpensesUpdateRequest;
+use App\Http\Requests\ExpensesCreateRequest;
 use App\Http\Requests\ExpensesDeleteRequest;
+use App\Http\Requests\ExpensesUpdateRequest;
+use App\Http\Requests\ExpensesDivisionsRequest;
 
 class ExpensesService
 {
@@ -102,6 +103,13 @@ class ExpensesService
         return $expenses;
     }
 
+    public function getDivisions(ExpensesDivisionsRequest $req)
+    {
+        $expenses = Expense::where('group_id', $req->group_id)->get();
+        $expensesId = $expenses->pluck('id');
+        $divisions = Expense_division::whereIn('expense_id', $expensesId)->get();
+        return $divisions;
+    }
     
 }
 ?>
