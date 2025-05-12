@@ -23,7 +23,6 @@ export const useGetUser = () => {
       fetchUser();
     }, []);
   
-    return { user, setUser, loading };
+    return { user, loading };
   };
-  
   

@@ -30,7 +30,7 @@ class UserService
             'username' => $req->username ?? $user->username
         ]);
 
-        return response()->json($user, 201);
+        return $user;
     }
 
     public function getUser(Request $request){
