@@ -10,6 +10,7 @@ use App\Utils\GroupInvitation;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\GroupCreateRequest;
 use App\Http\Requests\GroupDeleteRequest;
+use App\Http\Requests\GroupGetRequest;
 use App\Http\Requests\GroupUpdateRequest;
 use App\Http\Requests\GroupGetUsersRequest;
 
@@ -90,6 +91,12 @@ class GroupService
 
         $group->delete();
 
+        return $group;
+    }
+
+    public function getGroup(GroupGetRequest $req)
+    {
+        $group = $this->group::find($req->group_id);
         return $group;
     }
 
