@@ -13,7 +13,7 @@ export const getGroup = async (id:string):Promise<Group> => {
     })
     return res.data
 }
-
+ 
 export const createGroup = async (name: string, currency_type: string, description: string ):Promise<Group[]> => {
     const res = await api.post(`${API_URL}/group`, {
         name: name,
