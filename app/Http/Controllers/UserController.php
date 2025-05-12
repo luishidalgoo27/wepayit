@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UploadImageRequest;
+use Cloudinary\Asset\Image;
 use Illuminate\Http\Request;
 use App\Services\UserService;
+use Cloudinary\Transformation\Format;
+use Cloudinary\Transformation\Resize;
+use Cloudinary\Transformation\Delivery;
 use App\Http\Requests\UserUpdateRequest;
+use App\Utils\ImageUploader;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class UserController extends Controller
 {
 
-    public function __construct(private UserService $userService) {}
+    public function __construct(private UserService $userService, private ImageUploader $imageUploader) {}
     
     public function update(UserUpdateRequest $req)
     {
@@ -23,24 +29,11 @@ class UserController extends Controller
         return response()->json($user, 200);
     }
 
-    public function uploadImage(Request $request)
+    public function deleteImage()
     {
-        $request->validate([
-            'image' => 'required|image|max:2048',
-        ]);
-
-        if (!$request->hasFile('image')) {
-            return response()->json(['error' => 'No se recibió archivo'], 400);
-        }
-
-        $image = $request->file('image');
-
-        $uploadedFileUrl = Cloudinary::upload($image->getRealPath())->getSecurePath();
-
-        return response()->json([
-            'url' => $uploadedFileUrl,
-        ]);
+        $user = $this->userService->deleteImage();
+        return response()->json($user, 200);
     }
-
+    
 
 }

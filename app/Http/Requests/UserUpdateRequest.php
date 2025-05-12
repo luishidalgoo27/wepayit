@@ -25,7 +25,7 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'name' => 'string',
-            'avatar' => 'string|nullable',
+            'image'     => 'nullable|file|image|mimes:jpg,jpeg,png,webp|max:2048',
             'telephone' => 'integer|nullable',
             'languague' => 'string',
             'username' => 'string|unique:users,username'
@@ -47,6 +47,11 @@ class UserUpdateRequest extends FormRequest
             'languague.string'   => 'El idioma debe ser una cadena de texto.',
             'username.string'   => 'El nombre de usuario debe ser una cadena de texto.',
             'username.unique'   => 'Este nombre de usuario ya está en uso.',
+            'image.image' => 'El archivo debe ser una imagen.',
+            'image.file' => 'Solo se puede enviar un archivo de imagen.',
+            'image.mimes' => 'Solo se permiten imágenes en formato JPG, JPEG, PNG o WEBP.',
+            'image.max'   => 'La imagen no debe pesar más de 2MB.',
+
         ];
     }
 
