@@ -5,20 +5,22 @@ import { User } from "@/types/user";
 
 export const useGetUsers = (id: string) => {
     const [users, setUsers] = useState<User[]>([]);
-
-    const fetchUsers = async () => {
-        try{
-            const data = await getUsersByGroup(id)
-            setUsers(data)
-        } catch(error: any) {
-            toast.error('Error al obtener los usuarios')
-            console.error(error)
-        }
-    }
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchUsers()
-    }, [])
+        async function fetchUsers() {
+            try {
+                const data = await getUsersByGroup(id);
+                setUsers(data);
+            } catch (error) {
+                console.error("Error al cargar usuarios", error);
+            } finally {
+                setLoading(false);
+            }
+        }
 
-    return { users }
+        fetchUsers();
+    }, [id]);
+
+    return { users, loading }
 }

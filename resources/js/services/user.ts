@@ -7,13 +7,6 @@ export const getUser = async (): Promise<User> => {
   return res.data
 };
 
-export const getUsersByGroup = async (groupId: string): Promise<User[]> => {
-  const res = await api.post(`${API_URL}/getUsers`, {
-    id: groupId
-  });
-  return res.data;
-}
-
 export const updateUser = async (): Promise<User> => {
     const res = await api.post<User>(`${API_URL}/user`);
     return res.data;

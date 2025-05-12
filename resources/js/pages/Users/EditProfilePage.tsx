@@ -27,6 +27,7 @@ export const EditProfilePage = () => {
     loadUser();
   }, []);
 
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -36,6 +37,12 @@ export const EditProfilePage = () => {
       });
       setUser(res.data);
       toast.success("Perfil actualizado correctamente");
+
+      setName(updated.name || "");
+      setTelephone(updated.telephone || "");
+
+      setUser(updated)
+
     } catch (error) {
       console.error("Error al actualizar el perfil:", error);
       toast.error("Hubo un error al guardar los cambios");

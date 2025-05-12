@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('group_id');
             $table->date('date');   
             $table->text('description')->nullable();
-            $table->string('category')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->string('receipt_url')->nullable()->default('https://res.cloudinary.com/dotw4uex6/image/upload/v1747049502/ChatGPT_Image_12_may_2025_13_30_39_ook44q.png');
             $table->string('receipt_url_public_id')->nullable();
             $table->enum('state', ['pending', 'closed'])->default('pending');
