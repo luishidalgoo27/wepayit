@@ -2,15 +2,16 @@
 
 namespace App\Utils;
 
-use App\Mail\PayNotificationMail;
+use App\Models\User;
 use App\Models\Invitation;
+use App\Mail\PayNotificationMail;
 use Illuminate\Support\Facades\Mail;
 
 class PayNotification
 {
-    public function send(Invitation $invitation)
+    public function send(User $user)
     {
-        /* Mail::to($invitation->guest_email)->send(new PayNotificationMail()); */
+        Mail::to($user->email)->send(new PayNotificationMail($user));
     }
 }
 ?>
