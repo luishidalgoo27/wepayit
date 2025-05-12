@@ -1,5 +1,4 @@
 import { Link, LoaderFunctionArgs, useLoaderData } from "react-router-dom"
-import { useGetExpenses } from "@/hooks/useGetExpenses"
 import { useGetGroup } from "@/hooks/useGetGroup"
 
 export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: string }> {
@@ -10,46 +9,63 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: stri
 export const PhotosPage = () => {
     const { id } = useLoaderData() as { id: string }
     const { group } = useGetGroup(id)
-    const { expenses } = useGetExpenses(id)
 
     return(
-        <div className="container max-w-4xl mx-auto py-8 space-y-6 text-black">
-            <div className="flex flex-col justify-center items-center">
-                {    
-                    group?.photo 
-                    ?   <img className="w-10 h-10 rounded-full" src={group.photo} alt="Rounded avatar"></img>
-                    :   <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                            <svg className="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path></svg>
-                        </div>
-                }
-                <h1 className="text-5xl font-bold  mb-4">wepayit</h1>
+        <div className="container max-w-4xl mx-auto py-12 px-4 space-y-10 text-black">
+            {/* Header */}
+            <div className="flex flex-col items-center text-center space-y-3">
+                {group?.photo ? (
+                    <img className="w-14 h-14 rounded-full shadow-md" src={group.photo} alt="Grupo" />
+                ) : (
+                    <div className="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center">
+                        <svg
+                            className="w-8 h-8 text-gray-400"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                clipRule="evenodd"
+                            />
+                        </svg>
+                    </div>
+                )}
+                <h1 className="text-4xl font-bold tracking-tight">wepayit</h1>
+                <p className="text-sm text-gray-600">{group?.name}</p>
             </div>
 
-            <div>
-                <div className="grid grid-cols-3 bg-gray-300 p-2 rounded-lg">
-                    <Link className="flex justify-center items-center" to={`/groups/${id}/expenses`}>Gastos</Link>
-                    <Link className="flex justify-center items-center border-x" to={`/groups/${id}/balances`}>Saldos</Link>
-                    <Link className="flex justify-center items-center" to={`/groups/${id}/photos`}>Fotos</Link>
+            {/* Navegacion grupo */}
+            <div className="grid grid-cols-3 bg-white border rounded-xl shadow-sm overflow-hidden text-center text-sm font-medium">
+                <Link to={`/groups/${id}/expenses`} className="py-3 hover:bg-gray-100">
+                    Gastos
+                </Link>
+                <Link to={`/groups/${id}/balances`} className="py-3 border-x hover:bg-gray-100">
+                    Saldos
+                </Link>
+                <Link to={`/groups/${id}/photos`} className="py-3 hover:bg-gray-100">
+                    Fotos
+                </Link>
+            </div>
+
+            {/* Resumen */}
+            <div className="flex justify-around text-center">
+                <div>
+                    <p className="text-gray-500 text-sm">Mis gastos</p>
+                    <p className="text-xl font-semibold">10 €</p>
+                </div>
+                <div>
+                    <p className="text-gray-500 text-sm">Gastos totales</p>
+                    <p className="text-xl font-semibold">20 €</p>
                 </div>
             </div>
 
-            <div>
-                <div className="flex justify-around items-center">
-                    <div className="flex flex-col justify-center items-center">
-                        <p>Mis gastos</p>
-                        <p>10 €</p>
-                    </div>
-                    <div className="flex flex-col justify-center items-center">
-                        <p>Gastos totales</p>
-                        <p>20 €</p>
-                    </div>
-                </div>
-            </div>
-
-            <Link 
+            {/* Boton añadir foto */}
+            <Link
                 to={`/groups/${id}/expenses/create-expense`}
-                className="block w-full text-center bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950 hover:bg-500 text-100 dark:text-200 font-semibold py-3 rounded-xl transition shadow-md">
-                + Añadir foto
+                className="block w-full text-center bg-gradient-to-br from-emerald-400 to-emerald-600 text-white font-semibold py-3 rounded-xl shadow-md hover:brightness-110 transition"
+            >
+                + Añadir gasto
             </Link>
         </div>
     )
