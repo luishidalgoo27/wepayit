@@ -18,7 +18,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/deleteAvatar', [UserController::class, 'deleteImage']);
     
     Route::get('/groups', [GroupController::class, 'getGroupsUser']);
-    Route::get('/group', [GroupController::class, 'getGroup']);
+    Route::post('/get-group', [GroupController::class, 'getGroup']);
     Route::post('/group', [GroupController::class, 'create']);
     Route::put('/group', [GroupController::class, 'update']);
     Route::delete('/group', [GroupController::class, 'delete']);
@@ -36,7 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/expense', [ExpensesController::class, 'create']);
     Route::delete('/expense', [ExpensesController::class, 'delete']);
     
-    Route::get('/divisions', [ExpensesController::class, 'getDivisions']);
+    Route::post('/divisions', [ExpensesController::class, 'getDivisions']);
 
     Route::post('/converter', [ConverterController::class, 'convert']);
 });

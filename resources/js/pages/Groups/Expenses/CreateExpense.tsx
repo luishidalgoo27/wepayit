@@ -4,7 +4,7 @@ import { FolderKanban, BadgeEuro, Calendar, Type, FileText, Users } from "lucide
 import toast from "react-hot-toast";
 import { createExpense } from "@/services/expenses";
 import { useGetUsers } from "@/hooks/useGetUsers";
-import { Expense, UserDivision } from "@/types/expense";
+import { CreateExpense, UserDivision } from "@/types/expense";
 
 export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: string }> {
     const id = params.id!;
@@ -12,10 +12,8 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: stri
 }
 
 export const CreateExpensePage = () => {
-    const [loading, setLoading] = useState(true);
-
     const { id } = useLoaderData() as { id: string }
-    const { users } = useGetUsers(id)
+    const { users, loading } = useGetUsers(id)
 
     const [title, setTitle] = useState("")
     const [amount, setAmount] = useState(0)
@@ -27,16 +25,16 @@ export const CreateExpensePage = () => {
     const [usersDivision, setUsersDivision] = useState<UserDivision[]>([])
 
     useEffect(() => {
-        setUsersDivision(
-            users.map((user) => ({
-                user_id: user.id,
-                assigned_amount: amount % users.length,
-                selected: false,
-            }))
-        );
-        setLoading(false);
-
-    }, [users]);
+        if (!loading) {
+            setUsersDivision(
+                users.map((user) => ({
+                    user_id: user.id,
+                    assigned_amount: 0,
+                    selected: false,
+                }))
+            );
+        }
+    }, [users, loading]);
 
 
     const handleUserDivisionChange = (
@@ -52,7 +50,7 @@ export const CreateExpensePage = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const newExpense: Expense = {
+        const newExpense: CreateExpense = {
             title,
             amount,
             currency_type: currency,
