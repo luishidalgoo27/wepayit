@@ -28,9 +28,18 @@ class GroupService
     public function create(GroupCreateRequest $req)
     {
 
-        if ($imageData = $req->hasFile('image')){
-            $this->imageUploader->processImageUpload($req->file('image')); 
-        } 
+       $imageData = [
+            'photo' => null,
+            'photo_public_id' => null,
+        ];
+
+        if ($req->hasFile('image')) {
+            $uploaded = $this->imageUploader->processImageUpload($req->file('image'));
+
+            // Aseguramos los nombres correctos de clave:
+            $imageData['photo'] = $uploaded['url'] ?? null;
+            $imageData['photo_public_id'] = $uploaded['public_id'] ?? null;
+        }
 
         $group = $this->group::create([
             'name' => $req->name,
@@ -39,16 +48,15 @@ class GroupService
             'photo_public_id' => $imageData['photo_public_id'],
             'owner_id' => Auth::id(),
             'currency_type' => $req->currency_type,
-            'description' => $req->description,
-                     
         ]);
 
         $this->user_group::create([
             'group_id' => $group->id,
-            'user_id' => Auth::id()
+            'user_id' => Auth::id(),
         ]);
 
-        return $group;
+return $group;
+
     }
 
     public function getGroupsUser()

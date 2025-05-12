@@ -2,13 +2,14 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use App\Models\Invitation;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class PayNotificationMail extends Mailable
 {
@@ -17,16 +18,16 @@ class PayNotificationMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public Invitation $invitation)
+    public function __construct(public User $user, public int $expenseId, public int $groupId)
     {
         //
     }
 
     public function build()
     {
-        $url = url("/invitations/accept/{$this->invitation->invitation_code}");
+        $url = url("/groups/$this->groupId/expenses/$this->expenseId/");
 
-        return $this->subject('Has sido invitado a un grupo')
+        return $this->subject('Me parece que debes un bizum...')
             ->view('emails.notification')
             ->with(['url' => $url]);
     }
