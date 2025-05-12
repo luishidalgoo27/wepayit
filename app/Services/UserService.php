@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserUpdateRequest;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class UserService
 {
@@ -37,5 +38,13 @@ class UserService
         return $request->user();
     }
 
+    public function subirImagen(Request $request)
+    {
+        $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+
+        return response()->json([
+            'url' => $uploadedFileUrl
+        ]);
+    }
 }
 ?>

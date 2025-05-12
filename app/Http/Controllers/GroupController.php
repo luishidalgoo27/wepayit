@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Services\GroupService;
+use App\Http\Requests\GroupGetRequest;
 use App\Http\Requests\GroupCreateRequest;
 use App\Http\Requests\GroupDeleteRequest;
-use App\Http\Requests\GroupGetUsersRequest;
 use App\Http\Requests\GroupUpdateRequest;
+use App\Http\Requests\GroupGetUsersRequest;
 
 
 class GroupController extends Controller
@@ -43,6 +44,12 @@ class GroupController extends Controller
     {
         $group = $this->groupService->delete($req);
         return response()->json($group, 201);
+    }
+
+    public function getGroup(GroupGetRequest $req)
+    {
+        $group = $this->groupService->getGroup($req);
+        return response()->json($group, 200);
     }
     
 }
