@@ -9,13 +9,8 @@ use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserGroupController;
 
-Route::get('/group', [GroupController::class, 'getGroup']);
 Route::post('/register', [AuthController::class, 'createUser'])->name('auth.register');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
-Route::patch('/expense', [ExpensesController::class, 'update']);
-Route::post('/expense', [ExpensesController::class, 'create']);
-Route::delete('/expense', [ExpensesController::class, 'delete']);
-Route::get('/divisions', [ExpensesController::class, 'getDivisions']);
 Route::post('/uploadImage', [UserController::class, 'uploadImage']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -23,6 +18,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/user', [UserController::class, 'update']);
     
     Route::get('/groups', [GroupController::class, 'getGroupsUser']);
+    Route::post('/get-group', [GroupController::class, 'getGroup']);
     Route::post('/group', [GroupController::class, 'create']);
     Route::put('/group', [GroupController::class, 'update']);
     Route::delete('/group', [GroupController::class, 'delete']);
@@ -37,6 +33,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/expense', [ExpensesController::class, 'create']);
     Route::put('/expense', [ExpensesController::class, 'update']);
     Route::delete('/expense', [ExpensesController::class, 'delete']);
+    Route::post('/divisions', [ExpensesController::class, 'getDivisions']);
 
     Route::post('/converter', [ConverterController::class, 'convert']);
 });

@@ -8,8 +8,8 @@ export const getGroups = async ():Promise<Group[]> => {
 }
 
 export const getGroup = async (id:string):Promise<Group> => {
-    const res = await api.post(`${API_URL}/group`, {
-        id: id
+    const res = await api.post(`${API_URL}/get-group`, {
+        group_id: id
     })
     return res.data
 }

@@ -15,6 +15,7 @@ import { PhotosPage, loader as PhotosLoader } from "./pages/Expenses/PhotosPage"
 import { CreateExpensePage, loader as CreateExpenseLoader } from "@/pages/Expenses/CreateExpense";
 import { EditProfilePage } from "@/pages/Users/EditProfilePage";
 import { InvitacionPage } from "@/pages/Users/InvitacionPage";
+import { GroupLayout, loader as GroupLoader } from "./layouts/GroupLayout";
 
 const router = createBrowserRouter([
   // Rutas públicas
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
         element: <GuestLayout />,
         children: [
           { path: "/", element: <HomePage /> },
-          { path: "/register",element: <RegisterPage /> },
+          { path: "/register", element: <RegisterPage /> },
           { path: "/login", element: <LoginPage /> },
         ]
       }
@@ -39,21 +40,39 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        element: <UserLayout />, 
+        element: <UserLayout />,
         children: [
           { path: "/groups", element: <GroupsPage /> },
           { path: "/groups/create-group", element: <CreateGroupPage /> },
-          { path: "/groups/:id/expenses", element: <ExpensesPage />, loader: ExpensesLoader},
-          { path: "/groups/:id/balances", element: <BalancesPage />, loader: BalancesLoader},
-          { path: "/groups/:id/photos", element: <PhotosPage />, loader: PhotosLoader},
-          { path: "/groups/:id/expenses/create-expense", element: <CreateExpensePage />, loader: CreateExpenseLoader},
+          {
+            path: "/groups/:id",
+            element: <GroupLayout />,
+            loader: GroupLoader, 
+            children: [
+              {
+                path: "expenses",
+                element: <ExpensesPage />,
+                loader: GroupLoader, 
+              },
+              {
+                path: "balances",
+                element: <BalancesPage />,
+                loader: GroupLoader,
+              },
+              {
+                path: "photos",
+                element: <PhotosPage />,
+                loader: GroupLoader,
+              },
+            ],
+          },
           { path: "/user/edit-profile", element: <EditProfilePage /> },
           { path: "/invitation", element: <InvitacionPage /> },
         ],
       },
     ],
   },
-/*   { path: "*", element: <Navigate to="/" replace /> }, */
+  /*   { path: "*", element: <Navigate to="/" replace /> }, */
 ]);
 
 export const Routes = () => {
