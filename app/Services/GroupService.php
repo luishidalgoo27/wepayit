@@ -48,7 +48,7 @@ class GroupService
             'user_id' => Auth::id(),
         ]);
 
-return $group;
+        return $group;
 
     }
 
