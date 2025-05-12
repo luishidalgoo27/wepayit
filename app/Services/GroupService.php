@@ -27,16 +27,9 @@ class GroupService
 
     public function create(GroupCreateRequest $req)
     {
-
-       $imageData = [
-            'photo' => null,
-            'photo_public_id' => null,
-        ];
-
         if ($req->hasFile('image')) {
             $uploaded = $this->imageUploader->processImageUpload($req->file('image'));
 
-            // Aseguramos los nombres correctos de clave:
             $imageData['photo'] = $uploaded['url'] ?? null;
             $imageData['photo_public_id'] = $uploaded['public_id'] ?? null;
         }
