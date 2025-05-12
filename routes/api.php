@@ -9,8 +9,14 @@ use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserGroupController;
 
+Route::get('/group', [GroupController::class, 'getGroup']);
 Route::post('/register', [AuthController::class, 'createUser'])->name('auth.register');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
+Route::patch('/expense', [ExpensesController::class, 'update']);
+Route::post('/expense', [ExpensesController::class, 'create']);
+Route::delete('/expense', [ExpensesController::class, 'delete']);
+Route::get('/divisions', [ExpensesController::class, 'getDivisions']);
+Route::post('/uploadImage', [UserController::class, 'uploadImage']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
