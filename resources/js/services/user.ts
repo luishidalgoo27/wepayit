@@ -6,7 +6,7 @@ export const getUser = async (): Promise<User> => {
   const res = await api.get(`${API_URL}/user`);
   return res.data
 };
-
+ 
 export const updateUser = async (): Promise<User> => {
     const res = await api.post<User>(`${API_URL}/user`);
     return res.data;
