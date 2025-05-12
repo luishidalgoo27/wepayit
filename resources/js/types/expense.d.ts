@@ -23,6 +23,11 @@ export type CreateExpense = {
     users_division: UserDivision[]
 }
 
+export interface Category {
+    id: number
+    type: string
+}
+
 export interface UserDivision { 
     user_id: number
     assigned_amount: number
