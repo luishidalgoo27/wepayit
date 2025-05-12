@@ -67,11 +67,12 @@ class GroupService
             return response()->json(['message', 'Group not found'], 404);
         } 
 
-         $imageData = $req->hasFile('image') 
+        $imageData = $req->hasFile('image') 
         ? $this->imageUploader->processImageUpload($req->file('image')) 
         : ['url' => $group->photo, 'public_id' => $group->photo_public_id];
         
         $this->imageUploader->delete($group['photo_public_id']);
+        
         $group->update([
             'name' => $req->name ?? $group->name,
             'photo' => $imageData['photo'],
