@@ -27,10 +27,16 @@ class GroupService
 
     public function create(GroupCreateRequest $req)
     {
+
+        if ($imageData = $req->hasFile('image')){
+            $this->imageUploader->processImageUpload($req->file('image')); 
+        } 
+
         $group = $this->group::create([
             'name' => $req->name,
             'description' => $req->description,
-            'photo' => $req->photo,
+            'photo' => $imageData['photo'],
+            'photo_public_id' => $imageData['photo_public_id'],
             'owner_id' => Auth::id(),
             'currency_type' => $req->currency_type,
             'description' => $req->description,
