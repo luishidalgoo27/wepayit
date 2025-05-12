@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { createExpense } from "@/services/expenses";
 import { useGetUsers } from "@/hooks/useGetUsers";
 import { CreateExpense, UserDivision } from "@/types/expense";
+import { useGetCategories } from "@/hooks/useGetCategories";
 
 export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: string }> {
     const id = params.id!;
@@ -13,7 +14,10 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: stri
 
 export const CreateExpensePage = () => {
     const { id } = useLoaderData() as { id: string }
-    const { users, loading } = useGetUsers(id)
+    const { users, loading: loadingUsers } = useGetUsers(id);
+    const { categories, loading: loadingCategories } = useGetCategories();
+
+    const loading = loadingUsers || loadingCategories;
 
     const [title, setTitle] = useState("")
     const [amount, setAmount] = useState(0)
@@ -150,10 +154,11 @@ export const CreateExpensePage = () => {
                     className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
                 >
                     <option value="">Selecciona una categoría</option>
-                    <option value="Comida">Comida</option>
-                    <option value="Ropa">Ropa</option>
-                    <option value="Cine">Cine</option>
-                    <option value="Viaje">Viaje</option>
+                    {!loadingCategories && categories && categories.map((cat) => (
+                        <option key={cat.id} value={cat.type}>{cat.type}</option>
+                    ))}
+
+
                 </select>
             </div>
 
