@@ -20,7 +20,8 @@ Route::post('/uploadImage', [UserController::class, 'uploadImage']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
-    Route::put('/user', [UserController::class, 'update']);
+    Route::post('/user', [UserController::class, 'update']);
+    Route::post('/deleteAvatar', [UserController::class, 'deleteImage']);
     
     Route::get('/groups', [GroupController::class, 'getGroupsUser']);
     Route::post('/group', [GroupController::class, 'create']);
