@@ -9,10 +9,10 @@ import { ProtectedRoute } from "@/layouts/ProtectedRoute";
 import { UserLayout } from "@/layouts/UserLayout";
 import { GroupsPage } from "@/pages/Groups/GroupsPage";
 import { CreateGroupPage } from "@/pages/Groups/CreateGroupPage";
-import { ExpensesPage, loader as ExpensesLoader } from "@/pages/Expenses/ExpensesPage";
-import { BalancesPage, loader as BalancesLoader } from "./pages/Expenses/BalancesPage";
-import { PhotosPage, loader as PhotosLoader } from "./pages/Expenses/PhotosPage";
-import { CreateExpensePage, loader as CreateExpenseLoader } from "@/pages/Expenses/CreateExpense";
+import { ExpensesPage, loader as ExpensesLoader } from "@/pages/Groups/Expenses/ExpensesPage";
+import { BalancesPage, loader as BalancesLoader } from "./pages/Groups/Balances/BalancesPage";
+import { PhotosPage, loader as PhotosLoader } from "./pages/Groups/Photos/PhotosPage";
+import { CreateExpensePage, loader as CreateExpenseLoader } from "@/pages/Groups/Expenses/CreateExpense";
 import { EditProfilePage } from "@/pages/Users/EditProfilePage";
 import { InvitacionPage } from "@/pages/Users/InvitacionPage";
 import { GroupLayout, loader as GroupLoader } from "./layouts/GroupLayout";
@@ -65,6 +65,11 @@ const router = createBrowserRouter([
                 loader: GroupLoader,
               },
             ],
+          },
+          {
+            path: "/groups/:id/create-expense",
+            element: <CreateExpensePage />,
+            loader: CreateExpenseLoader,
           },
           { path: "/user/edit-profile", element: <EditProfilePage /> },
           { path: "/invitation", element: <InvitacionPage /> },
