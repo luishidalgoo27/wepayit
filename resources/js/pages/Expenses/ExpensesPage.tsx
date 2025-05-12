@@ -37,7 +37,7 @@ export const ExpensesPage = () => {
                 <p className="text-sm text-gray-600">{group?.name}</p>
             </div>
 
-            {/* Navigation Tabs */}
+            {/* Navegacion */}
             <div className="grid grid-cols-3 bg-white border rounded-xl shadow-sm overflow-hidden text-center text-sm font-medium">
                 <Link to={`/groups/${id}/expenses`} className="py-3 hover:bg-gray-100">
                     Gastos
@@ -50,7 +50,7 @@ export const ExpensesPage = () => {
                 </Link>
             </div>
 
-            {/* Summary */}
+            {/* Resumen */}
             <div className="flex justify-around text-center">
                 <div>
                     <p className="text-gray-500 text-sm">Mis gastos</p>
@@ -62,7 +62,7 @@ export const ExpensesPage = () => {
                 </div>
             </div>
 
-            {/* Expenses List */}
+            {/* Lista de gastos */}
             <div className="grid grid-cols-2 space-x-4 space-y-4">
                 {expenses.map((expense) => (
                     <div
@@ -80,8 +80,8 @@ export const ExpensesPage = () => {
                             {expense.state && (
                                 <span
                                     className={`text-xs px-2 py-1 rounded-full font-medium ${expense.state === "pending"
-                                            ? "bg-yellow-100 text-yellow-800"
-                                            : "bg-green-100 text-green-800"
+                                        ? "bg-yellow-100 text-yellow-800"
+                                        : "bg-green-100 text-green-800"
                                         }`}
                                 >
                                     {expense.state}
@@ -103,7 +103,7 @@ export const ExpensesPage = () => {
             </div>
 
 
-            {/* Add Expense Button */}
+            {/* Boton añadir gasto */}
             <Link
                 to={`/groups/${id}/expenses/create-expense`}
                 className="block w-full text-center bg-gradient-to-br from-emerald-400 to-emerald-600 text-white font-semibold py-3 rounded-xl shadow-md hover:brightness-110 transition"
