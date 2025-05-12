@@ -30,7 +30,7 @@ export const CreateExpensePage = () => {
         setUsersDivision(
             users.map((user) => ({
                 user_id: user.id,
-                assigned_amount: amount % users.length,
+                assigned_amount: 0,
                 selected: false,
             }))
         );

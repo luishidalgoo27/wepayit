@@ -10,6 +10,8 @@ import { UserLayout } from "@/layouts/UserLayout";
 import { GroupsPage } from "@/pages/Groups/GroupsPage";
 import { CreateGroupPage } from "@/pages/Groups/CreateGroupPage";
 import { ExpensesPage, loader as ExpensesLoader } from "@/pages/Expenses/ExpensesPage";
+import { BalancesPage, loader as BalancesLoader } from "./pages/Expenses/BalancesPage";
+import { PhotosPage, loader as PhotosLoader } from "./pages/Expenses/PhotosPage";
 import { CreateExpensePage, loader as CreateExpenseLoader } from "@/pages/Expenses/CreateExpense";
 import { EditProfilePage } from "@/pages/Users/EditProfilePage";
 import { InvitacionPage } from "@/pages/Users/InvitacionPage";
@@ -42,6 +44,8 @@ const router = createBrowserRouter([
           { path: "/groups", element: <GroupsPage /> },
           { path: "/groups/create-group", element: <CreateGroupPage /> },
           { path: "/groups/:id/expenses", element: <ExpensesPage />, loader: ExpensesLoader},
+          { path: "/groups/:id/balances", element: <BalancesPage />, loader: BalancesLoader},
+          { path: "/groups/:id/photos", element: <PhotosPage />, loader: PhotosLoader},
           { path: "/groups/:id/expenses/create-expense", element: <CreateExpensePage />, loader: CreateExpenseLoader},
           { path: "/user/edit-profile", element: <EditProfilePage /> },
           { path: "/invitation", element: <InvitacionPage /> },
