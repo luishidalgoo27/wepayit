@@ -10,9 +10,10 @@ use App\Utils\GroupInvitation;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\GroupCreateRequest;
 use App\Http\Requests\GroupDeleteRequest;
+use App\Http\Requests\GroupGetRequest;
 use App\Http\Requests\GroupUpdateRequest;
 use App\Http\Requests\GroupGetUsersRequest;
-
+use App\Utils\ImageUploader;
 
 class GroupService
 {
@@ -20,7 +21,8 @@ class GroupService
         private Group $group,
         private User_group $user_group,
         private GroupInvitation $groupInvitation,
-        private Invitation $invitation
+        private Invitation $invitation,
+        private ImageUploader $imageUploader
     ){}
 
     public function create(GroupCreateRequest $req)
@@ -66,15 +68,33 @@ class GroupService
             return response()->json(['message', 'Group not found'], 404);
         } 
 
+        $imageData = $req->hasFile('image') 
+        ? $this->imageUploader->processImageUpload($req->file('image')) 
+        : ['url' => $group->photo, 'public_id' => $group->photo_public_id];
+        
+        $this->imageUploader->delete($group['photo_public_id']);
+        
         $group->update([
             'name' => $req->name ?? $group->name,
-            'photo' => $req->photo ?? $group->photo,
+            'photo' => $imageData['photo'],
+            'photo_public_id' => $imageData['photo_public_id'],
             'currency_type' => $req->currency_type ?? $group->currency_type,
             'description' => $req->description ?? $group->description,
         ]);
 
         return $group;
     }
+
+    public function deleteImage(GroupGetRequest $req)
+    {
+        $group = $this->group::find($req->group_id);
+        $this->imageUploader->delete($group->photo_public_id);
+        $group->update([
+            'photo' => 'https://res.cloudinary.com/dotw4uex6/image/upload/v1747049503/ChatGPT_Image_12_may_2025_13_30_34_x0b7aa.png',
+            'photo_public_id' => null
+        ]);
+        return $group;
+    }  
 
     public function delete(GroupDeleteRequest $req)
     {
@@ -90,6 +110,12 @@ class GroupService
 
         $group->delete();
 
+        return $group;
+    }
+
+    public function getGroup(GroupGetRequest $req)
+    {
+        $group = $this->group::find($req->group_id);
         return $group;
     }
 
