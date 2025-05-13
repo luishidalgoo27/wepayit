@@ -53,7 +53,7 @@ export const Header = () => {
             <li key={index}>
               <Link
                 to={link.path}
-                className="hover:text-600 transition-colors font-medium"
+                className="hover:text-600 transition-colors font-medium pl-14"
               >
                 {link.name}
               </Link>
