@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <script src="../../js/emails/notification.js"></script>
+  <script src="../../js/utils/notification.ts"></script>
 
 </body>
 </html>
