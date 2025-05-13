@@ -13,7 +13,7 @@ export const CreateGroupPage = () => {
     e.preventDefault();
 
     try {
-      await createGroup(name, currency, description);
+      await createGroup(name, currency, description, image);
       toast.success("Grupo creado correctamente");
       // Limpiar campos si quieres
       setName("");
@@ -76,7 +76,7 @@ export const CreateGroupPage = () => {
       {/* Imagen */}
       <div className="space-y-2">
         <label
-          htmlFor="fotoGrupo"
+          htmlFor="image"
           className="flex items-center justify-center gap-2 w-full bg-emerald-100 text-black px-4 py-2 rounded-xl cursor-pointer hover:bg-emerald-200 transition"
         >
           <ImagePlus size={20} />
@@ -84,7 +84,8 @@ export const CreateGroupPage = () => {
         </label>
         <input
           type="file"
-          id="fotoGrupo"
+          id="image"
+          name="image"
           onChange={(e) => setImage(e.target.files?.[0] || null)}
           className="hidden"
         />
