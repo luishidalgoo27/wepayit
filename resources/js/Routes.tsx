@@ -20,18 +20,7 @@ import { AboutPage } from "@/pages/FastLinks/AboutPage";
 import { TermsPage } from "@/pages/FastLinks/TermsPage";
 
 const router = createBrowserRouter([
-  // Rutas públicas y accesibles para todos
-  {
-    element: <GuestLayout />, // Layout común para todos
-    errorElement: <ErrorPage />,
-    children: [
-      { path: "/", element: <HomePage /> },
-      { path: "/about", element: <AboutPage /> }, // Ruta para "Sobre nosotros"
-      { path: "/terms", element: <TermsPage /> }, // Ruta para "Términos y condiciones"
-    ],
-  },
-
-  // Rutas públicas exclusivas para usuarios no autenticados
+    // Rutas públicas exclusivas para usuarios no autenticados
   {
     element: <PublicRoute />,
     errorElement: <ErrorPage />,
@@ -39,6 +28,9 @@ const router = createBrowserRouter([
       {
         element: <GuestLayout />,
         children: [
+          { path: "/", element: <HomePage /> },
+          { path: "/about", element: <AboutPage /> }, // Ruta para "Sobre nosotros"
+          { path: "/terms", element: <TermsPage /> }, // Ruta para "Términos y condiciones"
           { path: "/register", element: <RegisterPage /> },
           { path: "/login", element: <LoginPage /> },
         ],
