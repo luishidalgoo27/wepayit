@@ -1,10 +1,5 @@
-import { Link, LoaderFunctionArgs, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { useGetExpenses } from "@/hooks/useGetExpenses";
-
-export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: string }> {
-    const id = params.id!;
-    return { id };
-}
 
 export const ExpensesPage = () => {
     const { id } = useLoaderData() as { id: string };

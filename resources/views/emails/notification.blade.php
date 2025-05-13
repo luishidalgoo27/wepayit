@@ -42,5 +42,8 @@
       </div>
     </div>
   </div>
+
+  <script src="../../js/utils/notification.ts"></script>
+
 </body>
 </html>
