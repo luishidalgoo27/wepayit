@@ -61,17 +61,5 @@ class GroupCreateRequest extends FormRequest
         ];
     }
 
-    /**
-     * En caso de que falle la validación, devuelve un error JSON.
-     *
-     * @param Validator $validator
-     */
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'status'  => false,
-            'message' => 'Error de validación',
-            'errors'  => $validator->errors()
-        ], 422));
-    }
+    
 }
