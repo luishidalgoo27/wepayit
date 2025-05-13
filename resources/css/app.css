@@ -1,3 +1,34 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@source "../views";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    /* Paleta de colores principal */
+    --color-primary-dark: #1d443c;
+    --color-primary-light: #f2fbf8;
+
+    --color-50:#f2fbf8;
+    --color-100:#d4f3e8;
+    --color-200:#a9e6d3;
+    --color-300:#76d2b8;
+    --color-400:#57bca3;
+    --color-500:#319b83;
+    --color-600:#257c6a;
+    --color-700:#216457;
+    --color-800: #1e5147;
+    --color-900: #1d443c;
+    --color-950: #0c2724;
+    
+
+    --color-header-dark: #0C2724;
+    --color-footer-dark:#0C2724;
+    --color-footer-light:#257c6a;
+    /* Tipografía */
+    --font-primary: 'Poppins', sans-serif;
+    --font-secondary: 'Inter', sans-serif;
+} usando esta paleta de colores
+
+body {
+    font-family: var(--font-primary);
+}

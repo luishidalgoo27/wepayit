@@ -14,7 +14,14 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('username')->unique();
             $table->string('email')->unique();
+            $table->string('avatar')->nullable()->default('https://res.cloudinary.com/dotw4uex6/image/upload/v1747049503/ChatGPT_Image_12_may_2025_13_30_34_x0b7aa.png');
+            $table->string('avatar_public_id')->nullable();
+            $table->string('telephone')->nullable();
+            $table->string('language')->default('es');
+            $table->boolean('active_notifications')->default(true);
+            $table->boolean('premium')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
