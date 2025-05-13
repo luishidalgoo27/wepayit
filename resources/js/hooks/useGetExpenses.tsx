@@ -18,7 +18,7 @@ export const useGetExpenses = (id:string) => {
 
     useEffect(() => {
         fetchExpenses()
-    }, [])
+    }, [id])
 
     return { expenses }
 }

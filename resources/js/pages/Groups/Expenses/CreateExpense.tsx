@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
+import { LoaderFunctionArgs, useLoaderData, useNavigate } from "react-router-dom";
 import { FolderKanban, BadgeEuro, Calendar, Type, FileText, Users } from "lucide-react";
 import toast from "react-hot-toast";
 import { createExpense } from "@/services/expenses";
@@ -13,6 +13,8 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: stri
 }
 
 export const CreateExpensePage = () => {
+    const navigate = useNavigate()
+
     const { id } = useLoaderData() as { id: string }
     const { users, loading: loadingUsers } = useGetUsers(id);
     const { categories, loading: loadingCategories } = useGetCategories();
@@ -132,6 +134,7 @@ export const CreateExpensePage = () => {
                 assigned_amount: 0,
                 selected: false,
             })));
+            navigate(`/groups/${id}/expenses`)
         } catch (err: any) {
            const errors = err.response?.data?.errors
         ? Object.values(err.response.data.errors).flat() // Aplanar los mensajes de error
