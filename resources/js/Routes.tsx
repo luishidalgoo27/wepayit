@@ -9,16 +9,29 @@ import { ProtectedRoute } from "@/layouts/ProtectedRoute";
 import { UserLayout } from "@/layouts/UserLayout";
 import { GroupsPage } from "@/pages/Groups/GroupsPage";
 import { CreateGroupPage } from "@/pages/Groups/CreateGroupPage";
-import { ExpensesPage, loader as ExpensesLoader } from "@/pages/Groups/Expenses/ExpensesPage";
-import { BalancesPage, loader as BalancesLoader } from "./pages/Groups/Balances/BalancesPage";
-import { PhotosPage, loader as PhotosLoader } from "./pages/Groups/Photos/PhotosPage";
+import { ExpensesPage } from "@/pages/Groups/Expenses/ExpensesPage";
+import { BalancesPage } from "./pages/Groups/Balances/BalancesPage";
+import { PhotosPage } from "./pages/Groups/Photos/PhotosPage";
 import { CreateExpensePage, loader as CreateExpenseLoader } from "@/pages/Groups/Expenses/CreateExpense";
 import { EditProfilePage } from "@/pages/Users/EditProfilePage";
 import { InvitacionPage } from "@/pages/Users/InvitacionPage";
 import { GroupLayout, loader as GroupLoader } from "./layouts/GroupLayout";
+import { AboutPage } from "@/pages/FastLinks/AboutPage";
+import { TermsPage } from "@/pages/FastLinks/TermsPage";
 
 const router = createBrowserRouter([
-  // Rutas públicas
+  // Rutas públicas y accesibles para todos
+  {
+    element: <GuestLayout />, // Layout común para todos
+    errorElement: <ErrorPage />,
+    children: [
+      { path: "/", element: <HomePage /> },
+      { path: "/about", element: <AboutPage /> }, // Ruta para "Sobre nosotros"
+      { path: "/terms", element: <TermsPage /> }, // Ruta para "Términos y condiciones"
+    ],
+  },
+
+  // Rutas públicas exclusivas para usuarios no autenticados
   {
     element: <PublicRoute />,
     errorElement: <ErrorPage />,
@@ -26,12 +39,11 @@ const router = createBrowserRouter([
       {
         element: <GuestLayout />,
         children: [
-          { path: "/", element: <HomePage /> },
           { path: "/register", element: <RegisterPage /> },
           { path: "/login", element: <LoginPage /> },
-        ]
-      }
-    ]
+        ],
+      },
+    ],
   },
 
   // Rutas protegidas con layout
@@ -47,12 +59,12 @@ const router = createBrowserRouter([
           {
             path: "/groups/:id",
             element: <GroupLayout />,
-            loader: GroupLoader, 
+            loader: GroupLoader,
             children: [
               {
                 path: "expenses",
                 element: <ExpensesPage />,
-                loader: GroupLoader, 
+                loader: GroupLoader,
               },
               {
                 path: "balances",

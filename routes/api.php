@@ -24,7 +24,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/group', [GroupController::class, 'update']);
     Route::delete('/group', [GroupController::class, 'delete']);
     Route::post('/deletePhoto', [GroupController::class, 'deleteImage']);
-    
+    Route::post('/userCount', [UserGroupController::class, 'userCount']);
+
     Route::post('/getUsers', [GroupController::class, 'getUsers']);
     
     Route::delete('/deleteUser', [UserGroupController::class, 'deleteUser']);
