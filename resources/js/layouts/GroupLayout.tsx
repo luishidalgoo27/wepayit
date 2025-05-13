@@ -32,7 +32,7 @@ export const GroupLayout = () => {
     }, [divisions, user]);
 
     return (
-        <div className="container max-w-4xl mx-auto py-10 space-y-10 text-black">
+        <div className="container max-w-4xl mx-auto py-10 space-y-10 text-950 dark:text-50">
             <div className="space-y-6">
                 {/* Header */}
                 <div className="flex flex-col items-center text-center space-y-3">
@@ -53,14 +53,14 @@ export const GroupLayout = () => {
                 </div>
 
                 {/* Navegación */}
-                <div className="grid grid-cols-3 bg-white border rounded-xl shadow-sm overflow-hidden text-center text-sm font-medium">
-                    <Link to={`expenses`} className="py-3 hover:bg-gray-100">
+                <div className="grid grid-cols-3 bg-700 dark:bg-200 text-50 dark:text-800 border rounded-xl shadow-sm overflow-hidden text-center text-sm font-medium">
+                    <Link to={`expenses`} className="py-3 dark:hover:bg-100 dark:hover:text-950 hover:bg-600 hover:text-200">
                         Gastos
                     </Link>
-                    <Link to={`balances`} className="py-3 border-x hover:bg-gray-100">
+                    <Link to={`balances`} className="py-3 border-x dark:hover:bg-100 dark:hover:text-950 hover:bg-600 hover:text-200">
                         Saldos
                     </Link>
-                    <Link to={`photos`} className="py-3 hover:bg-gray-100">
+                    <Link to={`photos`} className="py-3 dark:hover:bg-100 dark:hover:text-950 hover:bg-600 hover:text-200">
                         Fotos
                     </Link>
                 </div>
@@ -72,8 +72,8 @@ export const GroupLayout = () => {
                         <p className="text-xl font-semibold">{userExpense.toFixed(2)} {group?.currency_type}</p>
                     </div>
                     <div>
-                        <p className="text-gray-500 text-sm">Gastos totales</p>
-                        <p className="text-xl font-semibold">
+                        <p className="text-950 dark:text-100 text-sm">Gastos totales</p>
+                        <p className="text-xl text-950 dark:text-50 font-semibold">
                             {totalExpenses.toFixed(2)} {group?.currency_type}
                         </p>
                     </div>

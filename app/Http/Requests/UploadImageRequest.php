@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UploadImageRequest extends FormRequest
 {
@@ -29,5 +31,19 @@ class UploadImageRequest extends FormRequest
             'image.mimes' => 'Solo se permiten imágenes jpeg, png, jpg y webp.',
             'image.max' => 'La imagen no debe superar los 2MB.'
         ];
+    }
+
+     /**
+     * En caso de que falle la validación, devuelve un error JSON.
+     *
+     * @param Validator $validator
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status'  => false,
+            'message' => 'Error de validación',
+            'errors'  => $validator->errors()
+        ], 422));
     }
 }
