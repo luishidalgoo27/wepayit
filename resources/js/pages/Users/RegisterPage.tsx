@@ -113,15 +113,15 @@ export const RegisterPage = () => {
 
           <button
             type="submit"
-            className="w-full py-2 px-4 dark:bg-300 dark:text-950 bg-700 text-50 font-semibold rounded-full hover:bg-600 dark:hover:bg-200 transition"
+            className="w-full py-2 px-4 dark:bg-500 dark:text-50 bg-700 text-50 font-semibold rounded-full hover:bg-600 dark:hover:bg-200 dark:hover:text-950 transition"
           >
             Registrarse
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm ">
+        <p className="mt-6 text-center text-sm dark:text-200 text-500 ">
           ¿Ya tienes una cuenta?{" "}
-          <Link to="/login" className="text-300 hover:underline font-medium">
+          <Link to="/login" className="text-700 dark:text-50 hover:underline font-medium">
             Inicia sesión
           </Link>
         </p>
