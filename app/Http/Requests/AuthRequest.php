@@ -23,14 +23,21 @@ class AuthRequest extends FormRequest
      */
     public function rules(): array
     {
-        $route = $this->route()->getName(); // Usamos el nombre de la ruta para decidir qué validar
+        $route = $this->route()->getName(); 
 
         if ($route === 'auth.register') {
             return [
-                'name'     => 'required|string',
-                'email'    => 'required|email|unique:users,email',
-                'password' => 'required',
-                'username' => 'required|string|unique:users,username',
+                'name'     => 'required|string|max:255',
+                'email'    => 'required|string|email|unique:users,email',
+                'password' => [
+                    'required',
+                    'string',
+                    'min:8',
+                    'regex:/[A-Z]/',
+                    'regex:/[a-z]/', 
+                    'regex:/[0-9]/',  
+                ],
+                'username' => 'required|string|max:255|unique:users',
             ];
         }
 
@@ -44,6 +51,9 @@ class AuthRequest extends FormRequest
         return [];
     }
 
+    /**
+     * Custom error messages for validation rules.
+     */
     public function messages(): array
     {
         return [
@@ -53,18 +63,11 @@ class AuthRequest extends FormRequest
             'email.email'       => 'El correo electrónico no es válido.',
             'email.unique'      => 'Este correo ya está registrado.',
             'password.required' => 'La contraseña es obligatoria.',
+            'password.min'      => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.regex'    => 'La contraseña debe incluir al menos una letra mayúscula, una letra minúscula, un número.',
             'username.required' => 'El nombre de usuario es obligatorio.',
             'username.string'   => 'El nombre de usuario debe ser una cadena de texto.',
             'username.unique'   => 'Este nombre de usuario ya está en uso.',
         ];
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'status' => false,
-            'message' => 'Errores de validación',
-            'errors' => $validator->errors()
-        ], 422));
     }
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 
@@ -9,8 +9,10 @@ export const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false); // Estado para el modal
 
   const { register } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,12 +20,19 @@ export const RegisterPage = () => {
 
     try {
       await register(username, name, email, password);
-      toast.success("Te has registrado correctamente");
+      // Mostrar el modal en lugar de redirigir directamente
+      setShowModal(true);
     } catch (err: any) {
-      const message = err.message || "Error al registrarse";
+      const message =
+        err.response?.data?.message || "Error desconocido. Inténtalo de nuevo.";
       setError(message);
       toast.error(message);
     }
+  };
+
+  const handleRedirectToLogin = () => {
+    setShowModal(false);
+    navigate("/login");
   };
 
   return (
@@ -46,9 +55,7 @@ export const RegisterPage = () => {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className={`mt-1 w-full px-4 py-2 rounded-md border ${
-                error ? "border-red-400" : "border-gray-300"
-              } focus:ring-[#8FE3C2] focus:border-[#8FE3C2]`}
+              className="mt-1 w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-[#8FE3C2] focus:border-[#8FE3C2]"
             />
           </div>
 
@@ -64,9 +71,7 @@ export const RegisterPage = () => {
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className={`mt-1 w-full px-4 py-2 rounded-md border ${
-                error ? "border-red-400" : "border-gray-300"
-              } focus:ring-[#8FE3C2] focus:border-[#8FE3C2]`}
+              className="mt-1 w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-[#8FE3C2] focus:border-[#8FE3C2]"
             />
           </div>
 
@@ -82,21 +87,14 @@ export const RegisterPage = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`mt-1 w-full px-4 py-2 rounded-md border ${
-                error ? "border-red-400" : "border-gray-300"
-              } focus:ring-[#8FE3C2] focus:border-[#8FE3C2]`}
+              className="mt-1 w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-[#8FE3C2] focus:border-[#8FE3C2]"
             />
           </div>
 
           <div>
-            <div className="flex justify-between items-center">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Contraseña
-              </label>
-              <a href="#" className="text-sm text-[#8FE3C2] hover:underline">
-                ¿Olvidaste tu contraseña?
-              </a>
-            </div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              Contraseña
+            </label>
             <input
               id="password"
               name="password"
@@ -105,9 +103,7 @@ export const RegisterPage = () => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`mt-1 w-full px-4 py-2 rounded-md border ${
-                error ? "border-red-400" : "border-gray-300"
-              } focus:ring-[#8FE3C2] focus:border-[#8FE3C2]`}
+              className="mt-1 w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-[#8FE3C2] focus:border-[#8FE3C2]"
             />
           </div>
 
@@ -130,6 +126,24 @@ export const RegisterPage = () => {
           </Link>
         </p>
       </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">
+          <div className="bg-300 dark:bg-950 rounded-lg p-6 w-96 text-center">
+            <h3 className="text-lg text-700 dark:text-100 font-semibold mb-4">¡Registro exitoso!</h3>
+            <p className="dark:text-50 text-700 mb-6">
+              Te has registrado correctamente. Por favor, verifica tu correo electrónico antes de iniciar sesión.
+            </p>
+            <button
+              onClick={handleRedirectToLogin}
+              className="px-6 py-2 bg-950 text-50 dark:bg-600 dark:text-50 font-medium rounded-lg hover:bg-800 dark:hover:bg-500 transition"
+            >
+              Ir al login
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 };
