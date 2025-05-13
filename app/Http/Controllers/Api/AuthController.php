@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Requests\AuthRequest;
+use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -74,6 +76,28 @@ class AuthController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+
+    public function verifyEmail(Request $request)
+    {
+        $user = User::find($request->query('id'));
+
+        if (! $user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        if (! URL::hasValidSignature($request)) {
+            return response()->json(['message' => 'Enlace inválido o expirado'], 403);
+        }
+
+        if ($user->hasVerifiedEmail()) {
+            return response()->json(['message' => 'Correo ya verificado']);
+        }
+
+        $user->markEmailAsVerified();
+        event(new Verified($user));
+
+        return response()->json(['message' => 'Correo verificado correctamente']);
     }
 
 }
