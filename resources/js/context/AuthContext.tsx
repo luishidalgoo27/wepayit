@@ -31,14 +31,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const register = async (username: string, name: string, email: string, password: string) => {
     const res = await axios.post(`${API_URL}/register`, { username, name, email, password });
-    const { token } = res.data;
-
-    if (!token) {
-      throw new Error("No se recibió token");
-    }
-
-    localStorage.setItem("token", token);
-    setIsAuthenticated(true);
   };
 
   const logout = () => {
