@@ -55,7 +55,7 @@ export const GroupLayout = () => {
                 </div>
 
                 {/* Navegación */}
-                <div className="grid grid-cols-3 bg-700 dark:bg-200 text-50 dark:text-800 border rounded-xl shadow-sm overflow-hidden text-center text-sm font-medium">
+                <div className="grid grid-cols-4 bg-700 dark:bg-200 text-50 dark:text-800 border rounded-xl shadow-sm overflow-hidden text-center text-sm font-medium">
                     <Link to={`expenses`} className="py-3 dark:hover:bg-100 dark:hover:text-950 hover:bg-600 hover:text-200">
                         Gastos
                     </Link>
@@ -64,6 +64,9 @@ export const GroupLayout = () => {
                     </Link>
                     <Link to={`photos`} className="py-3 dark:hover:bg-100 dark:hover:text-950 hover:bg-600 hover:text-200">
                         Fotos
+                    </Link>
+                    <Link to={`games`} className="py-3 dark:hover:bg-100 dark:hover:text-950 hover:bg-600 hover:text-200">
+                        Juegos
                     </Link>
                 </div>
 
