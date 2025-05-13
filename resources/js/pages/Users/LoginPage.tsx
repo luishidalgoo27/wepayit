@@ -18,9 +18,11 @@ export const LoginPage = () => {
       await login(email, password);
       toast.success("Has iniciado sesión correctamente");
     } catch (err: any) {
-      const message = err.message || "Error desconocido";
-      setError(message);
-      toast.error(message);
+      // Verificar si el error tiene una respuesta del backend
+      const message =
+        err.response?.data?.message || "Error desconocido. Inténtalo de nuevo.";
+      setError(message); // Mostrar el mensaje del backend
+      toast.error(message); // Mostrar el mensaje en el toast
     }
   };
 
