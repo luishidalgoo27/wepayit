@@ -73,8 +73,13 @@ export const CreateGroupPage = () => {
       setImage(null);
       navigate('/groups')
     } catch (err: any) {
-      const message = err.message || "Error desconocido";
-      toast.error(message);
+      // Verificar si el backend envía múltiples errores
+      const errors = err.response?.data?.errors
+        ? Object.values(err.response.data.errors).flat() // Aplanar los mensajes de error
+        : [err.response?.data?.message || "Error desconocido. Inténtalo de nuevo."];
+
+      // Mostrar cada error como un toast separado
+      errors.forEach((message: string) => toast.error(message));
     }
   };
 

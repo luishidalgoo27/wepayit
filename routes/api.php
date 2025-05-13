@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GroupController;
@@ -10,12 +13,16 @@ use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\ConverterController;
 use App\Http\Controllers\UserGroupController;
 use App\Http\Controllers\NotificationController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::post('/register', [AuthController::class, 'createUser'])->name('auth.register');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
+Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
     Route::post('/user', [UserController::class, 'update']);
+    Route::post('/updateAvatar', [UserController::class, 'updateAvatar']);
     Route::post('/deleteAvatar', [UserController::class, 'deleteImage']);
     
     Route::get('/groups', [GroupController::class, 'getGroupsUser']);
@@ -24,7 +31,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/group', [GroupController::class, 'update']);
     Route::delete('/group', [GroupController::class, 'delete']);
     Route::post('/deletePhoto', [GroupController::class, 'deleteImage']);
-    
+    Route::post('/userCount', [UserGroupController::class, 'userCount']);
+
     Route::post('/getUsers', [GroupController::class, 'getUsers']);
     
     Route::delete('/deleteUser', [UserGroupController::class, 'deleteUser']);
@@ -45,3 +53,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::post('/converter', [ConverterController::class, 'convert']);
 });
+
+

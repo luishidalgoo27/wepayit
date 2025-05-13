@@ -6,6 +6,7 @@ use App\Models\Group;
 use App\Models\Invitation;
 use App\Models\User_group;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Utils\GroupInvitation;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -97,6 +98,19 @@ class UserGroupService
         $userGroup->delete();
 
         return response()->json($userGroup, 200);
+    }
+
+    public function userCount(Request $req)
+    {
+        $group = $this->group::find($req->group_id);
+
+        if (!$group) {
+            return response()->json(['message' => 'Group not found'], 404);
+        }
+
+        $userCount = $this->user_group::where('group_id', $req->group_id)->count();
+
+        return $userCount;
     }
 }
 ?>
