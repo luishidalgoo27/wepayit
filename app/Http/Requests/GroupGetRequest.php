@@ -3,8 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class GroupGetRequest extends FormRequest
 {
@@ -24,35 +22,7 @@ class GroupGetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'integer|exists:users,id'
+            'group_id' => 'required|integer|exists:groups,id'
         ];
-    }
-
-    /**
-     * Mensajes de error personalizados para las reglas de validación.
-     *
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        return [
-            'user_id.integer' => 'El ID del usuario debe ser un número entero.',
-            'user_id.exists'  => 'El usuario especificado no existe en el sistema.',
-        ];
-    }
-
-
-    /**
-     * En caso de que falle la validación, devuelve un error JSON.
-     *
-     * @param Validator $validator
-     */
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'status'  => false,
-            'message' => 'Error de validación',
-            'errors'  => $validator->errors()
-        ], 422));
     }
 }

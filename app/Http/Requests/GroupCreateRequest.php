@@ -25,8 +25,11 @@ class GroupCreateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:50',
+            'descripcion' => 'nullable|string|max:255',
             'photo' => 'string|max:255',
-            'coin' => 'required|string'
+            'currency_type' => 'required|string',
+            'description' => 'nullable|string|max:255'
+            
         ];
     }
 
@@ -42,11 +45,19 @@ class GroupCreateRequest extends FormRequest
             'name.string'   => 'El nombre del grupo debe ser una cadena de texto.',
             'name.max'      => 'El nombre del grupo no puede tener más de 50 caracteres.',
 
+            'description.nullable' => 'La descripción puede ser nula',
+            'description.string' => 'El nombre de la descripción debe ser una cadena de texto.',
+            'description.max' => 'El nombre de la descripción no puede tener más de 255 caracteres.',
+
             'photo.string'  => 'La foto debe ser una cadena de texto.',
             'photo.max'     => 'La foto no puede tener más de 255 caracteres.',
 
-            'coin.required' => 'El tipo de moneda es obligatorio.',
-            'coin.string'   => 'El tipo de moneda debe ser una cadena de texto.',
+            'currency_type.required' => 'El tipo de moneda es obligatorio.',
+            'currency_type.string'   => 'El tipo de moneda debe ser una cadena de texto.',
+            
+            'description.nullable' => 'La descripcion puede ser null',
+            'description.string' => 'La descripcion debe ser una cadena de texto',
+            'description.max' => 'La descripcion no puede pasar de los 255 caracteres'
         ];
     }
 
