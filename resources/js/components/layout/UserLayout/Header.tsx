@@ -68,7 +68,7 @@ export const Header = () => {
           <Link
             to="/user/edit-profile"
             onClick={handleProfileClick} // Cierra el menú cuando se hace clic en "Perfil"
-            className={`p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-150 duration-150 ${isProfilePage ? 'text-green-600' : ''}`}
+            className={`p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-150 duration-150 ${isProfilePage ? 'text-green-600 dark:text-amber-600' : ''}`}
             title="Perfil"
           >
             <User size={20} />
@@ -117,7 +117,7 @@ export const Header = () => {
             <Link
               to="/user/edit-profile"
               onClick={handleProfileClick} // Cierra el menú cuando se hace clic en "Perfil"
-              className={`p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-150 duration-150 flex items-center gap-2 ${isProfilePage ? 'text-green-600' : ''}`}
+              className={`p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-150 duration-150 flex items-center gap-2 ${isProfilePage ? 'text-green-600 dark:text-amber-600' : ''}`}
             >
               <User size={20} />
               Perfil
