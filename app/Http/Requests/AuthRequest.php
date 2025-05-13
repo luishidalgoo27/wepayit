@@ -35,8 +35,7 @@ class AuthRequest extends FormRequest
                     'min:8',
                     'regex:/[A-Z]/',
                     'regex:/[a-z]/', 
-                    'regex:/[0-9]/', 
-                    'regex:/[@$!%*?&]/', 
+                    'regex:/[0-9]/',  
                 ],
                 'username' => 'required|string|max:255|unique:users',
             ];
@@ -65,7 +64,7 @@ class AuthRequest extends FormRequest
             'email.unique'      => 'Este correo ya está registrado.',
             'password.required' => 'La contraseña es obligatoria.',
             'password.min'      => 'La contraseña debe tener al menos 8 caracteres.',
-            'password.regex'    => 'La contraseña debe incluir al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.',
+            'password.regex'    => 'La contraseña debe incluir al menos una letra mayúscula, una letra minúscula, un número.',
             'username.required' => 'El nombre de usuario es obligatorio.',
             'username.string'   => 'El nombre de usuario debe ser una cadena de texto.',
             'username.unique'   => 'Este nombre de usuario ya está en uso.',

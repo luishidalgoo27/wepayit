@@ -39,16 +39,16 @@ export const LoginPage = () => {
 
   return (
     <main className="min-h-screen flex items-center justify-center px-4">
-      <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-xl">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Inicia sesión en <span className="text-[#8FE3C2]">Wepayit</span>
+      <div className="w-full max-w-md p-8 bg-[var(--color-50)] dark:bg-[var(--color-900)] border border-[var(--color-200)] dark:border-[var(--color-700)] rounded-2xl shadow-xl">
+        <h2 className="text-2xl font-bold text-center text-950 dark:text-50 mb-6">
+          Inicia sesión en <span className="text-400">Wepayit</span>
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium "
             >
               Correo electrónico
             </label>
@@ -70,13 +70,13 @@ export const LoginPage = () => {
             <div className="flex justify-between items-center">
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium "
               >
                 Contraseña
               </label>
               <a
                 href="#"
-                className="text-sm text-[#8FE3C2] hover:underline"
+                className="text-sm text-700 dark:text-50 hover:underline"
               >
                 ¿Olvidaste tu contraseña?
               </a>
@@ -101,17 +101,17 @@ export const LoginPage = () => {
 
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-[#8FE3C2] text-white font-semibold rounded-full hover:bg-[#7dd8b4] transition"
+            className="w-full py-2 px-4 dark:bg-500 dark:text-50 bg-700 text-50 font-semibold rounded-full hover:bg-600 dark:hover:bg-200 dark:hover:text-950 transition"
           >
             Iniciar sesión
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-600">
+        <p className="mt-6 text-center text-sm text-500 dark:text-200 ">
           ¿No tienes cuenta?{" "}
           <Link
             to="/register"
-            className="text-[#8FE3C2] hover:underline font-medium"
+            className="text-700 dark:text-50 hover:underline font-medium"
           >
             Regístrate
           </Link>
