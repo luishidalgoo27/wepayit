@@ -32,8 +32,6 @@ class UserService
             return response()->json(['message', 'User not found'], 404);
         }
 
-        
-
         $user->update([
             'name' => $req->name ?? $user->name,
             'telephone' => $req->telephone ?? $user->telephone,
