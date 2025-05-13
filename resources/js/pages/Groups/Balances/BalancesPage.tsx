@@ -1,15 +1,15 @@
-import { Link, LoaderFunctionArgs, useLoaderData } from "react-router-dom"
-
-export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: string }> {
-    const id = params.id!;
-    return { id };
-}
+import { getMessageCuñao } from "@/utils/notification"
+import { useLoaderData } from "react-router-dom"
 
 export const BalancesPage = () => {
     const { id } = useLoaderData() as { id: string }
 
     return (
         <>
+            {/* Frase cuñao */}
+            <div className="text-center">
+                <p>{getMessageCuñao()}</p>
+            </div>
         </>
     )
 }
