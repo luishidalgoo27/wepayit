@@ -28,14 +28,14 @@ export const AboutPage = () => {
 
     return (
         <div className="container max-w-4xl mx-auto py-8 space-y-6">
-            <h1 className="text-4xl font-bold text-[var(--color-600)] dark:text-[var(--color-100)]">
+            <h1 className="text-4xl font-bold text-[var(--color-800)] dark:text-[var(--color-100)]">
                 Sobre nosotros
             </h1>
-            <p className="text-lg text-[var(--color-700)] dark:text-[var(--color-200)]">
+            <p className="text-lg text-[var(--color-950)] dark:text-[var(--color-00)]">
                 WePayIt es una plataforma diseñada para facilitar la gestión de grupos y gastos compartidos. 
                 Nuestro objetivo es simplificar tu vida financiera, permitiéndote organizar tus finanzas de manera eficiente y colaborativa.
             </p>
-            <p className="text-lg text-[var(--color-700)] dark:text-[var(--color-200)]">
+            <p className="text-lg text-[var(--color-800)] dark:text-[var(--color-200)]">
                 Creemos en la importancia de la transparencia y la colaboración, y trabajamos constantemente para ofrecerte las mejores herramientas para gestionar tus grupos.
             </p>
 
@@ -51,13 +51,13 @@ export const AboutPage = () => {
                             alt={member.name}
                             className="w-24 h-24 rounded-full mb-4 border border-[var(--color-300)] dark:border-[var(--color-600)]"
                         />
-                        <h3 className="text-lg font-semibold text-[var(--color-600)] dark:text-[var(--color-100)]">
+                        <h3 className="text-lg font-semibold text-[var(--color-800)] dark:text-[var(--color-100)]">
                             {member.name}
                         </h3>
-                        <p className="text-sm text-[var(--color-500)] dark:text-[var(--color-300)]">
+                        <p className="text-sm text-[var(--color-600)] dark:text-[var(--color-300)]">
                             {member.role}
                         </p>
-                        <p className="text-sm text-[var(--color-700)] dark:text-[var(--color-200)] mt-2">
+                        <p className="text-sm text-[var(--color-800)] dark:text-[var(--color-200)] mt-2">
                             {member.description}
                         </p>
                     </div>

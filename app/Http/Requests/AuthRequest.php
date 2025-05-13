@@ -59,12 +59,12 @@ class AuthRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
+    /* protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
             'status' => false,
             'message' => 'Errores de validación',
             'errors' => $validator->errors()
         ], 422));
-    }
+    } */
 }

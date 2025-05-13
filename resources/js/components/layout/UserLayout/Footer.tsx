@@ -1,14 +1,14 @@
 export const Footer = () => {
     return (
-        <footer className="bg-footer-light dark:bg-footer-dark dark:text-100 text-100 pt-6 pb-3">
+        <footer className="bg-footer-light dark:bg-footer-dark dark:text-100 text-black pt-6 pb-3">
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Sección 1: Información */}
+                {/* Sección 1: Logo */}
                 <div className="text-center md:text-left">
-                    <h3 className="text-lg font-semibold mb-2">Sobre nosotros</h3>
-                    <p className="text-sm">
-                        WePayIt es una plataforma diseñada para facilitar la gestión de grupos y gastos compartidos. 
-                        Nuestro objetivo es simplificar tu vida financiera.
-                    </p>
+                    <img
+                        src="/public/wepayitlightlogo.png" // Cambia esta ruta al logo real
+                        alt="WePayIt Logo"
+                        className="w-32 mx-auto md:mx-0"
+                    />
                 </div>
 
                 {/* Sección 2: Enlaces rápidos */}
@@ -46,5 +46,5 @@ export const Footer = () => {
                 </p>
             </div>
         </footer>
-    )
-}
+    );
+};
