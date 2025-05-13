@@ -28,6 +28,7 @@ export const createGroup = async (name: string, currency_type: string, descripti
     return res.data
 }
 
+
 export const updateGroup = async (): Promise<Group[]> => {
     const res = await api.get(`${API_URL}/group`)
     return res.data
@@ -37,3 +38,10 @@ export const deleteGroup = async (): Promise<Group[]> => {
     const res = await api.get(`${API_URL}/group`)
     return res.data
 }
+
+export const getUserCount = async (group_id: number): Promise<number> => {
+    const res = await api.post(`${API_URL}/userCount`, {
+        group_id: group_id,
+    });
+    return res.data.user_count;
+};
