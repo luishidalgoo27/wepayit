@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 import { Link } from "react-router-dom";
@@ -10,6 +10,17 @@ export const LoginPage = () => {
 
   const { login } = useAuth();
 
+  useEffect(() => {
+    // Verificar si el popup debe mostrarse
+    const showPopup = localStorage.getItem("showVerifyEmailPopup");
+    if (showPopup) {
+      toast.success(
+        "Te has registrado correctamente. Por favor, verifica tu correo electrónico."
+      );
+      localStorage.removeItem("showVerifyEmailPopup"); // Eliminar el indicador
+    }
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -18,9 +29,11 @@ export const LoginPage = () => {
       await login(email, password);
       toast.success("Has iniciado sesión correctamente");
     } catch (err: any) {
-      const message = err.message || "Error desconocido";
-      setError(message);
-      toast.error(message);
+      // Verificar si el error tiene una respuesta del backend
+      const message =
+        err.response?.data?.message || "Error desconocido. Inténtalo de nuevo.";
+      setError(message); // Mostrar el mensaje del backend
+      toast.error(message); // Mostrar el mensaje en el toast
     }
   };
 
@@ -33,7 +46,10 @@ export const LoginPage = () => {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Correo electrónico
             </label>
             <input
@@ -52,10 +68,16 @@ export const LoginPage = () => {
 
           <div>
             <div className="flex justify-between items-center">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Contraseña
               </label>
-              <a href="#" className="text-sm text-[#8FE3C2] hover:underline">
+              <a
+                href="#"
+                className="text-sm text-[#8FE3C2] hover:underline"
+              >
                 ¿Olvidaste tu contraseña?
               </a>
             </div>
@@ -87,7 +109,10 @@ export const LoginPage = () => {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           ¿No tienes cuenta?{" "}
-          <Link to="/register" className="text-[#8FE3C2] hover:underline font-medium">
+          <Link
+            to="/register"
+            className="text-[#8FE3C2] hover:underline font-medium"
+          >
             Regístrate
           </Link>
         </p>

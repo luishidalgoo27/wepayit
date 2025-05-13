@@ -1,48 +1,30 @@
 import { useEffect, useRef, useState } from "react";
-import api from "@/utils/api";
 import toast from "react-hot-toast";
-import { User } from "@/types/user";
-import { getUser } from "@/services/user";
 import { Trash2, Pencil } from "lucide-react";
 
+import { useGetUser } from "@/hooks/useGetUser";
+import { deleteAvatar, updateAvatar, updateUser } from "@/services/user";
+
 export const EditProfilePage = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const { user, loading } = useGetUser();
+
   const [name, setName] = useState("");
   const [telephone, setTelephone] = useState("");
   const [uploading, setUploading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null); 
 
   useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const data = await getUser();
-        setUser(data);
-        setName(data.name || "");
-        setTelephone(data.telephone || "");
-      } catch (error) {
-        toast.error("Error al cargar el perfil");
-        console.error(error);
-      }
-    };
-    loadUser();
-  }, []);
-
+    if (!loading && user) {
+      setName(user.name || "");
+      setTelephone(user.telephone || "");
+    }
+  }, [user, loading]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await api.post("/user", {
-        name,
-        telephone,
-      });
-      setUser(res.data);
-      toast.success("Perfil actualizado correctamente");
-
-      setName(updated.name || "");
-      setTelephone(updated.telephone || "");
-
-      setUser(updated)
-
+      await updateUser(name, telephone);
+      toast.success("Usuario actualizado");
     } catch (error) {
       console.error("Error al actualizar el perfil:", error);
       toast.error("Hubo un error al guardar los cambios");
@@ -51,9 +33,7 @@ export const EditProfilePage = () => {
 
   const handleDeleteAvatar = async () => {
     try {
-      await api.post("/deleteAvatar");
-      const updatedUser = await getUser();
-      setUser(updatedUser);
+      await deleteAvatar();
       toast.success("Avatar eliminado");
     } catch (error) {
       toast.error("Error al eliminar avatar");
@@ -64,14 +44,9 @@ export const EditProfilePage = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append("image", file);
-
     try {
       setUploading(true);
-      await api.post("/user", formData);
-      const updatedUser = await getUser();
-      setUser(updatedUser);
+      await updateAvatar(file);
       toast.success("Avatar actualizado");
     } catch (error) {
       toast.error("Error al subir la imagen");
@@ -99,7 +74,7 @@ export const EditProfilePage = () => {
             </div>
           )}
 
-          {/* Botón de eliminar */}
+          {/* Botón eliminar avatar */}
           {user.avatar && (
             <button
               type="button"
@@ -123,13 +98,13 @@ export const EditProfilePage = () => {
             )}
           </div>
 
-          {/* Input oculto para subir imagen */}
+          {/* Input oculto */}
           <input
             ref={fileInputRef}
             type="file"
             accept="image/*"
-            onChange={handleUploadAvatar}
             className="hidden"
+            onChange={handleUploadAvatar}
           />
         </div>
 

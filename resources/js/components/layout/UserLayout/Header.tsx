@@ -37,8 +37,8 @@ export const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-200 dark:bg-header-dark shadow-md pl-7 pr-7">
-      <nav className="container mx-auto py-4 flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-200 dark:bg-header-dark shadow-md">
+      <nav className="container mx-auto  flex items-center justify-between">
         {/* Logo */}
         <Link
           to="/groups"
@@ -117,7 +117,7 @@ export const Header = () => {
             <Link
               to="/user/edit-profile"
               onClick={handleProfileClick} // Cierra el menú cuando se hace clic en "Perfil"
-              className={`p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-150 duration-150 flex items-center gap-2 ${isProfilePage ? 'text-green-600 dark:text-amber-600' : ''}`}
+              className={`p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-110 duration-150 flex items-center gap-2 ${isProfilePage ? 'text-green-600 dark:text-amber-600' : ''}`}
             >
               <User size={20} />
               Perfil
