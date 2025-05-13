@@ -20,6 +20,7 @@ class Expense extends Model {
         'description',
         'category_id',
         'receipt_url',
+        'receipt_url_public_id',
         'state',
         'recurrent',
         'frecuency',
