@@ -25,6 +25,13 @@ export const GroupsPage = () => {
         <div className="container max-w-4xl mx-auto py-8 space-y-6"> {/* La propiedad max-w-4xl define el tamaño del witdh */}
             <h1 className="text-left text-5xl font-bold  mb-4">wepayit <span className="text-lg font-medium">by Medac</span></h1>
 
+            <Link
+                to="/groups/create-group"
+                className="hover:translate-y-0.5 block w-full text-center bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950 hover:bg-500 text-100 dark:text-200 font-semibold py-3 rounded-xl transition shadow-md"
+            >
+                + Nuevo wepayit
+            </Link>
+            
             <div className="grid gap-4 sm:grid-cols-2">
                 {groups.map((group) => (
                     <Link
@@ -47,12 +54,6 @@ export const GroupsPage = () => {
                 ))}
             </div>
 
-            <Link
-                to="/groups/create-group"
-                className="hover:translate-y-0.5 block w-full text-center bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950 hover:bg-500 text-100 dark:text-200 font-semibold py-3 rounded-xl transition shadow-md"
-            >
-                + Nuevo wepayit
-            </Link>
         </div>
     )
 }
