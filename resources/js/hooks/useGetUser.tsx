@@ -2,7 +2,7 @@ import { getUser } from "@/services/user";
 import { User } from "@/types/user";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-
+ 
 export const useGetUser = () => {
     const [user, setUser] = useState<User | undefined>();
     const [loading, setLoading] = useState(true);
