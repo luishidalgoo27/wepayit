@@ -8,6 +8,56 @@ export const CreateGroupPage = () => {
   const [currency, setCurrency] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState<File | null>(null);
+  const [currencies, setCurrencies] = useState([
+    { code: "EUR", name: "Euro (€)" },
+    { code: "USD", name: "Dólar ($)" },
+    { code: "GBP", name: "Libra (£)" },
+    { code: "JPY", name: "Yen (¥)" },
+  ]);
+  const [showAllCurrencies, setShowAllCurrencies] = useState(false);
+
+  const handleShowMoreCurrencies = async () => {
+    try {
+      const response = await fetch(
+        "https://api.exchangerate.host/list?access_key=545bfb975ab03c81e3f1a344a7ecd593"
+      );
+      const data = await response.json();
+
+      if (data && data.currencies) {
+        const newCurrencies = Object.keys(data.currencies).map((key) => ({
+          code: key,
+          name: `${data.currencies[key]} (${key})`,
+        }));
+        setCurrencies(newCurrencies);
+        setShowAllCurrencies(true); // Cambia el estado para mostrar todas las monedas
+      } else {
+        toast.error("No se pudieron cargar las monedas.");
+      }
+    } catch (error) {
+      toast.error("Error al cargar las monedas.");
+    }
+  };
+
+  const handleShowLessCurrencies = () => {
+    // Restablece las monedas iniciales y cambia el estado
+    setCurrencies([
+      { code: "EUR", name: "Euro (€)" },
+      { code: "USD", name: "Dólar ($)" },
+      { code: "GBP", name: "Libra (£)" },
+      { code: "JPY", name: "Yen (¥)" },
+    ]);
+    setShowAllCurrencies(false);
+  };
+
+  const handleCurrencyChange = (value: string) => {
+    if (value === "show_more") {
+      handleShowMoreCurrencies();
+    } else if (value === "show_less") {
+      handleShowLessCurrencies();
+    } else {
+      setCurrency(value);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,7 +65,6 @@ export const CreateGroupPage = () => {
     try {
       await createGroup(name, currency, description);
       toast.success("Grupo creado correctamente");
-      // Limpiar campos si quieres
       setName("");
       setCurrency("");
       setDescription("");
@@ -50,14 +99,20 @@ export const CreateGroupPage = () => {
         <BadgeEuro className="absolute left-3 top-2 text-emerald-700" size={20} />
         <select
           value={currency}
-          onChange={(e) => setCurrency(e.target.value)}
+          onChange={(e) => handleCurrencyChange(e.target.value)}
           className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
         >
           <option value="">Selecciona una moneda</option>
-          <option value="EUR">Euro (€)</option>
-          <option value="USD">Dólar ($)</option>
-          <option value="GBP">Libra (£)</option>
-          <option value="JPY">Yen (¥)</option>
+          {currencies.map((currency) => (
+            <option key={currency.code} value={currency.code}>
+              {currency.name}
+            </option>
+          ))}
+          {!showAllCurrencies ? (
+            <option value="show_more">Mostrar más monedas</option>
+          ) : (
+            <option value="show_less">Mostrar menos monedas</option>
+          )}
         </select>
       </div>
 
