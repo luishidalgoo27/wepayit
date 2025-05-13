@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Mail;
 
 class PayNotification
 {
-    public function send(User $user)
+    public function send(User $user, int $expenseId, int $groupId)
     {
-        Mail::to($user->email)->send(new PayNotificationMail($user));
+        Mail::to($user->email)->send(new PayNotificationMail($user, $expenseId, $groupId));
     }
 }
 ?>
