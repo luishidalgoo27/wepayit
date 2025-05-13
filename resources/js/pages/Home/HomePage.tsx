@@ -1,8 +1,8 @@
 export const HomePage = () => {
     return (
-        <div className="flex flex-col gap-24 py-20 px-4 sm:px-8 bg-color-50">
+        <div className="flex flex-col gap-24 py-20 px-4 sm:px-8 bg-color-50 ">
 
-            <section className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center shadow-xl">
+            <section className="max-w-7xl mx-auto  grid md:grid-cols-2 gap-12 items-center shadow-xl">
                 <img
                     src="/public/imagenprincipal.png"
                     alt="Puzzle manos"
@@ -25,7 +25,7 @@ export const HomePage = () => {
             </section>
 
             <section className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center shadow-xl">
-                <div className="space-y-6 ml-9">
+                <div className="space-y-6 ml-0 md:ml-9">
                     <h2 className="text-3xl font-bold text-color-900">
                         Divide tus gastos fácilmente
                     </h2>
@@ -43,7 +43,7 @@ export const HomePage = () => {
             </section>
 
             <section className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
-                <img src="/public/movilYDinero.png" alt="Dinero en el móvil" />
+                <img src="/public/movilYDinero.png" alt="Dinero en el móvil" className="w-full h-auto" />
 
                 <div className="rounded-2xl p-8 space-y-4">
                     <h3 className="text-2xl font-bold text-color-800 flex items-center gap-2">
@@ -67,7 +67,11 @@ export const HomePage = () => {
                     </p>
                 </div>
 
-                <img src="/public/vistaGrupos.avif" className="ml-24 w-80" alt="Vista de grupos en la app" />
+                <img
+                    src="/public/vistaGrupos.avif"
+                    className="ml-0 md:ml-24 w-full md:w-80 h-auto"
+                    alt="Vista de grupos en la app"
+                />
             </section>
         </div>
     );

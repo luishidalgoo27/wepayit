@@ -25,6 +25,7 @@ class GroupCreateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:50',
+            'descripcion' => 'nullable|string|max:255',
             'photo' => 'string|max:255',
             'currency_type' => 'required|string',
             'description' => 'nullable|string|max:255'
@@ -44,6 +45,10 @@ class GroupCreateRequest extends FormRequest
             'name.string'   => 'El nombre del grupo debe ser una cadena de texto.',
             'name.max'      => 'El nombre del grupo no puede tener más de 50 caracteres.',
 
+            'description.nullable' => 'La descripción puede ser nula',
+            'description.string' => 'El nombre de la descripción debe ser una cadena de texto.',
+            'description.max' => 'El nombre de la descripción no puede tener más de 255 caracteres.',
+
             'photo.string'  => 'La foto debe ser una cadena de texto.',
             'photo.max'     => 'La foto no puede tener más de 255 caracteres.',
 
@@ -56,17 +61,5 @@ class GroupCreateRequest extends FormRequest
         ];
     }
 
-    /**
-     * En caso de que falle la validación, devuelve un error JSON.
-     *
-     * @param Validator $validator
-     */
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'status'  => false,
-            'message' => 'Error de validación',
-            'errors'  => $validator->errors()
-        ], 422));
-    }
+    
 }
