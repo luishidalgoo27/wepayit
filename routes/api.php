@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GroupController;
@@ -10,12 +13,15 @@ use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\ConverterController;
 use App\Http\Controllers\UserGroupController;
 use App\Http\Controllers\NotificationController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::post('/register', [AuthController::class, 'createUser'])->name('auth.register');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
     Route::post('/user', [UserController::class, 'update']);
+    Route::post('/updateAvatar', [UserController::class, 'updateAvatar']);
     Route::post('/deleteAvatar', [UserController::class, 'deleteImage']);
     
     Route::get('/groups', [GroupController::class, 'getGroupsUser']);
@@ -46,3 +52,25 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::post('/converter', [ConverterController::class, 'convert']);
 });
+
+
+Route::get('/verify-email', function (Request $request) {
+    $user = User::find($request->query('id'));
+
+    if (! $user) {
+        return response()->json(['message' => 'Usuario no encontrado'], 404);
+    }
+
+    if (! URL::hasValidSignature($request)) {
+        return response()->json(['message' => 'Enlace inválido o expirado'], 403);
+    }
+
+    if ($user->hasVerifiedEmail()) {
+        return response()->json(['message' => 'Correo ya verificado']);
+    }
+
+    $user->markEmailAsVerified();
+    event(new Verified($user));
+
+    return response()->json(['message' => 'Correo verificado correctamente']);
+})->name('verification.verify');

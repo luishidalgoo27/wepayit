@@ -1,8 +1,8 @@
 export const HomePage = () => {
     return (
-        <div className="flex flex-col gap-24 py-20 px-4 sm:px-8 bg-color-50">
+        <div className="flex flex-col gap-24 py-20 px-4 sm:px-8 bg-color-50 ">
 
-            <section className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center shadow-xl">
+            <section className="max-w-7xl mx-auto  grid md:grid-cols-2 gap-12 items-center shadow-xl">
                 <img
                     src="/public/imagenprincipal.png"
                     alt="Puzzle manos"

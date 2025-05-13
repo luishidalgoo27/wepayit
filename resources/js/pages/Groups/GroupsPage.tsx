@@ -36,7 +36,7 @@ export const GroupsPage = () => {
     }, []);
 
     return (
-        <div className="container max-w-4xl mx-auto py-8 space-y-6">
+        <div className="container max-w-4xl mx-auto  space-y-6">
             {/* Título y subtítulo */}
             <h1 className="text-left text-5xl font-bold mb-2">
                 wepayit <span className="text-lg font-medium">by Medac</span>
