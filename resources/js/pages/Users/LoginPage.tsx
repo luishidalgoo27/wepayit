@@ -39,7 +39,7 @@ export const LoginPage = () => {
 
   return (
     <main className="min-h-screen flex items-center justify-center px-4">
-      <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-xl">
+      <div className="w-full max-w-md p-8 text-950 bg-white rounded-2xl shadow-xl">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Inicia sesión en <span className="text-[#8FE3C2]">Wepayit</span>
         </h2>
@@ -76,7 +76,7 @@ export const LoginPage = () => {
               </label>
               <a
                 href="#"
-                className="text-sm text-[#8FE3C2] hover:underline"
+                className="text-sm text-600 hover:underline"
               >
                 ¿Olvidaste tu contraseña?
               </a>
@@ -101,7 +101,7 @@ export const LoginPage = () => {
 
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-[#8FE3C2] text-white font-semibold rounded-full hover:bg-[#7dd8b4] transition"
+            className="w-full py-2 px-4 bg-[#8FE3C2] text-950 font-semibold rounded-full hover:bg-[#7dd8b4] transition"
           >
             Iniciar sesión
           </button>
@@ -111,7 +111,7 @@ export const LoginPage = () => {
           ¿No tienes cuenta?{" "}
           <Link
             to="/register"
-            className="text-[#8FE3C2] hover:underline font-medium"
+            className="text-600 hover:underline font-medium"
           >
             Regístrate
           </Link>
