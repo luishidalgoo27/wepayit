@@ -68,8 +68,8 @@ export const GroupLayout = () => {
                 {/* Resumen */}
                 <div className="flex justify-around text-center">
                     <div>
-                        <p className="text-950 dark:text-100 text-sm">Mis gastos</p>
-                        <p className="text-xl text-950 dark:text-50 font-semibold">{userExpense.toFixed(2)} €</p>
+                        <p className="text-gray-500 text-sm">Mis gastos</p>
+                        <p className="text-xl font-semibold">{userExpense.toFixed(2)} {group?.currency_type}</p>
                     </div>
                     <div>
                         <p className="text-950 dark:text-100 text-sm">Gastos totales</p>
