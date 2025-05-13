@@ -1,3 +1,4 @@
+import { BackButton } from "@/components/ui/BackButton";
 import { createGroup } from "@/services/groups";
 import { ImagePlus, FolderKanban, BadgeEuro, Type } from "lucide-react";
 import { useState } from "react";

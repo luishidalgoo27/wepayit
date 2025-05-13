@@ -18,6 +18,7 @@ import { InvitacionPage } from "@/pages/Users/InvitacionPage";
 import { GroupLayout, loader as GroupLoader } from "./layouts/GroupLayout";
 import { AboutPage } from "@/pages/FastLinks/AboutPage";
 import { TermsPage } from "@/pages/FastLinks/TermsPage";
+import { GamesPage } from "@/pages/Games/GamesPage"; // Importación por defecto
 
 const router = createBrowserRouter([
   // Rutas públicas y accesibles para todos
@@ -25,7 +26,6 @@ const router = createBrowserRouter([
     element: <GuestLayout />, // Layout común para todos
     errorElement: <ErrorPage />,
     children: [
-      { path: "/", element: <HomePage /> },
       { path: "/about", element: <AboutPage /> }, // Ruta para "Sobre nosotros"
       { path: "/terms", element: <TermsPage /> }, // Ruta para "Términos y condiciones"
     ],
@@ -39,6 +39,7 @@ const router = createBrowserRouter([
       {
         element: <GuestLayout />,
         children: [
+          { path: "/", element: <HomePage /> },
           { path: "/register", element: <RegisterPage /> },
           { path: "/login", element: <LoginPage /> },
         ],
@@ -74,6 +75,11 @@ const router = createBrowserRouter([
               {
                 path: "photos",
                 element: <PhotosPage />,
+                loader: GroupLoader,
+              },
+              {
+                path: "/groups/:id/games",
+                element: <GamesPage />,
                 loader: GroupLoader,
               },
             ],
