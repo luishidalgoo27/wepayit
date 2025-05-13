@@ -21,6 +21,7 @@ Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
     Route::post('/user', [UserController::class, 'update']);
+    Route::post('/updateAvatar', [UserController::class, 'updateAvatar']);
     Route::post('/deleteAvatar', [UserController::class, 'deleteImage']);
     
     Route::get('/groups', [GroupController::class, 'getGroupsUser']);

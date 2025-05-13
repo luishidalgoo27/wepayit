@@ -12,6 +12,7 @@ use Cloudinary\Transformation\Resize;
 use Cloudinary\Transformation\Delivery;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Requests\UploadImageRequest;
+use App\Http\Requests\UserUpdateAvatarRequest;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class UserService
@@ -31,16 +32,10 @@ class UserService
             return response()->json(['message', 'User not found'], 404);
         }
 
-        $imageData = $req->hasFile('image') 
-        ? $this->imageUploader->processImageUpload($req->file('image')) 
-        : ['url' => $user->avatar, 'public_id' => $user->avatar_public_id];
         
-        $this->imageUploader->delete($user['avatar_public_id']);
 
         $user->update([
             'name' => $req->name ?? $user->name,
-            'avatar' => $imageData['url'],
-            'avatar_public_id' => $imageData['public_id'],
             'telephone' => $req->telephone ?? $user->telephone,
             'languague' => $req->language ?? $user->languague,
             'username' => $req->username ?? $user->username
@@ -57,6 +52,24 @@ class UserService
             'avatar' => 'https://res.cloudinary.com/dotw4uex6/image/upload/v1747049503/ChatGPT_Image_12_may_2025_13_30_34_x0b7aa.png',
             'avatar_public_id' => null
         ]);
+        return $user;
+    }
+
+    public function updateAvatar(UserUpdateAvatarRequest $req )
+    {
+        $user = $this->user::find(Auth::id());
+        
+        $imageData = $req->hasFile('image') 
+        ? $this->imageUploader->processImageUpload($req->file('image')) 
+        : ['url' => $user->avatar, 'public_id' => $user->avatar_public_id];
+        
+        $this->imageUploader->delete($user['avatar_public_id']);
+        
+        $user->update([
+            'avatar' => $imageData['url'],
+            'avatar_public_id' => $imageData['public_id'],
+        ]);
+
         return $user;
     }
 

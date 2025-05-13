@@ -17,23 +17,16 @@ class AuthController extends Controller
      * @param AuthRequest $req
      * @return User
      */
-    public function createUser(Request $request)
+    public function createUser(AuthRequest $req)
 {
-    $request->validate([
-        'username' => 'required|string|max:255|unique:users',
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
-        'password' => 'required|string|min:8',
-    ]);
-
     $user = User::create([
-        'username' => $request->username,
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
+        'username' => $req->username,
+        'name' => $req->name,
+        'email' => $req->email,
+        'password' => Hash::make($req->password),
     ]);
 
-    event(new Registered($user)); // Enviar correo de verificación
+    event(new Registered($user));
 
     return response()->json(['message' => 'Usuario registrado correctamente. Por favor, verifica tu correo.'], 201);
 }
