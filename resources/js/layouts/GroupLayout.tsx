@@ -1,5 +1,6 @@
 // src/layouts/GroupLayout.tsx
 import { useGetDivisions } from "@/hooks/useGetDivisions";
+import { useGetExpenses } from "@/hooks/useGetExpenses";
 import { useGetGroup } from "@/hooks/useGetGroup";
 import { useGetUser } from "@/hooks/useGetUser";
 import { useEffect, useState } from "react";
@@ -14,25 +15,26 @@ export const GroupLayout = () => {
     const { id } = useLoaderData() as { id: string }
     const { group } = useGetGroup(id)
     const { divisions } = useGetDivisions(id);
+    const { expenses } = useGetExpenses(id)
     const { user } = useGetUser();
 
     const [userExpense, setUserExpense] = useState<number>(0);
     const [totalExpenses, setTotalExpenses] = useState<number>(0);
 
     useEffect(() => {
-        if (!divisions || !user) return;
+        if (!divisions || !user || !expenses) return;
 
-        const totalGroup = divisions.reduce((sum, division) => sum + division.assigned_amount, 0);
+        const totalGroup = expenses.reduce((sum, expense) => sum + expense.amount, 0);
         setTotalExpenses(totalGroup);
 
         const totalUser = divisions
             .filter((division) => division.user_id === user.id)
             .reduce((sum, division) => sum + division.assigned_amount, 0);
         setUserExpense(totalUser);
-    }, [divisions, user]);
+    }, [divisions, user, expenses]);
 
     return (
-        <div className="container max-w-4xl mx-auto py-10 space-y-10 text-950 dark:text-50">
+        <div className="container max-w-4xl mx-auto py-2 space-y-10 text-950 dark:text-50">
             <div className="space-y-6">
                 {/* Header */}
                 <div className="flex flex-col items-center text-center space-y-3">
