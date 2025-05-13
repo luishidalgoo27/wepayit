@@ -2,8 +2,11 @@ import { createGroup } from "@/services/groups";
 import { ImagePlus, FolderKanban, BadgeEuro, Type } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export const CreateGroupPage = () => {
+  const navigate = useNavigate()
+  
   const [name, setName] = useState("");
   const [currency, setCurrency] = useState("");
   const [description, setDescription] = useState("");
@@ -29,7 +32,7 @@ export const CreateGroupPage = () => {
           name: `${data.currencies[key]} (${key})`,
         }));
         setCurrencies(newCurrencies);
-        setShowAllCurrencies(true); // Cambia el estado para mostrar todas las monedas
+        setShowAllCurrencies(true);
       } else {
         toast.error("No se pudieron cargar las monedas.");
       }
@@ -39,7 +42,6 @@ export const CreateGroupPage = () => {
   };
 
   const handleShowLessCurrencies = () => {
-    // Restablece las monedas iniciales y cambia el estado
     setCurrencies([
       { code: "EUR", name: "Euro (€)" },
       { code: "USD", name: "Dólar ($)" },
@@ -69,9 +71,15 @@ export const CreateGroupPage = () => {
       setCurrency("");
       setDescription("");
       setImage(null);
+      navigate('/groups')
     } catch (err: any) {
-      const message = err.message || "Error desconocido";
-      toast.error(message);
+      // Verificar si el backend envía múltiples errores
+      const errors = err.response?.data?.errors
+        ? Object.values(err.response.data.errors).flat() // Aplanar los mensajes de error
+        : [err.response?.data?.message || "Error desconocido. Inténtalo de nuevo."];
+
+      // Mostrar cada error como un toast separado
+      errors.forEach((message: string) => toast.error(message));
     }
   };
 

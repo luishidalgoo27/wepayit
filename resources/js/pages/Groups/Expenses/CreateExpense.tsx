@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
+import { LoaderFunctionArgs, useLoaderData, useNavigate } from "react-router-dom";
 import { FolderKanban, BadgeEuro, Calendar, Type, FileText, Users } from "lucide-react";
 import toast from "react-hot-toast";
 import { createExpense } from "@/services/expenses";
@@ -13,6 +13,8 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: stri
 }
 
 export const CreateExpensePage = () => {
+    const navigate = useNavigate()
+
     const { id } = useLoaderData() as { id: string }
     const { users, loading: loadingUsers } = useGetUsers(id);
     const { categories, loading: loadingCategories } = useGetCategories();
@@ -27,6 +29,55 @@ export const CreateExpensePage = () => {
     const [category, setCategory] = useState("")
     const [receipt, setReceipt] = useState("")
     const [usersDivision, setUsersDivision] = useState<UserDivision[]>([])
+    const [currencies, setCurrencies] = useState([
+        { code: "EUR", name: "Euro (€)" },
+        { code: "USD", name: "Dólar ($)" },
+        { code: "GBP", name: "Libra (£)" },
+        { code: "JPY", name: "Yen (¥)" },
+    ]);
+    const [showAllCurrencies, setShowAllCurrencies] = useState(false);
+    const handleShowMoreCurrencies = async () => {
+    try {
+    const response = await fetch(
+        "https://api.exchangerate.host/list?access_key=545bfb975ab03c81e3f1a344a7ecd593"
+    );
+    const data = await response.json();
+
+    if (data && data.currencies) {
+        const newCurrencies = Object.keys(data.currencies).map((key) => ({
+        code: key,
+        name: `${data.currencies[key]} (${key})`,
+        }));
+        setCurrencies(newCurrencies);
+        setShowAllCurrencies(true); // Cambia el estado para mostrar todas las monedas
+    } else {
+        toast.error("No se pudieron cargar las monedas.");
+    }
+    } catch (error) {
+        toast.error("Error al cargar las monedas.");
+    }
+    };
+
+    const handleShowLessCurrencies = () => {
+        // Restablece las monedas iniciales y cambia el estado
+        setCurrencies([
+        { code: "EUR", name: "Euro (€)" },
+        { code: "USD", name: "Dólar ($)" },
+        { code: "GBP", name: "Libra (£)" },
+        { code: "JPY", name: "Yen (¥)" },
+        ]);
+        setShowAllCurrencies(false);
+    };
+
+    const handleCurrencyChange = (value: string) => {
+        if (value === "show_more") {
+        handleShowMoreCurrencies();
+        } else if (value === "show_less") {
+        handleShowLessCurrencies();
+        } else {
+        setCurrency(value);
+        }
+    };
 
     useEffect(() => {
         if (!loading) {
@@ -83,8 +134,14 @@ export const CreateExpensePage = () => {
                 assigned_amount: 0,
                 selected: false,
             })));
+            navigate(`/groups/${id}/expenses`)
         } catch (err: any) {
-            toast.error(err.message || "Error al crear gasto");
+           const errors = err.response?.data?.errors
+        ? Object.values(err.response.data.errors).flat() // Aplanar los mensajes de error
+        : [err.response?.data?.message || "Error desconocido. Inténtalo de nuevo."];
+
+        // Mostrar cada error como un toast separado
+         errors.forEach((message: string) => toast.error(message));
         }
     };
 
@@ -131,20 +188,27 @@ export const CreateExpensePage = () => {
                 />
             </div>
 
-            <div className="relative">
-                <BadgeEuro className="absolute left-3 top-2 text-emerald-700" size={20} />
-                <select
-                    value={currency}
-                    onChange={(e) => setCurrency(e.target.value)}
-                    className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
-                >
-                    <option value="">Selecciona una moneda</option>
-                    <option value="EUR">Euro (€)</option>
-                    <option value="USD">Dólar ($)</option>
-                    <option value="GBP">Libra (£)</option>
-                    <option value="JPY">Yen (¥)</option>
-                </select>
-            </div>
+             {/* Moneda */}
+        <div className="relative">
+            <BadgeEuro className="absolute left-3 top-2 text-emerald-700" size={20} />
+            <select
+            value={currency}
+            onChange={(e) => handleCurrencyChange(e.target.value)}
+            className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
+            >
+            <option value="">Selecciona una moneda</option>
+            {currencies.map((currency) => (
+                <option key={currency.code} value={currency.code}>
+                {currency.name}
+                </option>
+            ))}
+            {!showAllCurrencies ? (
+                <option value="show_more">Mostrar más monedas</option>
+            ) : (
+                <option value="show_less">Mostrar menos monedas</option>
+            )}
+            </select>
+        </div>
 
             <div className="relative">
                 <Type className="absolute left-3 top-3 text-emerald-700" size={20} />
