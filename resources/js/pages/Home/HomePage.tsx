@@ -58,7 +58,7 @@ export const HomePage = () => {
                     </p>
         
                     <motion.button
-                        className="mt-4 bg-[var(--color-500)] dark:bg-[var(--color-400)] text-[var(--color-50)] px-6 py-3 rounded-xl text-lg font-medium shadow hover:bg-[var(--color-400)] dark:hover:bg-500 transition"
+                        className="clickButton mt-4 px-6 py-3 text-lg  shadow"
                         onClick={() => navigate('/register')}
 
                     >
@@ -187,7 +187,7 @@ export const HomePage = () => {
                     Únete a miles de usuarios que ya están simplificando sus gastos con <span className="font-semibold">WePayIt</span>.
                 </p>
                 <motion.button
-                    className="bg-[var(--color-50)] dark:bg-400 dark:hover:bg-500 dark:text-50 dark:hover:text-50 text-[var(--color-500)] hover:bg-200 hover:text-800 px-6 py-3 rounded-xl text-lg font-medium shadow transition cursor-pointer"
+                    className="clickButton px-6 py-3 rounded-xl text-lg font-medium shadow"
                     onClick={() => navigate('/register')}
 
                 >
