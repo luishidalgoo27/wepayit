@@ -10,7 +10,7 @@
             "dest": "/public/build/assets/"
         },
         {
-            "src": "/(.*\\.(png|jpg|jpeg|avif|gif|svg|css|js))",
+            "src": "/(.*\\.(png|jpg|jpeg|avif|gif|svg|css|js|webp))",
             "dest": "/public/$1"
         },
         {
