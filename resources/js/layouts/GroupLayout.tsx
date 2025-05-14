@@ -60,7 +60,7 @@ export const GroupLayout = () => {
                 to="/groups/edit-group"
                 className="clickButton  w-auto p-5 text-center  font-semibold py-3 rounded-xl shadow-md"
             >
-                Editar Grupo
+                🖋️ Editar Grupo
             </Link>
                 </div>
                 {/* Navegación */}
