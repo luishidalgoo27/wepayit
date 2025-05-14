@@ -7,6 +7,13 @@ export const ExpensesPage = () => {
 
     return (
         <>
+            {/* Boton añadir gasto */}
+            <Link
+                to={`/groups/${id}/create-expense`}
+                className="clickButton block w-full text-center bg-gradient-to-b font-semibold py-3 shadow-md"
+            >
+                + Añadir gasto
+            </Link>
             {/* Lista de gastos */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {expenses.map((expense) => (
@@ -48,18 +55,17 @@ export const ExpensesPage = () => {
                                 </Link>
                             )}
                         </div>
+                <Link
+                    to={`/groups/${id}/edit-expenses`}
+                    className="bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950  w-auto p-5 text-center  font-semibold py-3 rounded-xl shadow-md"
+                >
+                    Ver gasto
+                </Link>
                     </div>
                 ))}
             </div>
 
 
-            {/* Boton añadir gasto */}
-            <Link
-                to={`/groups/${id}/create-expense`}
-                className="clickButton block w-full text-center bg-gradient-to-b font-semibold py-3 shadow-md"
-            >
-                + Añadir gasto
-            </Link>
         </>
     );
 };

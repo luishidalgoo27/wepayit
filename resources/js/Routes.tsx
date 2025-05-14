@@ -21,6 +21,8 @@ import { TermsPage } from "@/pages/FastLinks/TermsPage";
 import { GamesPage } from "@/pages/Groups/Games/GamesPage";
 import { GroupProvider } from "@/context/GroupContext"; 
 import { MinimalLayout } from "@/layouts/MinimalLayout";
+import { EditGroupPage } from "./pages/Groups/EditGroupPage";
+import { EditExpensePage } from "./pages/Groups/Expenses/EditExpensesPage";
 
 const router = createBrowserRouter([
   /* Layout sin header ni footer */
@@ -59,6 +61,7 @@ const router = createBrowserRouter([
         children: [
           { path: "/groups", element: <GroupsPage /> },
           { path: "/groups/create-group", element: <CreateGroupPage /> },
+          { path: "/groups/edit-group", element: <EditGroupPage /> },
 
           {
             path: "/groups/:id",
@@ -68,6 +71,11 @@ const router = createBrowserRouter([
               {
                 path: "expenses",
                 element: <ExpensesPage />,
+                loader: GroupLoader,
+              },
+              {
+                path: "edit-expenses",
+                element: <EditExpensePage />,
                 loader: GroupLoader,
               },
               {

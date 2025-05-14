@@ -15,7 +15,7 @@ export const GroupLayout = () => {
     const { userExpense, totalExpenses } = useGetUserGroupExpenses(id);
 
     return (
-        <div className="container max-w-4xl mx-auto py-2 space-y-10 text-gray-900 dark:text-gray-50">
+        <div className="container max-w-4xl mx-auto py-2 space-y-10 text-950 dark:text-50 px-8">
             <div className="space-y-6">
                 {/* Header */}
                 <div className="flex flex-col items-center text-center space-y-3">
@@ -33,8 +33,13 @@ export const GroupLayout = () => {
                         </div>
                     )}
                     <h1 className="text-4xl font-bold tracking-tight">{group?.name}</h1>
+            <Link 
+                to="/groups/edit-group"
+                className="clickButton  w-auto p-5 text-center  font-semibold py-3 rounded-xl shadow-md"
+            >
+                🖋️ Editar Grupo
+            </Link>
                 </div>
-
                 {/* Navegación */}
                 <div className="grid grid-cols-4 bg-500 dark:bg-500 text-950 dark:text-50 border-2 border-300 rounded-xl shadow-sm overflow-hidden text-center text-sm font-medium">
                     <Link to={`expenses`} className="py-3 border-r sectionCols">
@@ -43,11 +48,11 @@ export const GroupLayout = () => {
                     <Link to={`balances`} className="py-3 sectionCols">
                         Saldos
                     </Link>
-                    <Link to={`photos`} className="py-3 border-x sectionCols">
-                        Fotos
-                    </Link>
-                    <Link to={`games`} className="py-3 sectionCols">
+                    <Link to={`games`} className="py-3 border-x sectionCols">
                         Juegos
+                    </Link>
+                    <Link to={`photos`} className="py-3 sectionCols">
+                        Fotos
                     </Link>
                 </div>
 
