@@ -20,6 +20,7 @@ import { AboutPage } from "@/pages/FastLinks/AboutPage";
 import { TermsPage } from "@/pages/FastLinks/TermsPage";
 import { GamesPage } from "@/pages/Games/GamesPage";
 import { GroupProvider } from "@/context/GroupContext"; // Importar el contexto
+import { EditGroupPage } from "./pages/Groups/EditGroupPage";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,7 @@ const router = createBrowserRouter([
         children: [
           { path: "/groups", element: <GroupsPage /> },
           { path: "/groups/create-group", element: <CreateGroupPage /> },
+          { path: "/groups/edit-group", element: <EditGroupPage /> },
 
           {
             path: "/groups/:id",
