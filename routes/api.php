@@ -13,6 +13,7 @@ use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\ConverterController;
 use App\Http\Controllers\UserGroupController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::post('/register', [AuthController::class, 'createUser'])->name('auth.register');
@@ -24,7 +25,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/user', [UserController::class, 'update']);
     Route::post('/updateAvatar', [UserController::class, 'updateAvatar']);
     Route::post('/deleteAvatar', [UserController::class, 'deleteImage']);
-    
+
+    Route::get('/fullUsers', [UserController::class, 'fullUsers']);
+
     Route::get('/groups', [GroupController::class, 'getGroupsUser']);
     Route::post('/get-group', [GroupController::class, 'getGroup']);
     Route::post('/group', [GroupController::class, 'create']);
@@ -32,7 +35,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/group', [GroupController::class, 'delete']);
     Route::post('/deletePhoto', [GroupController::class, 'deleteImage']);
     Route::post('/userCount', [UserGroupController::class, 'userCount']);
-
+    
     Route::post('/getUsers', [GroupController::class, 'getUsers']);
     
     Route::delete('/deleteUser', [UserGroupController::class, 'deleteUser']);
@@ -41,7 +44,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
     
     Route::post('/notification', [NotificationController::class, 'sendNotification']);
-    
+      
+    Route::post('/payments', [PaymentController::class, 'getPaymentUser']);
+    Route::post('/paymentGroup', [PaymentController::class, 'getPaymentGroup']);
+
     Route::post('/expenses', [ExpensesController::class, 'getExpenses']);
     Route::patch('/expense', [ExpensesController::class, 'update']);
     Route::post('/expense', [ExpensesController::class, 'create']);
@@ -52,6 +58,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);
     
     Route::post('/converter', [ConverterController::class, 'convert']);
+    Route::post('/search-users', [UserController::class, 'searchUsers']);
 });
 
 
