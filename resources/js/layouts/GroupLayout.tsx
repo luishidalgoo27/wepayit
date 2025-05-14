@@ -56,7 +56,7 @@ export const GroupLayout = () => {
                         </div>
                     )}
                     <h1 className="text-4xl font-bold tracking-tight">{group?.name}</h1>
-            <Link
+            <Link 
                 to="/groups/edit-group"
                 className="clickButton  w-auto p-5 text-center  font-semibold py-3 rounded-xl shadow-md"
             >

@@ -5,7 +5,7 @@ export const Footer = () => {
                 {/* Sección 1: Logo */}
                 <div className="text-center md:text-left">
                     <img
-                        src="/public/wepayitlightlogo.png" // Cambia esta ruta al logo real
+                        src="/wepayitlightlogo.png" // Cambia esta ruta al logo real
                         alt="WePayIt Logo"
                         className="w-22 mx-auto md:mx-0"
                     />
