@@ -10,8 +10,8 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: stri
 }
 
 export const GamesPage = () => {
-  const { id } = useLoaderData() as { id: string }; // Obtener el id del grupo
-  const { userExpense } = useGroupContext(); // Obtener userExpense del contexto
+  const { id } = useLoaderData() as { id: string }; 
+  const { userExpense } = useGroupContext(); 
 
   const [funStats, setFunStats] = useState({
     coffeeEquivalent: 0,

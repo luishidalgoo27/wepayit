@@ -10,8 +10,8 @@ import { UserLayout } from "@/layouts/UserLayout";
 import { GroupsPage } from "@/pages/Groups/GroupsPage";
 import { CreateGroupPage } from "@/pages/Groups/CreateGroupPage";
 import { ExpensesPage } from "@/pages/Groups/Expenses/ExpensesPage";
-import { BalancesPage } from "./pages/Groups/Balances/BalancesPage";
-import { PhotosPage } from "./pages/Groups/Photos/PhotosPage";
+import { BalancesPage } from "@/pages/Groups/Balances/BalancesPage";
+import { PhotosPage } from "@/pages/Groups/Photos/PhotosPage";
 import { CreateExpensePage, loader as CreateExpenseLoader } from "@/pages/Groups/Expenses/CreateExpense";
 import { EditProfilePage } from "@/pages/Users/EditProfilePage";
 import { InvitacionPage } from "@/pages/Users/InvitacionPage";
@@ -19,11 +19,13 @@ import { GroupLayout, loader as GroupLoader } from "./layouts/GroupLayout";
 import { AboutPage } from "@/pages/FastLinks/AboutPage";
 import { TermsPage } from "@/pages/FastLinks/TermsPage";
 import { GamesPage } from "@/pages/Games/GamesPage";
-import { GroupProvider } from "@/context/GroupContext"; // Importar el contexto
+import { GroupProvider } from "@/context/GroupContext"; 
+import { MinimalLayout } from "@/layouts/MinimalLayout";
 
 const router = createBrowserRouter([
+  /* Layout sin header ni footer */
   {
-    element: <GuestLayout />,
+    element: <MinimalLayout />,
     errorElement: <ErrorPage />,
     children: [
       { path: "/about", element: <AboutPage /> },
@@ -31,6 +33,7 @@ const router = createBrowserRouter([
     ],
   },
 
+  /* Rutas publicas */
   {
     element: <PublicRoute />,
     errorElement: <ErrorPage />,
@@ -46,6 +49,7 @@ const router = createBrowserRouter([
     ],
   },
 
+  /* Rutas privadas */
   {
     element: <ProtectedRoute />,
     errorElement: <ErrorPage />,
