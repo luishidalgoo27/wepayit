@@ -36,15 +36,15 @@ export const RegisterPage = () => {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4">
-      <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-xl">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Crear cuenta en <span className="text-[#8FE3C2]">Wepayit</span>
+    <main className="min-h-screen flex items-center justify-center px-4 dark:text-50 text-950">
+      <div className="w-full max-w-md p-8 bg-[var(--color-50)] dark:bg-[var(--color-900)] border border-[var(--color-200)] dark:border-[var(--color-700)] rounded-2xl shadow-xl">
+        <h2 className="text-2xl font-bold text-center text-950 dark:text-50 mb-6">
+          Crear cuenta en <span className="dark:text-300 text-400">Wepayit</span>
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="name" className="block text-sm font-medium">
               Nombre
             </label>
             <input
@@ -60,7 +60,7 @@ export const RegisterPage = () => {
           </div>
 
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="username" className="block text-sm font-medium">
               Usuario
             </label>
             <input
@@ -76,7 +76,7 @@ export const RegisterPage = () => {
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="email" className="block text-sm font-medium">
               Correo electrónico
             </label>
             <input
@@ -92,7 +92,7 @@ export const RegisterPage = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="password" className="block text-sm font-medium">
               Contraseña
             </label>
             <input
@@ -113,15 +113,15 @@ export const RegisterPage = () => {
 
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-[#8FE3C2] text-white font-semibold rounded-full hover:bg-[#7dd8b4] transition"
+            className="w-full py-2 px-4 dark:bg-500 dark:text-50 bg-700 text-50 font-semibold rounded-full hover:bg-600 dark:hover:bg-200 dark:hover:text-950 transition"
           >
             Registrarse
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-600">
+        <p className="mt-6 text-center text-sm dark:text-200 text-500 ">
           ¿Ya tienes una cuenta?{" "}
-          <Link to="/login" className="text-[#8FE3C2] hover:underline font-medium">
+          <Link to="/login" className="text-700 dark:text-50 hover:underline font-medium">
             Inicia sesión
           </Link>
         </p>
