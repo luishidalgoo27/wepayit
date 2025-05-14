@@ -56,8 +56,13 @@ export const GroupLayout = () => {
                         </div>
                     )}
                     <h1 className="text-4xl font-bold tracking-tight">{group?.name}</h1>
+            <Link
+                to="/groups/edit-group"
+                className="clickButton  w-auto p-5 text-center  font-semibold py-3 rounded-xl shadow-md"
+            >
+                Editar Grupo
+            </Link>
                 </div>
-
                 {/* Navegación */}
                 <div className="grid grid-cols-4 bg-500 dark:bg-500 text-950 dark:text-50 border-2 border-300 rounded-xl shadow-sm overflow-hidden text-center text-sm font-medium">
                     <Link to={`expenses`} className="py-3 border-r sectionCols">
