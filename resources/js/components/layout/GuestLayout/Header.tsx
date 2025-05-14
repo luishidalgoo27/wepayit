@@ -14,7 +14,7 @@ export const Header = () => {
                     
                     <Link 
                         to='/register' 
-                        className="rounded-full bg-600 dark:bg-400 px-4 py-2  font-semibold text-white hover:bg-[#7dd8b4] transition"
+                        className="rounded-full bg-600 dark:bg-400 px-4 py-2  font-semibold text-white hover:bg-500 transition"
                     >
                         Registrate
                     </Link>
