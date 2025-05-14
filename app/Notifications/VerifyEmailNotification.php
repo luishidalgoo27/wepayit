@@ -25,7 +25,7 @@ class VerifyEmailNotification extends BaseVerifyEmail
             : config('app.url');
         
         // Construir la URL base
-        $routePath = '/api/verify-email';
+        $routePath = '/api/api/verify-email';
         $baseVerificationUrl = $baseUrl . $routePath . '?id=' . $notifiable->getKey();
         
         // Firmar la URL con nuestro método personalizado
