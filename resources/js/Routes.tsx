@@ -21,6 +21,7 @@ import { TermsPage } from "@/pages/FastLinks/TermsPage";
 import { GamesPage } from "@/pages/Games/GamesPage";
 import { GroupProvider } from "@/context/GroupContext"; // Importar el contexto
 import { EditGroupPage } from "./pages/Groups/EditGroupPage";
+import { EditExpensePage } from "./pages/Groups/Expenses/EditExpensesPage";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,11 @@ const router = createBrowserRouter([
               {
                 path: "expenses",
                 element: <ExpensesPage />,
+                loader: GroupLoader,
+              },
+              {
+                path: "edit-expenses",
+                element: <EditExpensePage />,
                 loader: GroupLoader,
               },
               {
