@@ -85,7 +85,7 @@ export const CreateGroupPage = () => {
   };
 
   return (
-
+    <div className="px-4">
     <form
       onSubmit={handleSubmit}
       className="container max-w-xl mx-auto py-8 space-y-6 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20 "
@@ -164,5 +164,6 @@ export const CreateGroupPage = () => {
         Crear Grupo
       </button>
     </form>
+    </div>
   );
 };
