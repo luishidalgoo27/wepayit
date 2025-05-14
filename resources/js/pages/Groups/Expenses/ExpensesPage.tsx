@@ -12,17 +12,17 @@ export const ExpensesPage = () => {
                 {expenses.map((expense) => (
                     <div
                         key={expense.id}
-                        className="bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-3 flex items-start justify-between"
+                        className="box shadow-sm px-4 py-3 flex items-start justify-between"
                     >
                         {/* Izquierda: Título, categoría y fecha */}
                         <div className="space-y-1">
-                            <p className="font-medium text-gray-800 leading-tight">{expense.title} <span className="text-sm text-gray-400">{new Date(expense.date).toLocaleDateString()}</span></p>
-                            <p className="text-sm text-gray-500">{expense.category}</p>
+                            <p className="font-medium dark:text-50 text-950 leading-tight">{expense.title} <span className="text-sm dark:text-300 text-500">{new Date(expense.date).toLocaleDateString()}</span></p>
+                            <p className="text-sm dark:text-300 text-800">{expense.category}</p>
                         </div>
 
                         {/* Derecha: Monto, estado, recibo */}
                         <div className="text-right space-y-1">
-                            <p className="text-lg font-semibold text-emerald-600">
+                            <p className="text-lg font-semibold dark:text-200 text-700">
                                 {expense.amount} {expense.currency_type}
                             </p>
 
@@ -30,7 +30,7 @@ export const ExpensesPage = () => {
                                 <span
                                     className={`inline-block text-xs px-2 py-0.5 rounded-full font-medium ${expense.state === "pending"
                                         ? "bg-yellow-100 text-yellow-700"
-                                        : "bg-green-100 text-green-700"
+                                        : "bg-500 text-200"
                                         }`}
                                 >
                                     {expense.state}
@@ -56,7 +56,7 @@ export const ExpensesPage = () => {
             {/* Boton añadir gasto */}
             <Link
                 to={`/groups/${id}/create-expense`}
-                className="hover:translate-y-0.5 block w-full text-center bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950 hover:bg-500 text-100 dark:text-200 font-semibold py-3 rounded-xl transition shadow-md"
+                className="clickButton block w-full text-center bg-gradient-to-b font-semibold py-3 shadow-md"
             >
                 + Añadir gasto
             </Link>
