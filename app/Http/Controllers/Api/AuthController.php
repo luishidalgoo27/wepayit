@@ -76,21 +76,15 @@ class AuthController extends Controller
         }
     }
 
-   public function verifyEmail(Request $request, $id, $hash)
+    public function verifyEmail(Request $request)
     {
-        $user = User::find($id);
+        $user = User::find($request->query('id'));
 
-        if (!$user) {
+        if (! $user) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
-        // Verificar el hash del email independientemente de la firma
-        if (!hash_equals((string) $hash, sha1($user->email))) {
-            return response()->json(['message' => 'Hash inválido'], 403);
-        }
-
-        // Comprobar si la URL tiene firma, pero no fallar si no es válida en producción
-        if (!URL::hasValidSignature($request) && env('APP_ENV') !== 'production') {
+        if (! URL::hasValidSignature($request)) {
             return response()->json(['message' => 'Enlace inválido o expirado'], 403);
         }
 
@@ -101,43 +95,7 @@ class AuthController extends Controller
         $user->markEmailAsVerified();
         event(new Verified($user));
 
-        // Redirigir a una página de éxito o a la aplicación
-        if ($request->wantsJson()) {
-            return response()->json(['message' => 'Correo verificado correctamente']);
-        } else {
-            // Redirigir a la aplicación frontend
-            return redirect('https://wepayit.vercel.app/login?verified=1');
-        }
+        return response()->json(['message' => 'Correo verificado correctamente']);
     }
-
-    public function verifyEmailAlternative(Request $request, $id, $hash)
-    {
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json(['message' => 'Usuario no encontrado'], 404);
-        }
-
-        // Verificar solo el hash del email
-        if (!hash_equals((string) $hash, sha1($user->email))) {
-            return response()->json(['message' => 'Hash inválido'], 403);
-        }
-
-        if ($user->hasVerifiedEmail()) {
-            return response()->json(['message' => 'Correo ya verificado']);
-        }
-
-        $user->markEmailAsVerified();
-        event(new Verified($user));
-
-        // Redirigir a una página de éxito o a la aplicación
-        if ($request->wantsJson()) {
-            return response()->json(['message' => 'Correo verificado correctamente']);
-        } else {
-            // Redirigir a la aplicación frontend
-            return redirect('https://wepayit.vercel.app/login?verified=1');
-        }
-    }
-
 
 }
