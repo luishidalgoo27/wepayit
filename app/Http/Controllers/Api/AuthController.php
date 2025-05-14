@@ -28,7 +28,7 @@ class AuthController extends Controller
         'password' => Hash::make($req->password),
     ]);
 
-    event(new Registered($user));
+    /* event(new Registered($user)); */
 
     return response()->json(['message' => 'Usuario registrado correctamente. Por favor, verifica tu correo.'], 201);
 }
