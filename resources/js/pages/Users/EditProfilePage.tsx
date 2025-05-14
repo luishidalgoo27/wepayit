@@ -58,6 +58,7 @@ export const EditProfilePage = () => {
   if (!user) return null;
 
   return (
+    <div className="px-4">
     <div className="container max-w-md mx-auto py-8 space-y-6 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20 ">
       <div className="flex flex-col justify-center items-center">
         <div className="relative group z-0 w-20 h-20">
@@ -144,6 +145,7 @@ export const EditProfilePage = () => {
           Guardar
         </button>
       </form>
+    </div>
     </div>
   );
 };
