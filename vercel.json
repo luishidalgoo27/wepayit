@@ -10,8 +10,8 @@
             "dest": "/public/build/assets/"
         },
         {
-            "src": "/img/(.*)",
-            "dest": "/public/img/"
+            "src": "/(.*\\.(png|jpg|jpeg|avif|gif|svg|css|js|webp))",
+            "dest": "/public/$1"
         },
         {
             "src": "/js/(.*)",
@@ -24,7 +24,7 @@
     ],
     "env": {
         "APP_ENV": "production",
-        "APP_DEBUG": "false",
+        "APP_DEBUG": "true",
         "APP_URL": "https://wepayit.vercel.app/",
         "APP_KEY": "base64:73TTFTiHZmIALAaAZWQaOwBtTJFVopP3WAvagtQaGUc=",
         "APP_CONFIG_CACHE": "/tmp/config.php",

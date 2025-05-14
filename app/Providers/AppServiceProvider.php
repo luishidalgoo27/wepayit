@@ -25,5 +25,13 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
         Schema::defaultStringLength(191);
+
+        // Configurar logs para Vercel
+            $this->app->make('config')->set('logging.channels.single', [
+                'driver' => 'errorlog',
+                'level' => env('LOG_LEVEL', 'debug'),
+            ]);
+            
+            $this->app->make('config')->set('logging.default', 'single');
     }
 }

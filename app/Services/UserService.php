@@ -11,6 +11,7 @@ use Cloudinary\Transformation\Format;
 use Cloudinary\Transformation\Resize;
 use Cloudinary\Transformation\Delivery;
 use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\SearchUsersRequest;
 use App\Http\Requests\UploadImageRequest;
 use App\Http\Requests\UserUpdateAvatarRequest;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
@@ -23,7 +24,21 @@ class UserService
     ) {
         $this->user = $user;
     }
-    
+
+    public function searchUsers(SearchUsersRequest $req)
+    {
+        $username = $req->username;
+
+
+        if (!$username) {
+            return response()->json(['error' => 'El campo username es requerido.'], 400);
+        }
+
+        $users = User::where('username', 'like', '%' . $username . '%')->get();
+
+        return $users;
+    }
+
     public function update(UserUpdateRequest $req)
     {
         $user = $this->user::find(Auth::id());
