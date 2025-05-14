@@ -76,26 +76,31 @@ class AuthController extends Controller
         }
     }
 
-    public function verifyEmail(Request $request)
-    {
-        $user = User::find($request->query('id'));
+    public function verifyEmail(Request $request, $id, $hash)
+{
+    $user = User::find($id);
 
-        if (! $user) {
-            return response()->json(['message' => 'Usuario no encontrado'], 404);
-        }
-
-        if (! URL::hasValidSignature($request)) {
-            return response()->json(['message' => 'Enlace inválido o expirado'], 403);
-        }
-
-        if ($user->hasVerifiedEmail()) {
-            return response()->json(['message' => 'Correo ya verificado']);
-        }
-
-        $user->markEmailAsVerified();
-        event(new Verified($user));
-
-        return response()->json(['message' => 'Correo verificado correctamente']);
+    if (! $user) {
+        return response()->json(['message' => 'Usuario no encontrado'], 404);
     }
+
+    if (! URL::hasValidSignature($request)) {
+        return response()->json(['message' => 'Enlace inválido o expirado'], 403);
+    }
+
+    if (! hash_equals((string) $hash, sha1($user->email))) {
+        return response()->json(['message' => 'Hash inválido'], 403);
+    }
+
+    if ($user->hasVerifiedEmail()) {
+        return response()->json(['message' => 'Correo ya verificado']);
+    }
+
+    $user->markEmailAsVerified();
+    event(new Verified($user));
+
+    return response()->json(['message' => 'Correo verificado correctamente']);
+}
+
 
 }
