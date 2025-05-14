@@ -16,10 +16,10 @@ export const Footer = () => {
                     <h3 className="text-lg font-semibold mb-2">Enlaces rápidos</h3>
                     <ul className="space-y-1">
                         <li>
-                            <a href="/about" className="hover:text-accent hover:text-300 dark:hover:text-300 transition">Sobre nosotros</a>
+                            <a href="/about" className="hover:text-accent transition">Sobre nosotros</a>
                         </li>
                         <li>
-                            <a href="/terms" className="hover:text-accent hover:text-300 dark:hover:text-300 transition">Términos y condiciones</a>
+                            <a href="/terms" className="hover:text-accent transition">Términos y condiciones</a>
                         </li>
                     </ul>
                 </div>
@@ -40,7 +40,7 @@ export const Footer = () => {
             </div>
 
             {/* Línea divisoria */}
-            <div className="border-[var(--color-950)] dark:border-[var(--color-700)]">
+            <div className="border-t border-[var(--color-950)] dark:border-[var(--color-700)] mt-4 pt-2">
                 <p className="text-center text-sm">
                     © {new Date().getFullYear()} WePayIt. Todos los derechos reservados.
                 </p>
