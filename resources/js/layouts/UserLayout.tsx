@@ -7,8 +7,9 @@ export const UserLayout = () => {
     return(
         <div className="flex flex-col min-h-screen">
             <Toaster position="top-right" reverseOrder={false} />
+            
             <Header />
-            {/* Botón de "Volver atrás" siempre visible */}
+
             <main className="flex-1 container mx-auto py-4">
                 <Outlet />
             </main>
