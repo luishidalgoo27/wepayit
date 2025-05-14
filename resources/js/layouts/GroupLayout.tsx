@@ -34,7 +34,7 @@ export const GroupLayout = () => {
     }, [divisions, user, expenses]);
 
     return (
-        <div className="container max-w-4xl mx-auto py-2 space-y-10 text-950 dark:text-50">
+        <div className="container max-w-4xl mx-auto py-2 space-y-10 text-950 dark:text-50 px-8">
             <div className="space-y-6">
                 {/* Header */}
                 <div className="flex flex-col items-center text-center space-y-3">
