@@ -33,6 +33,10 @@
     @apply bg-[var(--color-50)] dark:bg-[var(--color-900)] hover:bg-[var(--color-100)] dark:hover:bg-[var(--color-800)] border border-[var(--color-200)] dark:border-[var(--color-700)] rounded-2xl;
 }
 
+.box-2 {
+    @apply bg-[var(--color-50)] dark:bg-[var(--color-900)] border border-[var(--color-200)] dark:border-[var(--color-700)] rounded-2xl;
+}
+
 .clickButton {
     @apply dark:bg-gradient-to-b dark:from-500 dark:to-600 bg-gradient-to-b from-700 to-800 text-50 font-semibold rounded-full hover:bg-gradient-to-b hover:from-600 hover:to-700 dark:hover:from-400 dark:hover:to-500 transition cursor-pointer hover:translate-y-0.5;
 }
