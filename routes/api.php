@@ -44,7 +44,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
     
     Route::post('/notification', [NotificationController::class, 'sendNotification']);
-    
+     
     Route::post('/payments', [PaymentController::class, 'getPaymentUser']);
     Route::post('/paymentGroup', [PaymentController::class, 'getPaymentGroup']);
 
