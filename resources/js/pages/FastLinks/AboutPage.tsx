@@ -4,25 +4,25 @@ export const AboutPage = () => {
             name: "Luis Hidalgo",
             role: "Desarrollador Backend y Gestor del Proyecto",
             description: "Encargado de la lógica del servidor y supervisó el desarrollo del proyecto y la coordinación del equipo.",
-            photo: "/public/luisphoto.jpg", 
+            photo: "/luisphoto.jpg", 
         },
         {
             name: "Pedro Ángel Beltrán",
             role: "Desarrollador Frontend",
             description: "Encargado de la implementación de la interfaz de usuario y la experiencia visual.",
-            photo: "/public/pedroangelphoto.jpg", 
+            photo: "/pedroangelphoto.jpg", 
         },
         {
             name: "Ángel Baena",
             role: "Desarrollador Backend",
             description: "Integración con la base de datos. Modelos, Migraciones",
-            photo: "/public/angelphoto.jpg", 
+            photo: "/angelphoto.jpg", 
         },
         {
             name: "Rafaél López",
             role: "Diseñador UI/UX",
             description: "Diseñó la experiencia de usuario y los prototipos visuales de la plataforma.",
-            photo: "/public/rafaphoto.jpg", 
+            photo: "/rafaphoto.jpg", 
         },
     ];
 
