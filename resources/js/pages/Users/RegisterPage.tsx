@@ -36,7 +36,7 @@ export const RegisterPage = () => {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 dark:text-50 text-950">
+    <main className=" flex items-center justify-center px-4 dark:text-50 text-950">
       <div className="w-full max-w-md p-8 bg-[var(--color-50)] dark:bg-[var(--color-900)] border border-[var(--color-200)] dark:border-[var(--color-700)] rounded-2xl shadow-xl">
         <h2 className="text-2xl font-bold text-center text-950 dark:text-50 mb-6">
           Crear cuenta en <span className="dark:text-300 text-400">Wepayit</span>
@@ -113,7 +113,7 @@ export const RegisterPage = () => {
 
           <button
             type="submit"
-            className="w-full py-2 px-4 dark:bg-500 dark:text-50 bg-700 text-50 font-semibold rounded-full hover:bg-600 dark:hover:bg-200 dark:hover:text-950 transition"
+            className="clickButton w-full py-2 px-4  font-semibold rounded-full"
           >
             Registrarse
           </button>

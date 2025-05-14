@@ -36,7 +36,7 @@ export const GroupsPage = () => {
     }, []);
 
     return (
-        <div className="container max-w-4xl mx-auto  space-y-6">
+        <div className="container max-w-4xl mx-auto  space-y-6 px-8">
             {/* Título y subtítulo */}
             <h1 className="text-left text-5xl font-bold mb-2">
                 wepayit <span className="text-lg font-medium">by Medac</span>
@@ -48,7 +48,7 @@ export const GroupsPage = () => {
             {/* Botón para crear un nuevo grupo */}
             <Link
                 to="/groups/create-group"
-                className="block w-full text-center bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950 hover:bg-500 text-100 dark:text-200 font-semibold py-3 rounded-xl transition shadow-md"
+                className="clickButton block w-full text-center font-semibold py-3 rounded-xl shadow-md"
             >
                 + Nuevo wepayit
             </Link>
@@ -64,7 +64,7 @@ export const GroupsPage = () => {
                     <Link
                         key={group.id}
                         to={`/groups/${group.id}`}
-                        className="bg-[var(--color-50)] dark:bg-[var(--color-900)] hover:bg-[var(--color-100)] dark:hover:bg-[var(--color-800)] border border-[var(--color-200)] dark:border-[var(--color-700)] rounded-2xl p-4 shadow-md flex flex-col gap-2 transition"
+                        className="box p-4 shadow-md flex flex-col gap-2 transition"
                     >
                         <div className="flex items-center gap-4">
                             {group.photo ? (
@@ -114,7 +114,7 @@ export const GroupsPage = () => {
                     <p>No tienes grupos creados aún.</p>
                     <p>
                         Haz clic en{" "}
-                        <span className="font-semibold text-500">+ Nuevo wepayit</span> para
+                        <span className="font-semibold">+ Nuevo wepayit</span> para
                         crear uno.
                     </p>
                 </div>
