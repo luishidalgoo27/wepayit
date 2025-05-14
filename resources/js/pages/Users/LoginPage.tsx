@@ -101,7 +101,7 @@ export const LoginPage = () => {
 
           <button
             type="submit"
-            className="w-full py-2 px-4 dark:bg-500 dark:text-50 bg-700 text-50 font-semibold rounded-full hover:bg-600 dark:hover:bg-200 dark:hover:text-950 transition"
+            className="clickButton w-full py-2 px-4 font-semibold rounded-full"
           >
             Iniciar sesión
           </button>
