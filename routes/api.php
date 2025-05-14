@@ -47,7 +47,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
        
     Route::post('/payments', [PaymentController::class, 'getPaymentUser']);
     Route::post('/paymentGroup', [PaymentController::class, 'getPaymentGroup']);
-
+  
     Route::post('/expenses', [ExpensesController::class, 'getExpenses']);
     Route::patch('/expense', [ExpensesController::class, 'update']);
     Route::post('/expense', [ExpensesController::class, 'create']);
