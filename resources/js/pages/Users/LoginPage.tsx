@@ -6,36 +6,20 @@ import { Link } from "react-router-dom";
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
 
   const { login } = useAuth();
 
-  useEffect(() => {
-    // Verificar si el popup debe mostrarse
-    const showPopup = localStorage.getItem("showVerifyEmailPopup");
-    if (showPopup) {
-      toast.success(
-        "Te has registrado correctamente. Por favor, verifica tu correo electrónico."
-      );
-      localStorage.removeItem("showVerifyEmailPopup"); // Eliminar el indicador
-    }
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
+  e.preventDefault();
 
-    try {
-      await login(email, password);
-      toast.success("Has iniciado sesión correctamente");
-    } catch (err: any) {
-      // Verificar si el error tiene una respuesta del backend
-      const message =
-        err.response?.data?.message || "Error desconocido. Inténtalo de nuevo.";
-      setError(message); // Mostrar el mensaje del backend
-      toast.error(message); // Mostrar el mensaje en el toast
-    }
-  };
+  try {
+    await login(email, password);
+    toast.success("Has iniciado sesión correctamente");
+  } catch (error: any) {
+    console.error("Error al iniciar sesión:", error.message);
+    toast.error(error.message || "Credenciales incorrectas");
+  }
+};
 
   return (
     <main className="min-h-screen flex items-center justify-center px-4">
@@ -60,9 +44,7 @@ export const LoginPage = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`mt-1 w-full px-4 py-2 rounded-md border ${
-                error ? "border-red-400" : "border-gray-300"
-              } focus:ring-[#8FE3C2] focus:border-[#8FE3C2]`}
+              className={`mt-1 w-full px-4 py-2 rounded-md border focus:ring-[#8FE3C2] focus:border-[#8FE3C2]`}
             />
           </div>
 
@@ -89,15 +71,9 @@ export const LoginPage = () => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`mt-1 w-full px-4 py-2 rounded-md border ${
-                error ? "border-red-400" : "border-gray-300"
-              } focus:ring-[#8FE3C2] focus:border-[#8FE3C2]`}
+              className={`mt-1 w-full px-4 py-2 rounded-md border focus:ring-[#8FE3C2] focus:border-[#8FE3C2]`}
             />
           </div>
-
-          {error && (
-            <p className="text-sm text-red-500 text-center">{error}</p>
-          )}
 
           <button
             type="submit"
