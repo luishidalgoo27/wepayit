@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Cloudinary\Asset\Image;
 use App\Utils\ImageUploader;
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use Cloudinary\Transformation\Format;
 use Cloudinary\Transformation\Resize;
 use Cloudinary\Transformation\Delivery;
 use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\SearchUsersRequest;
 use App\Http\Requests\UploadImageRequest;
 use App\Http\Requests\UserUpdateAvatarRequest;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
@@ -42,6 +44,10 @@ class UserController extends Controller
         return response()->json($user, 200);
     }
     
-    
+    public function searchUsers(SearchUsersRequest $req)
+    {
+        $users = $this->userService->searchUsers($req);
+        return response()->json($users, 200);
+    }
 
 }
