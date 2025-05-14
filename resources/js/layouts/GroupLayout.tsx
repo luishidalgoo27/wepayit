@@ -1,4 +1,5 @@
 // src/layouts/GroupLayout.tsx
+import { useGroupContext } from "@/context/GroupContext";
 import { useGetDivisions } from "@/hooks/useGetDivisions";
 import { useGetExpenses } from "@/hooks/useGetExpenses";
 import { useGetGroup } from "@/hooks/useGetGroup";
@@ -12,26 +13,29 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: stri
 }
 
 export const GroupLayout = () => {
-    const { id } = useLoaderData() as { id: string }
-    const { group } = useGetGroup(id)
+    const { id } = useLoaderData() as { id: string };
+    const { group } = useGetGroup(id);
     const { divisions } = useGetDivisions(id);
-    const { expenses } = useGetExpenses(id)
+    const { expenses } = useGetExpenses(id);
     const { user } = useGetUser();
 
-    const [userExpense, setUserExpense] = useState<number>(0);
+    const { userExpense, setUserExpense } = useGroupContext();
+
     const [totalExpenses, setTotalExpenses] = useState<number>(0);
 
     useEffect(() => {
         if (!divisions || !user || !expenses) return;
 
+        // Calcular gastos totales del grupo
         const totalGroup = expenses.reduce((sum, expense) => sum + expense.amount, 0);
         setTotalExpenses(totalGroup);
 
+        // Calcular gastos asignados al usuario
         const totalUser = divisions
             .filter((division) => division.user_id === user.id)
             .reduce((sum, division) => sum + division.assigned_amount, 0);
-        setUserExpense(totalUser);
-    }, [divisions, user, expenses]);
+        setUserExpense(totalUser); // Actualizar el contexto
+    }, [divisions, user, expenses, setUserExpense]);
 
     return (
         <div className="container max-w-4xl mx-auto py-2 space-y-10 text-950 dark:text-50 px-8">
@@ -55,17 +59,17 @@ export const GroupLayout = () => {
                 </div>
 
                 {/* Navegación */}
-                <div className="grid grid-cols-4 bg-700 dark:bg-200 text-50 dark:text-800 border rounded-xl shadow-sm overflow-hidden text-center text-sm font-medium">
-                    <Link to={`expenses`} className="py-3 dark:hover:bg-100 dark:hover:text-950 hover:bg-600 hover:text-200">
+                <div className="grid grid-cols-4 bg-500 dark:bg-500 text-950 dark:text-50 border-2 border-300 rounded-xl shadow-sm overflow-hidden text-center text-sm font-medium">
+                    <Link to={`expenses`} className="py-3 border-r sectionCols">
                         Gastos
                     </Link>
-                    <Link to={`balances`} className="py-3 border-x dark:hover:bg-100 dark:hover:text-950 hover:bg-600 hover:text-200">
+                    <Link to={`balances`} className="py-3 sectionCols">
                         Saldos
                     </Link>
-                    <Link to={`photos`} className="py-3 dark:hover:bg-100 dark:hover:text-950 hover:bg-600 hover:text-200">
+                    <Link to={`photos`} className="py-3 border-x sectionCols">
                         Fotos
                     </Link>
-                    <Link to={`games`} className="py-3 dark:hover:bg-100 dark:hover:text-950 hover:bg-600 hover:text-200">
+                    <Link to={`games`} className="py-3 sectionCols">
                         Juegos
                     </Link>
                 </div>
@@ -73,14 +77,12 @@ export const GroupLayout = () => {
                 {/* Resumen */}
                 <div className="flex justify-around text-center">
                     <div>
-                        <p className="text-gray-500 text-sm">Mis gastos</p>
+                        <p className="dark:text-300 text-700 text-sm">Mis gastos</p>
                         <p className="text-xl font-semibold">{userExpense.toFixed(2)} {group?.currency_type}</p>
                     </div>
                     <div>
-                        <p className="text-950 dark:text-100 text-sm">Gastos totales</p>
-                        <p className="text-xl text-950 dark:text-50 font-semibold">
-                            {totalExpenses.toFixed(2)} {group?.currency_type}
-                        </p>
+                        <p className="dark:text-300 text-700 text-sm">Gastos totales</p>
+                        <p className="text-xl font-semibold">{totalExpenses.toFixed(2)} {group?.currency_type}</p>
                     </div>
                 </div>
             </div>
