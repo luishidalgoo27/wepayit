@@ -18,7 +18,10 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::post('/register', [AuthController::class, 'createUser'])->name('auth.register');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
-Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verification.verify')->middleware(['signed']);;
+Route::get('/verify-email/{id}/{hash}', [AuthController::class, 'verifyEmail'])
+    ->name('verification.verify')
+    ->middleware(['signed']);
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
