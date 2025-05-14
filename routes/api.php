@@ -13,6 +13,7 @@ use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\ConverterController;
 use App\Http\Controllers\UserGroupController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::post('/register', [AuthController::class, 'createUser'])->name('auth.register');
@@ -42,6 +43,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::post('/notification', [NotificationController::class, 'sendNotification']);
     
+    Route::post('/payments', [PaymentController::class, 'getPaymentUser']);
+    Route::post('/paymentGroup', [PaymentController::class, 'getPaymentGroup']);
+
     Route::post('/expenses', [ExpensesController::class, 'getExpenses']);
     Route::patch('/expense', [ExpensesController::class, 'update']);
     Route::post('/expense', [ExpensesController::class, 'create']);
