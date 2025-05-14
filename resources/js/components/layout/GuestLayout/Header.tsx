@@ -6,7 +6,7 @@ export const Header = () => {
         <header className="sticky top-0 z-50 bg-200 dark:bg-header-dark shadow-md pl-7 pr-7 ">
             <nav className="container mx-auto py-3 flex items-center justify-between">
                 <div className="flex items-center">
-                    <Link to='/' className="text-2xl font-bold"><img src="/public/wepayitlightlogo.png" className="w-15 h-auto" alt="" /></Link>
+                    <Link to='/' className="text-2xl font-bold"><img src="/wepayitlightlogo.png" className="w-15 h-auto" alt="" /></Link>
                 </div>
 
                 <div className="flex place-content-center gap-2">
