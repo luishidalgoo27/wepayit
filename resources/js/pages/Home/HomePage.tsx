@@ -96,7 +96,7 @@ export const HomePage = () => {
                 variants={fadeInFromTop}
             >
                 <motion.img
-                    src="/public/movilYDinero.png"
+                    src="/movilYDinero.png"
                     alt="Dinero en el móvil"
                     className="w-full h-auto rounded-3xl"
                     variants={zoomIn}
