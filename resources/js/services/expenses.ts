@@ -25,3 +25,17 @@ export const createExpense = async (expense: CreateExpense): Promise<Expense> =>
     const res = await api.post(`${API_URL}/expense`, expense);
     return res.data;
 };
+
+export const totalUserExpenses = async (id:string): Promise<number> => {
+    const res = await api.post(`${API_URL}/payments`, {
+        group_id: id
+    });
+    return res.data;
+};
+
+export const totalGroupExpenses = async (id:string): Promise<number> => {
+    const res = await api.post(`${API_URL}/paymentGroup`, {
+        group_id: id
+    });
+    return res.data;
+};
