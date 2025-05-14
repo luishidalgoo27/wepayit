@@ -9,7 +9,7 @@ export const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [showModal, setShowModal] = useState(false); // Estado para el modal
+  const [showModal, setShowModal] = useState(false);
 
   const { register } = useAuth();
   const navigate = useNavigate();
@@ -20,13 +20,11 @@ export const RegisterPage = () => {
 
     try {
       await register(username, name, email, password);
-      // Mostrar el modal en lugar de redirigir directamente
       setShowModal(true);
-    } catch (err: any) {
-      const message =
-        err.response?.data?.message || "Error desconocido. Inténtalo de nuevo.";
-      setError(message);
-      toast.error(message);
+    } catch (error: any) {
+      setError(error.message);
+      console.error("Error al iniciar sesión:", error.message);
+      toast.error(error.message || "Credenciales incorrectas");
     }
   };
 

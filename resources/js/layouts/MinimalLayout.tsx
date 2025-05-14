@@ -1,14 +1,16 @@
-import { Header } from "@/components/layout/GuestLayout/Header";
 import { Outlet } from "react-router-dom";
 import { Footer } from "@/components/layout/UserLayout/Footer";
-import { Toaster } from "react-hot-toast";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { BackButton } from "@/components/ui/BackButton";
 
-export const GuestLayout = () => {
+export const MinimalLayout = () => {
     return (
         <div className="flex flex-col min-h-screen">
-            <Toaster position="top-right" reverseOrder={false} />
+            <div className="fixed top-4 right-4 z-50">
+                <ThemeToggle />
+            </div>
 
-            <Header />
+            <BackButton />
 
             <main className="flex-1 container mx-auto py-4">
                 <Outlet />

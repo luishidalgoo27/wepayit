@@ -70,4 +70,17 @@ class AuthRequest extends FormRequest
             'username.unique'   => 'Este nombre de usuario ya está en uso.',
         ];
     }
+    /**
+     * Manejar un fallo de validación.
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'status' => false,
+                'message' => 'Error de validación',
+                'errors' => $validator->errors()
+            ], 422)
+        );
+    }
 }
