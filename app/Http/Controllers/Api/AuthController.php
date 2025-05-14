@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Services\CustomUrlSigner;
 use App\Http\Requests\AuthRequest;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Verified;
@@ -77,25 +79,36 @@ class AuthController extends Controller
     }
 
     public function verifyEmail(Request $request)
-    {
-        $user = User::find($request->query('id'));
+{
+    $user = User::find($request->query('id'));
 
-        if (! $user) {
-            return response()->json(['message' => 'Usuario no encontrado'], 404);
-        }
-
-        if (! URL::hasValidSignature($request)) {
-            return response()->json(['message' => 'Enlace inválido o expirado'], 403);
-        }
-
-        if ($user->hasVerifiedEmail()) {
-            return response()->json(['message' => 'Correo ya verificado']);
-        }
-
-        $user->markEmailAsVerified();
-        event(new Verified($user));
-
-        return response()->json(['message' => 'Correo verificado correctamente']);
+    if (!$user) {
+        return response()->json(['message' => 'Usuario no encontrado'], 404);
     }
+
+    // Usar nuestra validación personalizada en lugar del middleware signed
+    if (!app()->environment('local') && ! CustomUrlSigner::validate($request)) {
+        Log::warning('Firma inválida en verificación de correo', [
+            'url' => $request->fullUrl(),
+            'user_id' => $request->query('id')
+        ]);
+        
+        return response()->json(['message' => 'Enlace inválido o expirado'], 403);
+    }
+
+    if ($user->hasVerifiedEmail()) {
+        return response()->json(['message' => 'Correo ya verificado']);
+    }
+
+    $user->markEmailAsVerified();
+    event(new Verified($user));
+
+    // Redirigir según el tipo de solicitud
+    if ($request->wantsJson()) {
+        return response()->json(['message' => 'Correo verificado correctamente']);
+    } else {
+        return redirect('https://wepayit.vercel.app/login?verified=1');
+    }
+}
 
 }
