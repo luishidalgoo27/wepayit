@@ -1,244 +1,251 @@
-import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+import { useGroupContext } from "@/context/GroupContext";
+import { Link, LoaderFunctionArgs, Outlet, useLoaderData } from "react-router-dom";
+import { getUsersByGroup } from "@/services/user";
 
-// Mock User type and service for standalone functionality if original imports are not available
-interface User {
-  id: string;
-  name: string;
+export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: string }> {
+    const id = params.id!;
+    return { id };
 }
 
-// Mock service call
-const getUsersByGroup = async (groupId: string): Promise<User[]> => {
-  console.log(`Fetching users for group ${groupId}`);
-  // Example: return different users based on groupId for testing
-  if (groupId === "group1") {
-    return [
-      { id: "u1", name: "Alice" },
-      { id: "u2", name: "Bob" },
-    ];
-  }
-  if (groupId === "group2") {
-    return [
-      { id: "u1", name: "Carlos" },
-      { id: "u2", name: "Diana" },
-      { id: "u3", name: "Eve" },
-    ];
-  }
-  return [
-    { id: "user1", name: "Test User 1" },
-    { id: "user2", name: "Test User 2" },
-    { id: "user3", name: "Test User 3" },
-    { id: "user4", name: "Test User 4" },
-  ];
-};
-
 export const GamesPage = () => {
-  const { id: groupIdFromParams } = useParams<{ id: string }>();
-  const groupId = groupIdFromParams || "defaultTestGroup"; // Use a default for testing if no param
+  const { id } = useLoaderData() as { id: string }; // Obtener el id del grupo
+  const { userExpense } = useGroupContext(); // Obtener userExpense del contexto
 
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [isSpinning, setIsSpinning] = useState(false);
-  const [winner, setWinner] = useState<User | null>(null);
-  const wheelRef = useRef<HTMLDivElement>(null);
-  const [currentRotation, setCurrentRotation] = useState(0); // Stores the accumulated rotation
+  const [funStats, setFunStats] = useState({
+    coffeeEquivalent: 0,
+    beerEquivalent: 0,
+    kebabEquivalent: 0,
+    movieTicketEquivalent: 0,
+    daysToRecover: 0,
+    gptEquivalent: 0,
+  });
 
-  const fetchUsers = async () => {
-    if (!groupId) return;
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await getUsersByGroup(groupId);
-      setUsers(data);
-      // Reset wheel when users change
-      setCurrentRotation(0);
-      if (wheelRef.current) {
-        wheelRef.current.style.transition = "none";
-        wheelRef.current.style.transform = "rotate(0deg)";
-      }
-    } catch (error) {
-      console.error("Error al obtener los usuarios del grupo:", error);
-      setError("No se pudieron cargar los usuarios.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [excuse, setExcuse] = useState<string | null>(null);
+  const [users, setUsers] = useState([]); // Estado para almacenar los usuarios
+  const [loading, setLoading] = useState(false); // Estado para manejar la carga
+  const [error, setError] = useState<string | null>(null); // Estado para manejar errores
 
   useEffect(() => {
-    fetchUsers();
-  }, [groupId]);
+    // Calcular estadísticas divertidas
+    const coffeeEquivalent = parseFloat((userExpense / 1.25).toFixed(1));
+    const beerEquivalent = parseFloat((userExpense / 3).toFixed(1)); 
+    const kebabEquivalent = parseFloat((userExpense / 4).toFixed(1)); 
+    const movieTicketEquivalent = parseFloat((userExpense / 10).toFixed(1)); 
+    const daysToRecover = parseFloat((userExpense / 5).toFixed(1)); 
+    const gptEquivalent = parseFloat((userExpense / 20).toFixed(1)); 
 
-  const spinWheel = () => {
-    if (isSpinning || users.length === 0) return;
+    setFunStats({
+      coffeeEquivalent,
+      beerEquivalent,
+      kebabEquivalent,
+      movieTicketEquivalent,
+      daysToRecover,
+      gptEquivalent,
+    });
+  }, [userExpense]);
 
-    setIsSpinning(true);
-    setWinner(null);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const fetchedUsers = await getUsersByGroup(id); // Llamar a la función con el id del grupo
+        setUsers(fetchedUsers); // Guardar los usuarios en el estado
+      } catch (err) {
+        console.error("Error al obtener los usuarios:", err);
+        setError("No se pudieron cargar los usuarios.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    const numUsers = users.length;
-    const sectorAngleDegrees = 360 / numUsers;
-    const randomIndex = Math.floor(Math.random() * numUsers);
+    fetchUsers(); // Ejecutar la función al cargar el componente
+  }, [id]);
 
-    // Calculate the target angle for the middle of the winning sector (relative to a 0-360 cycle)
-    // This is the angle on the wheel that should align with the pointer.
-    const targetAngleInCycle = (randomIndex * sectorAngleDegrees) + (sectorAngleDegrees / 2);
+  const generateRandomExcuse = () => {
+    const excuses = [
+      "Me acabo de dar cuenta de que dejé mi cartera en casa.",
+      "Mi cuenta bancaria ha sido hackeada esta mañana.",
+      "Estoy ahorrando para comprar un unicornio.",
+      "Mi gato necesita una operación muy cara.",
+      "Acabo de donar todo mi dinero a una ONG de pingüinos.",
+      "Mi horóscopo dice que hoy no debo gastar dinero.",
+      "Estoy en una relación complicada con mi cuenta bancaria.",
+      "Prometí a mi abuela que no gastaría dinero esta semana.",
+      "Estoy practicando el minimalismo financiero.",
+      "Mi app de banco dice que estoy en modo supervivencia.",
+      "Estoy guardando para comprar Bitcoin cuando baje a 1€.",
+      "Mi terapeuta me recomendó no pagar cuentas como ejercicio de autocontrol.",
+      "Estoy en una huelga personal contra el capitalismo.",
+      "Mi economista personal me prohibió gastar hasta el próximo mes.",
+      "Acabo de recordar que tengo que pagar el alquiler... de los próximos 6 meses.",
+      "Estoy canalizando mi dinero hacia dimensiones alternativas.",
+      "Mi cuenta está en cuarentena por sospecha de gastos excesivos.",
+      "Juré por Snoopy que no gastaría dinero hoy.",
+      "Estoy participando en un experimento científico de abstinencia financiera.",
+      "Mi aplicación de presupuesto me ha bloqueado por exceder el límite mensual.",
+    ];
 
-    // Get the current visual position of the wheel (0-359 degrees)
-    const currentAngleInCycle = (currentRotation % 360 + 360) % 360;
-
-    // Calculate the difference to reach the target angle in the current cycle, ensuring forward spin.
-    let rotationDifferenceToTarget = targetAngleInCycle - currentAngleInCycle;
-    if (rotationDifferenceToTarget <= 0) {
-      // If target is "behind" or same as current, add 360 to ensure it spins forward at least one full turn to reach it.
-      rotationDifferenceToTarget += 360;
-    }
-
-    // Add multiple full spins for visual effect, plus the calculated difference.
-    const spinsForEffect = 5 * 360;
-    const newTotalRotation = currentRotation + spinsForEffect + rotationDifferenceToTarget;
-
-    if (wheelRef.current) {
-      // 1. Remove existing transition to prepare for an instant change (if any, or to set starting point).
-      wheelRef.current.style.transition = "none";
-      // 2. Set the rotation to its current *accumulated* value. This ensures the animation starts from where it actually is.
-      wheelRef.current.style.transform = `rotate(${currentRotation}deg)`;
-      
-      // 3. Force a reflow. Crucial for the browser to apply the style change above *before* re-adding the transition.
-      wheelRef.current.offsetHeight; 
-
-      // 4. Re-add the transition for the spin animation.
-      wheelRef.current.style.transition = "transform 4s ease-out";
-      // 5. Set the new target rotation. This will be a large, accumulating number.
-      wheelRef.current.style.transform = `rotate(${newTotalRotation}deg)`;
-    }
-    
-    setCurrentRotation(newTotalRotation); // Update the state for the next spin's calculation
-
-    setTimeout(() => {
-      setIsSpinning(false);
-      setWinner(users[randomIndex]);
-    }, 4000); // Duration should match CSS transition
+    const randomExcuse = excuses[Math.floor(Math.random() * excuses.length)];
+    setExcuse(randomExcuse);
   };
 
-  if (loading) {
-    return (
-      <p className="text-center text-lg text-[var(--color-700)] dark:text-[var(--color-200)]">
-        Cargando usuarios...
-      </p>
-    );
-  }
+  const copyExcuseToClipboard = () => {
+    if (excuse) {
+      navigator.clipboard.writeText(excuse).then(() => {
+        alert("Excusa copiada al portapapeles");
+      });
+    }
+  };
 
-  if (error) {
-    return (
-      <p className="text-center text-lg text-red-500 dark:text-red-400">{error}</p>
-    );
-  }
+  const handleGetUsersByGroup = async () => {
+    try {
+      await getUsersByGroup(id);
 
-  if (users.length === 0) {
-    return (
-      <p className="text-center text-lg text-[var(--color-700)] dark:text-[var(--color-200)]">
-        No hay usuarios en este grupo.
-      </p>
-    );
+    } catch (error) {
+      console.error("Error al obtener los usuarios:", error);
+      toast.error("Hubo un error al guardar los cambios");
+    }
   }
 
   return (
     <div className="flex flex-col items-center gap-6 p-6">
-      <h1 className="text-2xl font-bold text-green-600 text-center">¿Quién paga hoy?</h1>
+      <h1 className="text-2xl font-bold">Usuarios del grupo</h1>
 
-      <div className="relative w-64 h-64 border-2 border-gray-300 rounded-full">
-        <div
-          ref={wheelRef}
-          className="w-full h-full rounded-full relative overflow-hidden"
-          style={{ transform: `rotate(${currentRotation}deg)` }} // Initial rotation set via state for consistency if needed, though spinWheel handles it.
-        >
-          {users.map((user, index) => {
-            const numUsers = users.length;
-            const sectorAngleDegrees = numUsers > 0 ? 360 / numUsers : 0;
-            
-            let dynamicClipPath;
-            if (numUsers <= 0) { 
-              dynamicClipPath = "none"; 
-            } else if (numUsers === 1) {
-              dynamicClipPath = "circle(50% at 50% 50%)"; // Full circle for one user
-            } else {
-              const sectorAngleRadians = sectorAngleDegrees * Math.PI / 180;
-              // Points for polygon: Center, Point on circumference (0 deg), Point on circumference (sectorAngleDeg)
-              // Assuming CSS coordinates (y positive down), and angle positive CCW from positive x-axis (3 o'clock)
-              const p2x = 100; // % (50% radius from center, at 0 degrees on x-axis)
-              const p2y = 50;  // %
-              const p3x = 50 + 50 * Math.cos(sectorAngleRadians);
-              const p3y = 50 + 50 * Math.sin(sectorAngleRadians); // Positive sin moves y downwards
-              dynamicClipPath = `polygon(50% 50%, ${p2x}% ${p2y}%, ${p3x}% ${p3y}%)`;
-            }
+      {loading && <p className="text-center text-lg">Cargando usuarios...</p>}
+      {error && <p className="text-center text-lg text-red-500">{error}</p>}
 
-            const rotateForLayout = sectorAngleDegrees * index; // Rotates each pre-defined sector
-            const backgroundColor = `hsl(${ (360 / (numUsers || 1)) * index }, 70%, 70%)`;
-            
-            return (
-              <div
-                key={user.id}
-                className="absolute w-full h-full origin-center"
-                style={{
-                  transform: `rotate(${rotateForLayout}deg)`,
-                  clipPath: dynamicClipPath,
-                  backgroundColor,
-                }}
-              >
-                <div
-                  className="absolute top-0 left-0 w-full h-full flex items-center justify-start"
-                  style={{
-                    // Rotate text container to align text radially
-                    // Text itself should be pushed towards the edge of the sector
-                    transform: `rotate(${sectorAngleDegrees / 2}deg)`,
-                    paddingLeft: numUsers > 1 ? "55%" : "0", // Push text towards outer edge, adjust as needed
-                    boxSizing: "border-box",
-                  }}
-                >
-                  <span 
-                    className="text-xs font-bold text-black text-center block"
-                    style={{ 
-                        transform: "translateY(-50%)", // Vertically center if pushed by padding
-                        // Ensure text is readable, might need to adjust rotation if names are long
-                        // For very small sectors, text might be hard to read or overlap.
-                        // Consider making text smaller or changing orientation for many users.
-                        maxWidth: "40%", // Prevent text from overflowing too much
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis"
-                    }}
-                  >
-                    {user.name}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
+      {!loading && !error && users.length === 0 && (
+        <p className="text-center text-lg">No hay usuarios en este grupo.</p>
+      )}
+
+      {!loading && !error && users.length > 0 && (
+        <ul className="list-disc list-inside">
+          {users.map((user: any) => (
+            <li key={user.id} className="text-lg">
+              {user.name}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div className="grid grid-cols-1 gap-4 mt-4">
+        <div className="box statistics">
+          <div className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full mr-4">
+            ☕
+          </div>
+          <div>
+            <h4 className="text-lg font-semibold">Equivalente en café</h4>
+            <p className="dark:text-400 text-500">
+              Has pagado el equivalente a{" "}
+              <strong className="dark:text-50 text-700">{funStats.coffeeEquivalent} cafés</strong>
+            </p>
+          </div>
         </div>
-        {/* Indicador (Pointer) */}
-        <div 
-            className="absolute top-[-10px] left-1/2 -translate-x-1/2 w-0 h-0"
-            style={{
-                borderLeft: "8px solid transparent",
-                borderRight: "8px solid transparent",
-                borderBottom: "12px solid red", // Made pointer a bit larger
-            }}
-        ></div>
+        <div className="box statistics">
+          <div className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full mr-4">
+            🍻
+          </div>
+          <div>
+            <h4 className="text-lg font-semibold">Equivalente en cervezas</h4>
+            <p className="dark:text-400 text-500">
+              Has pagado el equivalente a{" "}
+              <strong className="dark:text-50 text-700">{funStats.beerEquivalent} cervezas</strong>
+            </p>
+          </div>
+        </div>
+        <div className="box statistics">
+          <div className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full mr-4">
+            🥙
+          </div>
+          <div>
+            <h4 className="text-lg font-semibold">Equivalente en kebabs</h4>
+            <p className="dark:text-400 text-500">
+              Has pagado el equivalente a{" "}
+              <strong className="dark:text-50 text-700">{funStats.kebabEquivalent} kebabs</strong>
+            </p>
+          </div>
+        </div>
+        <div className="box statistics">
+          <div className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full mr-4">
+            🎥
+          </div>
+          <div>
+            <h4 className="text-lg font-semibold">Equivalente en cine</h4>
+            <p className="dark:text-400 text-500">
+              Has pagado el equivalente a{" "}
+              <strong className="dark:text-50 text-700">{funStats.movieTicketEquivalent} entradas de cine</strong>
+            </p>
+          </div>
+        </div>
+        <div className="box statistics">
+          <div className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full mr-4">
+            🤖
+          </div>
+          <div>
+            <h4 className="text-lg font-semibold">Equivalente en ChatGPT Plus</h4>
+            <p className="dark:text-400 text-500">
+              Has pagado el equivalente a{" "}
+              <strong className="dark:text-50 text-700">{funStats.gptEquivalent} meses de ChatGPT Plus</strong>
+            </p>
+          </div>
+        </div>
+        <div className="box statistics">
+          <div className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full mr-4">
+            💰
+          </div>
+          <div>
+            <h4 className="text-lg font-semibold">Tiempo de recuperación</h4>
+            <p className="dark:text-400 text-500">
+              Necesitarías{" "}
+              <strong className="dark:text-50 text-700">{funStats.daysToRecover} días</strong> ahorrando 5€ diarios
+            </p>
+          </div>
+        </div>
       </div>
 
-      <button
-        onClick={spinWheel}
-        disabled={isSpinning || loading}
-        className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {isSpinning ? "Girando..." : "Girar ruleta"}
-      </button>
+      {/* Generador de excusas */}
+      <div className="tab-content mt-10" id="excuses">
+        <h2 className="text-xl font-bold">Generador de Excusas</h2>
+        <p>¿No quieres pagar? Genera una excusa creativa para evitar pagar la cuenta.</p>
 
-      {winner && (
-        <div className="text-center mt-4 text-xl font-semibold text-green-700">
-          🎉 ¡{winner.name} paga esta vez!
+        <div id="excuse-generator" className="excuse-generator mt-4">
+          <button
+            id="generate-excuse"
+            className="clickButton px-4 btn-lg"
+            onClick={generateRandomExcuse}
+          >
+            Generar excusa
+          </button>
+
+          {excuse && (
+            <div className="excuse-card bg-white rounded-lg p-6 shadow-md my-8 text-center">
+              <h3 className="text-lg font-semibold">Tu excusa para hoy:</h3>
+              <p className="excuse-text text-gray-700 italic text-xl mt-6 p-4 bg-gray-100 rounded-md relative">
+                "{excuse}"
+                <span className="absolute top-[-10px] left-2 text-primary text-2xl font-serif">“</span>
+                <span className="absolute bottom-[-10px] right-2 text-primary text-2xl font-serif">”</span>
+              </p>
+              <div className="excuse-actions flex flex-wrap justify-center gap-2 mt-6">
+                <button
+                  className="clickButton px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                  onClick={copyExcuseToClipboard}
+                >
+                  Copiar excusa
+                </button>
+                <button
+                  className="clickButton px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition"
+                  onClick={generateRandomExcuse}
+                >
+                  Nueva excusa
+                </button>
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
