@@ -18,20 +18,19 @@ import { InvitacionPage } from "@/pages/Users/InvitacionPage";
 import { GroupLayout, loader as GroupLoader } from "./layouts/GroupLayout";
 import { AboutPage } from "@/pages/FastLinks/AboutPage";
 import { TermsPage } from "@/pages/FastLinks/TermsPage";
-import { GamesPage } from "@/pages/Games/GamesPage"; // Importación por defecto
+import { GamesPage } from "@/pages/Games/GamesPage";
+import { GroupProvider } from "@/context/GroupContext"; // Importar el contexto
 
 const router = createBrowserRouter([
-  // Rutas públicas y accesibles para todos
   {
-    element: <GuestLayout />, // Layout común para todos
+    element: <GuestLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: "/about", element: <AboutPage /> }, // Ruta para "Sobre nosotros"
-      { path: "/terms", element: <TermsPage /> }, // Ruta para "Términos y condiciones"
+      { path: "/about", element: <AboutPage /> },
+      { path: "/terms", element: <TermsPage /> },
     ],
   },
 
-  // Rutas públicas exclusivas para usuarios no autenticados
   {
     element: <PublicRoute />,
     errorElement: <ErrorPage />,
@@ -47,7 +46,6 @@ const router = createBrowserRouter([
     ],
   },
 
-  // Rutas protegidas con layout
   {
     element: <ProtectedRoute />,
     errorElement: <ErrorPage />,
@@ -57,9 +55,14 @@ const router = createBrowserRouter([
         children: [
           { path: "/groups", element: <GroupsPage /> },
           { path: "/groups/create-group", element: <CreateGroupPage /> },
+
           {
             path: "/groups/:id",
-            element: <GroupLayout />,
+            element: (
+              <GroupProvider>
+                <GroupLayout />
+              </GroupProvider>
+            ), 
             loader: GroupLoader,
             children: [
               {
@@ -78,7 +81,7 @@ const router = createBrowserRouter([
                 loader: GroupLoader,
               },
               {
-                path: "/groups/:id/games",
+                path: "games",
                 element: <GamesPage />,
                 loader: GroupLoader,
               },
@@ -95,7 +98,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-  /*   { path: "*", element: <Navigate to="/" replace /> }, */
 ]);
 
 export const Routes = () => {
