@@ -48,11 +48,11 @@ export const GroupLayout = () => {
                     <Link to={`balances`} className="py-3 sectionCols">
                         Saldos
                     </Link>
-                    <Link to={`photos`} className="py-3 border-x sectionCols">
-                        Fotos
-                    </Link>
-                    <Link to={`games`} className="py-3 sectionCols">
+                    <Link to={`games`} className="py-3 border-x sectionCols">
                         Juegos
+                    </Link>
+                    <Link to={`photos`} className="py-3 sectionCols">
+                        Fotos
                     </Link>
                 </div>
 
