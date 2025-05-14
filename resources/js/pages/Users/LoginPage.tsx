@@ -38,7 +38,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4">
+    <main className=" flex items-center justify-center px-4">
       <div className="w-full max-w-md p-8 bg-[var(--color-50)] dark:bg-[var(--color-900)] border border-[var(--color-200)] dark:border-[var(--color-700)] rounded-2xl shadow-xl">
         <h2 className="text-2xl font-bold text-center text-950 dark:text-50 mb-6">
           Inicia sesión en <span className="text-400">Wepayit</span>
