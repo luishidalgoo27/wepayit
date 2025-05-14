@@ -56,7 +56,7 @@ export const ExpensesPage = () => {
                             )}
                         </div>
                 <Link
-                    to="/groups/expenses/edit-expenses"
+                    to={`/groups/${id}/edit-expenses`}
                     className="bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950  w-auto p-5 text-center  font-semibold py-3 rounded-xl shadow-md"
                 >
                     Ver gasto
