@@ -17,6 +17,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::post('/register', [AuthController::class, 'createUser'])->name('auth.register');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
+Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verification.verify');
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
@@ -54,23 +55,3 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 
-Route::get('/verify-email', function (Request $request) {
-    $user = User::find($request->query('id'));
-
-    if (! $user) {
-        return response()->json(['message' => 'Usuario no encontrado'], 404);
-    }
-
-    if (! URL::hasValidSignature($request)) {
-        return response()->json(['message' => 'Enlace inválido o expirado'], 403);
-    }
-
-    if ($user->hasVerifiedEmail()) {
-        return response()->json(['message' => 'Correo ya verificado']);
-    }
-
-    $user->markEmailAsVerified();
-    event(new Verified($user));
-
-    return response()->json(['message' => 'Correo verificado correctamente']);
-})->name('verification.verify');
