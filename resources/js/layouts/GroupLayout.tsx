@@ -1,10 +1,6 @@
-// src/layouts/GroupLayout.tsx
-import { useGroupContext } from "@/context/GroupContext";
-import { useGetDivisions } from "@/hooks/useGetDivisions";
-import { useGetExpenses } from "@/hooks/useGetExpenses";
 import { useGetGroup } from "@/hooks/useGetGroup";
-import { useGetUser } from "@/hooks/useGetUser";
-import { useEffect, useState } from "react";
+import { useGetUserGroupExpenses } from "@/hooks/useGetUserGroupExpenses";
+import { useEffect } from "react";
 import { Link, LoaderFunctionArgs, Outlet, useLoaderData } from "react-router-dom";
 
 export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: string }> {
@@ -15,27 +11,8 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: stri
 export const GroupLayout = () => {
     const { id } = useLoaderData() as { id: string };
     const { group } = useGetGroup(id);
-    const { divisions } = useGetDivisions(id);
-    const { expenses } = useGetExpenses(id);
-    const { user } = useGetUser();
 
-    const { userExpense, setUserExpense } = useGroupContext();
-
-    const [totalExpenses, setTotalExpenses] = useState<number>(0);
-
-    useEffect(() => {
-        if (!divisions || !user || !expenses) return;
-
-        // Calcular gastos totales del grupo
-        const totalGroup = expenses.reduce((sum, expense) => sum + expense.amount, 0);
-        setTotalExpenses(totalGroup);
-
-        // Calcular gastos asignados al usuario
-        const totalUser = divisions
-            .filter((division) => division.user_id === user.id)
-            .reduce((sum, division) => sum + division.assigned_amount, 0);
-        setUserExpense(totalUser); // Actualizar el contexto
-    }, [divisions, user, expenses, setUserExpense]);
+    const { userExpense, totalExpenses } = useGetUserGroupExpenses(id);
 
     return (
         <div className="container max-w-4xl mx-auto py-2 space-y-10 text-gray-900 dark:text-gray-50">
@@ -78,11 +55,11 @@ export const GroupLayout = () => {
                 <div className="flex justify-around text-center">
                     <div>
                         <p className="dark:text-300 text-700 text-sm">Mis gastos</p>
-                        <p className="text-xl font-semibold">{userExpense.toFixed(2)} {group?.currency_type}</p>
+                        <p className="text-xl font-semibold">{userExpense} {group?.currency_type}</p>
                     </div>
                     <div>
                         <p className="dark:text-300 text-700 text-sm">Gastos totales</p>
-                        <p className="text-xl font-semibold">{totalExpenses.toFixed(2)} {group?.currency_type}</p>
+                        <p className="text-xl font-semibold">{totalExpenses} {group?.currency_type}</p>
                     </div>
                 </div>
             </div>

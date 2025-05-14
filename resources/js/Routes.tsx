@@ -18,7 +18,7 @@ import { InvitacionPage } from "@/pages/Users/InvitacionPage";
 import { GroupLayout, loader as GroupLoader } from "./layouts/GroupLayout";
 import { AboutPage } from "@/pages/FastLinks/AboutPage";
 import { TermsPage } from "@/pages/FastLinks/TermsPage";
-import { GamesPage } from "@/pages/Games/GamesPage";
+import { GamesPage } from "@/pages/Groups/Games/GamesPage";
 import { GroupProvider } from "@/context/GroupContext"; 
 import { MinimalLayout } from "@/layouts/MinimalLayout";
 
@@ -62,11 +62,7 @@ const router = createBrowserRouter([
 
           {
             path: "/groups/:id",
-            element: (
-              <GroupProvider>
-                <GroupLayout />
-              </GroupProvider>
-            ), 
+            element: <GroupLayout />, 
             loader: GroupLoader,
             children: [
               {
