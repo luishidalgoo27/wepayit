@@ -44,5 +44,7 @@ class ExpensesController extends Controller
         return response()->json($divisions, 200);
     }
 
+    
+
 
 }
