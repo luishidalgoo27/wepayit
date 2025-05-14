@@ -44,7 +44,7 @@ export const Header = () => {
           to="/groups"
           className="text-2xl font-bold tracking-wide hover:text-600 transition-colors"
         >
-          <img src="/public/wepayitlightlogo.png" className="w-15 h-auto" alt="" />
+          <img src="/wepayitlightlogo.png" className="w-15 h-auto" alt="" />
         </Link>
 
         {/* Navigation Links (Visible on larger screens) */}
