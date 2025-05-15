@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WePayIt</title>
-    <link rel="shortcut icon" href="{{asset('wepayitdarklogo.png')}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon">
     @viteReactRefresh
     @vite(['resources/css/app.css', 'resources/js/main.tsx'])
   </head>
