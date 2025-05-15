@@ -20,6 +20,7 @@ Route::post('/register', [AuthController::class, 'createUser'])->name('auth.regi
 Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
 Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verification.verify');
 
+Route::post('/getExpense', [ExpensesController::class, 'getExpense']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
     Route::post('/user', [UserController::class, 'update']);
@@ -49,7 +50,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/paymentGroup', [PaymentController::class, 'getPaymentGroup']);
   
     Route::post('/expenses', [ExpensesController::class, 'getExpenses']);
-    Route::post('/getExpense', [ExpensesController::class, 'getExpense']);
     Route::patch('/expense', [ExpensesController::class, 'update']);
     Route::post('/expense', [ExpensesController::class, 'create']);
     Route::delete('/expense', [ExpensesController::class, 'delete']);

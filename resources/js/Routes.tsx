@@ -20,6 +20,7 @@ import { AboutPage } from "@/pages/FastLinks/AboutPage";
 import { TermsPage } from "@/pages/FastLinks/TermsPage";
 import { GamesPage } from "@/pages/Groups/Games/GamesPage";
 import { MinimalLayout } from "@/layouts/MinimalLayout";
+import { InvitacionLayout } from "@/layouts/InvitacionLayout";
 import { EditGroupPage } from "./pages/Groups/EditGroupPage";
 import { EditExpensePage, loader as EditExpenseLoader } from "./pages/Groups/Expenses/EditExpensesPage";
 
@@ -31,6 +32,15 @@ const router = createBrowserRouter([
     children: [
       { path: "/about", element: <AboutPage /> },
       { path: "/terms", element: <TermsPage /> },
+    ],
+  },
+
+  /* Layout sin header ni footer */
+  {
+    element: <InvitacionLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { path: "/invitation/:code", element: <InvitacionPage /> },
     ],
   },
 
@@ -100,7 +110,8 @@ const router = createBrowserRouter([
             loader: EditExpenseLoader,
           },
           { path: "/user/edit-profile", element: <EditProfilePage /> },
-          { path: "/invitation", element: <InvitacionPage /> },
+          { path: "/invitations/accept/:code", element: <InvitacionPage /> },
+
         ],
       },
     ],
