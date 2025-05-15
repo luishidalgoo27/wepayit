@@ -10,7 +10,7 @@ export const GuestLayout = () => {
 
             <Header />
 
-            <main className="flex-1 container mx-auto py-4">
+            <main className="flex-1 flex items-center justify-center container mx-auto py-7">
                 <Outlet />
             </main>
 
