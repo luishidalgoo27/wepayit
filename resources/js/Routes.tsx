@@ -12,7 +12,7 @@ import { CreateGroupPage } from "@/pages/Groups/CreateGroupPage";
 import { ExpensesPage } from "@/pages/Groups/Expenses/ExpensesPage";
 import { BalancesPage } from "@/pages/Groups/Balances/BalancesPage";
 import { ManagementPage } from "@/pages/Groups/Management/ManagmentPage";
-import { CreateExpensePage, loader as CreateExpenseLoader } from "@/pages/Groups/Expenses/CreateExpense";
+import { CreateExpensePage } from "@/pages/Groups/Expenses/CreateExpense";
 import { EditProfilePage } from "@/pages/Users/EditProfilePage";
 import { InvitacionPage } from "@/pages/Users/InvitacionPage";
 import { GroupLayout, loader as GroupLoader } from "./layouts/GroupLayout";
@@ -21,7 +21,7 @@ import { TermsPage } from "@/pages/FastLinks/TermsPage";
 import { GamesPage } from "@/pages/Groups/Games/GamesPage";
 import { MinimalLayout } from "@/layouts/MinimalLayout";
 import { EditGroupPage } from "./pages/Groups/EditGroupPage";
-import { EditExpensePage } from "./pages/Groups/Expenses/EditExpensesPage";
+import { EditExpensePage, loader as EditExpenseLoader } from "./pages/Groups/Expenses/EditExpensesPage";
 
 const router = createBrowserRouter([
   /* Layout sin header ni footer */
@@ -64,17 +64,12 @@ const router = createBrowserRouter([
 
           {
             path: "/groups/:id",
-            element: <GroupLayout />, 
+            element: <GroupLayout />,
             loader: GroupLoader,
             children: [
               {
                 path: "expenses",
                 element: <ExpensesPage />,
-                loader: GroupLoader,
-              },
-              {
-                path: "edit-expenses",
-                element: <EditExpensePage />,
                 loader: GroupLoader,
               },
               {
@@ -97,7 +92,12 @@ const router = createBrowserRouter([
           {
             path: "/groups/:id/create-expense",
             element: <CreateExpensePage />,
-            loader: CreateExpenseLoader,
+            loader: GroupLoader,
+          },
+          {
+            path: "/groups/:id/edit-expense/:expenseId",
+            element: <EditExpensePage />,
+            loader: EditExpenseLoader,
           },
           { path: "/user/edit-profile", element: <EditProfilePage /> },
           { path: "/invitation", element: <InvitacionPage /> },

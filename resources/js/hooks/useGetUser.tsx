@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
  
 export const useGetUser = () => {
-    const [user, setUser] = useState<User | undefined>();
+    const [user, setUser] = useState<User>({} as User);
     const [loading, setLoading] = useState(true);
   
     useEffect(() => {
