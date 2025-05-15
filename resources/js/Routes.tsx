@@ -107,7 +107,7 @@ const router = createBrowserRouter([
           {
             path: "/groups/:id/edit-expense/:expenseId",
             element: <EditExpensePage />,
-            loader: EditExpenseLoader,
+            loader: EditExpenseLoader
           },
           { path: "/user/edit-profile", element: <EditProfilePage /> },
           { path: "/invitations/accept/:code", element: <InvitacionPage /> },

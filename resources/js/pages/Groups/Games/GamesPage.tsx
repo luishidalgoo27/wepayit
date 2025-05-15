@@ -5,11 +5,6 @@ import { useGetUsers } from "@/hooks/useGetUsers";
 import { useGetUserGroupExpenses } from "@/hooks/useGetUserGroupExpenses";
 import { generateRandomExcuse } from "@/utils/excuse";
 
-export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: string }> {
-  const id = params.id!;
-  return { id };
-}
-
 export const GamesPage = () => {
   const { id } = useLoaderData() as { id: string };
   const { userExpense } = useGetUserGroupExpenses(id);
