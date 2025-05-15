@@ -34,7 +34,7 @@ class UserService
             return response()->json(['error' => 'El campo username es requerido.'], 400);
         }
 
-        $users = User::whereRaw('LOWER(username) LIKE ?', [strtolower($username) . '%'])->get();
+        $users = User::where('username', 'like', '%' . $username . '%')->get();
 
         return $users;
     }
