@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 
-export function usePwaInstallButton() {
+export function usePwaInstallButton(isMenuOpen: boolean) {
   useEffect(() => {
+    if (!isMenuOpen) return; // Solo cuando el menú está abierto
+
     let deferredPrompt: any = null;
 
     function isIos() {
@@ -15,10 +17,12 @@ export function usePwaInstallButton() {
     const installBtn = document.getElementById('installBtn');
     const iosPopup = document.getElementById('iosAddToHome');
 
-    window.addEventListener('beforeinstallprompt', (e) => {
+    // Guardar el evento para Android/Chrome
+    function beforeInstallPromptHandler(e: any) {
       e.preventDefault();
       deferredPrompt = e;
-    });
+    }
+    window.addEventListener('beforeinstallprompt', beforeInstallPromptHandler);
 
     if (installBtn) {
       installBtn.onclick = () => {
@@ -37,7 +41,8 @@ export function usePwaInstallButton() {
 
     // Limpieza
     return () => {
+      window.removeEventListener('beforeinstallprompt', beforeInstallPromptHandler);
       if (installBtn) installBtn.onclick = null;
     };
-  }, []);
+  }, [isMenuOpen]);
 }
