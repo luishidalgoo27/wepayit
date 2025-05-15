@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
 import { LogOut, User, Menu, X } from "lucide-react";
@@ -35,8 +35,6 @@ export const Header = () => {
   const handleProfileClick = () => {
     setIsMenuOpen(false); // Cierra el menú cuando se hace clic en "Perfil"
   };
-
-  usePwaInstallButton();
 
   return (
     <header className="sticky top-0 z-50 bg-200 dark:bg-header-dark shadow-md pl-7 pr-7">
@@ -158,51 +156,3 @@ export const Header = () => {
     </header>
   );
 };
-
-export function usePwaInstallButton() {
-  useEffect(() => {
-    let deferredPrompt: any = null;
-
-    // Detectar iOS
-    function isIos() {
-      return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
-    }
-    // Detectar si ya está en modo standalone
-    function isInStandaloneMode() {
-      // @ts-ignore
-      return ('standalone' in window.navigator) && window.navigator.standalone;
-    }
-
-    const installBtn = document.getElementById('installBtn');
-    const iosPopup = document.getElementById('iosAddToHome');
-
-    // Android/Chrome: guardar el evento
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-    });
-
-    // Click en el botón
-    if (installBtn) {
-      installBtn.addEventListener('click', function () {
-        if (isIos() && !isInStandaloneMode()) {
-          if (iosPopup) iosPopup.style.display = 'block';
-        } else if (deferredPrompt) {
-          deferredPrompt.prompt();
-          deferredPrompt.userChoice.then(() => {
-            deferredPrompt = null;
-          });
-        } else {
-          alert('Para añadir a inicio, usa el menú de tu navegador.');
-        }
-      });
-    }
-
-    // Limpieza
-    return () => {
-      if (installBtn) {
-        installBtn.replaceWith(installBtn.cloneNode(true));
-      }
-    };
-  }, []);
-}
