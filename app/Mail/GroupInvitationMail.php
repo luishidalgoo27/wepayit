@@ -28,7 +28,7 @@ class GroupInvitationMail extends Mailable
     {
         $apiUrl = env('VITE_API_URL');
         $api = env('VITE_URL');
-        
+         
         $url = $apiUrl."/invitations/accept/{$this->invitation->invitation_code}";
         $rute = $api."/invitation/{$this->invitation->invitation_code}";
 
