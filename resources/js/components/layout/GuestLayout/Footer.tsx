@@ -1,6 +1,6 @@
 export const Footer = () => {
     return (
-        <footer className="bg-footer-light dark:bg-footer-dark dark:text-100 text-black pt-4 pb-2 px-6">
+        <footer className="bg-footer-light dark:bg-footer-dark dark:text-100 text-950 pt-4 pb-2 px-6">
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Sección 1: Logo */}
                 <div className="text-center md:text-left">
