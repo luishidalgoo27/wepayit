@@ -97,7 +97,7 @@ class ExpensesService
 
     public function getExpense(ExpenseGetRequest $req)
     {
-        $expense = Expense::where('id', $req->expense_id)->get();
+        $expense = $this->expense::find($req->expense_id);
         return $expense;
     }
 
