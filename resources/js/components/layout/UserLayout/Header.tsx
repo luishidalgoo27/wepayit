@@ -3,6 +3,7 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
 import { LogOut, User, Menu, X } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { usePwaInstallButton } from "@/hooks/usePwaInstallButton";
 
 const NAV_LINKS = [
   { path: "/groups", name: "Grupos" },
@@ -14,6 +15,8 @@ export const Header = () => {
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation(); // Obtiene la ubicación actual
+
+  usePwaInstallButton();
 
   const handleLogout = () => {
     logout();
@@ -104,7 +107,7 @@ export const Header = () => {
             </button>
             <h2 className="text-lg font-semibold mb-4">Acciones</h2>
 
-            {/* Botón Añadir a inicio (solo visible si soportado) */}
+            {/* Botón "Añadir a inicio" SOLO en el menú móvil */}
             <button
               id="installBtn"
               className="w-full bg-emerald-600 text-white py-2 rounded-lg font-semibold hover:bg-emerald-700 transition mb-2 flex items-center justify-center gap-2"
