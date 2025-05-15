@@ -65,38 +65,38 @@ export const GamesPage = () => {
 
   return (
     <div className="box-2 flex flex-col items-center gap-8 px-6 py-8 min-h-screen">
-      <h1 className="text-3xl font-bold text-[var(--color-400)] dark:text-[var(--color-200)]">Usuarios del grupo</h1>
+      <h1 className="text-3xl font-bold text-600 dark:text-200">Usuarios del grupo</h1>
 
       {!users?.length ? (
-        <p className="text-center text-lg text-[var(--color-700)] dark:text-[var(--color-300)]">
+        <p className="text-center text-lg text-700 dark:text-300">
           No hay usuarios en este grupo.
         </p>
       ) : (
-        <ul className="grid sm:grid-cols-2 md:grid-cols-3 gap-2 bg-[var(--color-50)] dark:bg-[var(--color-800)] p-4 rounded shadow">
+        <ul className="grid sm:grid-cols-2 md:grid-cols-3 gap-2 text-600 bg-200 dark:bg-800 border-400 dark:border-600 border-1 p-4 rounded shadow">
           {users.map((user: any) => (
-            <li key={user.id} className="text-lg text-[var(--color-900)] dark:text-[var(--color-50)]">
-              👤 {user.name}
+            <li key={user.id} className="text-lg text-800 dark:text-50">
+              👤 {user.username}
             </li>
           ))}
         </ul>
       )}
 
       <section className="w-full max-w-3xl mt-6">
-        <h2 className="text-2xl font-semibold text-[var(--color-400)] dark:text-[var(--color-200)] mb-4 text-center">
+        <h2 className="text-2xl font-semibold text-600 dark:text-200 mb-4 text-center">
           Equivalencias divertidas
         </h2>
         <div className="grid sm:grid-cols-2 gap-6">
           {statsData.map(({ icon, label, value }) => (
             <div
               key={label}
-              className="flex items-start gap-4 p-4 rounded-lg bg-[var(--color-50)] dark:bg-[var(--color-800)] shadow border-l-4 border-[var(--color-400)]"
+              className="flex items-start gap-4 p-4 rounded-lg bg-50 dark:bg-800 shadow border-l-4 border-400"
             >
               <div className="text-3xl">{icon}</div>
               <div>
-                <p className="font-medium text-[var(--color-700)] dark:text-[var(--color-300)]">
+                <p className="font-medium text-700 dark:text-300">
                   Has pagado el equivalente a
                 </p>
-                <p className="text-[var(--color-400)] dark:text-[var(--color-200)] font-bold text-lg">
+                <p className="text-500 dark:text-200 font-bold text-lg">
                   {value} {label}
                 </p>
               </div>
@@ -106,8 +106,8 @@ export const GamesPage = () => {
       </section>
 
       <section className="w-full max-w-2xl mt-10 text-center">
-        <h2 className="text-xl font-bold text-[var(--color-400)] dark:text-[var(--color-200)]">Generador de Excusas</h2>
-        <p className="text-[var(--color-700)] dark:text-[var(--color-300)]">
+        <h2 className="text-xl font-bold text-600 dark:text-200">Generador de Excusas</h2>
+        <p className="text-700 dark:text-300">
           ¿No quieres pagar? Genera una excusa creativa para evitarlo.
         </p>
 
@@ -119,8 +119,8 @@ export const GamesPage = () => {
         </button>
 
         {excuse && (
-          <div className="bg-[var(--color-50)] dark:bg-[var(--color-800)] p-6 rounded-lg shadow-md mt-6 relative">
-            <h3 className="text-lg font-semibold text-[var(--color-700)] dark:text-[var(--color-300)]">
+          <div className="bg-50 dark:bg-800 p-6 rounded-lg shadow-md mt-6 relative">
+            <h3 className="text-lg font-semibold text-700 dark:text-300">
               Tu excusa para hoy:
             </h3>
             <blockquote className="text-xl italic mt-4 text-[var(--color-900)] dark:text-[var(--color-50)] bg-[var(--color-100)] dark:bg-[var(--color-700)] p-4 rounded-md border-l-4 border-[var(--color-400)]">
