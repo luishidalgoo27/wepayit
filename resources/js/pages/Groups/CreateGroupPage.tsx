@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export const CreateGroupPage = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const [name, setName] = useState("");
   const [currency, setCurrency] = useState("");
@@ -72,15 +72,12 @@ export const CreateGroupPage = () => {
     try {
       await createGroup(name, currency, description, image);
       toast.success("Grupo creado correctamente");
-      setName("");
-      setCurrency("");
-      setDescription("");
-      setImage(null);
       navigate('/groups')
     } catch (err: any) {
       const errors = err.response?.data?.errors
         ? Object.values(err.response.data.errors).flat()
         : [err.response?.data?.message || "Error desconocido. Inténtalo de nuevo."];
+
       errors.forEach((message: string) => toast.error(message));
     } finally {
       setLoading(false); // <-- Oculta el loader
@@ -88,6 +85,12 @@ export const CreateGroupPage = () => {
   };
 
   return (
+    <div className="flex items-center justify-center min-h-[75vh]">
+      <form
+        onSubmit={handleSubmit}
+        className="container max-w-xl mx-auto py-8 space-y-6 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20 "
+      >
+        <h1 className="text-center text-3xl font-bold mb-4">Crear nuevo grupo</h1>
     <div className="px-4 relative">
       {/* Overlay de carga */}
       {loading && (
@@ -101,12 +104,6 @@ export const CreateGroupPage = () => {
           </div>
         </div>
       )}
-
-      <form
-        onSubmit={handleSubmit}
-        className="container max-w-xl mx-auto py-8 space-y-6 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20 "
-      >
-        <h1 className="text-center text-3xl font-bold mb-4">Crear nuevo grupo</h1>
 
         {/* Nombre del grupo */}
         <div className="relative">

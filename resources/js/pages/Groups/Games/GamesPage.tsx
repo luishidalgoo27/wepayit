@@ -64,8 +64,8 @@ export const GamesPage = () => {
   ];
 
   return (
-    <div className="box-2 flex flex-col items-center gap-8 px-6 py-8 min-h-screen">
-      <h1 className="text-3xl font-bold text-600 dark:text-200">Usuarios del grupo</h1>
+    <div className="box-2 flex flex-col items-center gap-8 px-6 py-8">
+      <h1 className="text-3xl font-bold text-[var(--color-400)] dark:text-[var(--color-200)]">Usuarios del grupo</h1>
 
       {!users?.length ? (
         <p className="text-center text-lg text-700 dark:text-300">
