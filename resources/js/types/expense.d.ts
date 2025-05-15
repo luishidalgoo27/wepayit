@@ -39,7 +39,18 @@ export type CreateExpense = {
     date: string
     description: string
     category_id: number
-    receipt_url: string
+    group_id: string
+    users_division: UserDivision[]
+}
+
+export type UpdateExpense = {
+    expense_id: number
+    title: string
+    amount: number
+    currency_type: string
+    date: string
+    description: string
+    category_id: number
     group_id: string
     users_division: UserDivision[]
 }
