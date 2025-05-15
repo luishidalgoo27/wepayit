@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
 import { LogOut, User, Menu, X } from "lucide-react";
@@ -35,6 +35,8 @@ export const Header = () => {
   const handleProfileClick = () => {
     setIsMenuOpen(false); // Cierra el menú cuando se hace clic en "Perfil"
   };
+
+  usePwaInstallButton();
 
   return (
     <header className="sticky top-0 z-50 bg-200 dark:bg-header-dark shadow-md pl-7 pr-7">
@@ -89,7 +91,7 @@ export const Header = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div
-          className="fixed inset-0 z-50 items-center   backdrop-blur-xs   bg-opacity-50 flex justify-end"
+          className="fixed inset-0 z-50 items-center backdrop-blur-xs bg-opacity-50 flex justify-end"
           onClick={() => setIsMenuOpen(false)}
         >
           <div
@@ -103,9 +105,18 @@ export const Header = () => {
               <X size={24} />
             </button>
             <h2 className="text-lg font-semibold mb-4">Acciones</h2>
+
+            {/* Botón Añadir a inicio (solo visible si soportado) */}
+            <button
+              id="installBtn"
+              className="w-full bg-emerald-600 text-white py-2 rounded-lg font-semibold hover:bg-emerald-700 transition mb-2 flex items-center justify-center gap-2"
+            >
+              Añadir a inicio
+            </button>
+
             <Link
               to="/user/edit-profile"
-              onClick={handleProfileClick} // Cierra el menú cuando se hace clic en "Perfil"
+              onClick={handleProfileClick}
               className={`p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-110 duration-150 flex items-center gap-2 ${isProfilePage ? 'text-green-600 dark:text-amber-600' : ''}`}
             >
               <User size={20} />
@@ -147,3 +158,51 @@ export const Header = () => {
     </header>
   );
 };
+
+export function usePwaInstallButton() {
+  useEffect(() => {
+    let deferredPrompt: any = null;
+
+    // Detectar iOS
+    function isIos() {
+      return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+    }
+    // Detectar si ya está en modo standalone
+    function isInStandaloneMode() {
+      // @ts-ignore
+      return ('standalone' in window.navigator) && window.navigator.standalone;
+    }
+
+    const installBtn = document.getElementById('installBtn');
+    const iosPopup = document.getElementById('iosAddToHome');
+
+    // Android/Chrome: guardar el evento
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+
+    // Click en el botón
+    if (installBtn) {
+      installBtn.addEventListener('click', function () {
+        if (isIos() && !isInStandaloneMode()) {
+          if (iosPopup) iosPopup.style.display = 'block';
+        } else if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then(() => {
+            deferredPrompt = null;
+          });
+        } else {
+          alert('Para añadir a inicio, usa el menú de tu navegador.');
+        }
+      });
+    }
+
+    // Limpieza
+    return () => {
+      if (installBtn) {
+        installBtn.replaceWith(installBtn.cloneNode(true));
+      }
+    };
+  }, []);
+}
