@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\ExpenseGetRequest;
 use App\Models\Expense;
 use App\Models\Payment;
 use App\Models\Expense_division;
@@ -94,6 +95,11 @@ class ExpensesService
         return response()->json($expense, 200);
     }
 
+    public function getExpense(ExpenseGetRequest $req)
+    {
+        $expense = Expense::where('id', $req->expense_id)->get();
+        return $expense;
+    }
 
     public function getExpenses(ExpensesGetRequest $req)
     {

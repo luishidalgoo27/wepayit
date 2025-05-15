@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\ExpensesService;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ExpenseGetRequest;
 use App\Http\Requests\ExpensesGetRequest;
 use App\Http\Requests\ExpensesCreateRequest;
 use App\Http\Requests\ExpensesDeleteRequest;
@@ -15,9 +16,16 @@ class ExpensesController extends Controller
 {
     public function __construct(private ExpensesService $expensesService) {}
 
-    public function getExpenses(ExpensesGetRequest $req){
+    public function getExpenses(ExpensesGetRequest $req)
+    {
         $expenses = $this->expensesService->getExpenses($req);
         return response()->json($expenses);
+    }
+
+    public function getExpense(ExpenseGetRequest $req)
+    {
+        $expense = $this->expensesService->getExpense($req);
+        return response()->json($expense, 200);
     }
 
     public function create(ExpensesCreateRequest $req)

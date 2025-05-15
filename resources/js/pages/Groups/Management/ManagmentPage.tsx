@@ -102,7 +102,7 @@ export const ManagementPage = () => {
                 className="flex justify-between items-center bg-[var(--color-100)] dark:bg-[var(--color-700)] p-3 rounded"
               >
                 <span className="text-[var(--color-900)] dark:text-white">
-                  👤 {user.name} {user.id === group?.owner_id && <span className="italic text-sm">(Owner)</span>}
+                  👤 {user.username} {user.id === group?.owner_id && <span className="italic text-sm">(Owner)</span>}
                 </span>
                 {user.id !== group?.owner_id && (
                   <button
