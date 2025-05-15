@@ -62,11 +62,10 @@ class ExpensesService
             'date'          => $req->date          ?? $expense->date,
             'description'   => $req->description   ?? $expense->description,
             'category'      => $req->category      ?? $expense->category,
-            'receipt_url'   => $req->receipt_url   ?? $expense->receipt_url,
             'recurrent'     => $req->recurrent     ?? $expense->recurrent,
             'frecuency'     => $req->frecuency     ?? $expense->frecuency,
         ]);
-
+        
         if ($req->has('users_division')) {
             $this->expenseDivision->where('expense_id', $expense->id)->delete();
 
