@@ -49,6 +49,21 @@
     @apply flex items-center p-4 shadow hover:shadow-md transition-transform transform hover:-translate-y-1 cursor-pointer;
 }
 
+.textTerm {
+    @apply font-medium text-600 dark:text-50;
+}
+
+.textTerm2{
+    @apply mt-1 text-800 dark:text-200;
+}
+
+.borderTerm {
+   @apply text-xl font-semibold text-950 dark:text-50 border-l-4 border-500 pl-4 mb-4;
+}
+
+.boxTerm{
+    @apply bg-100 dark:bg-600 p-4 rounded-xl border border-300 dark:border-400;
+}
 
 body {
     font-family: var(--font-primary);
