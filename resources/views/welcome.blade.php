@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WePayIt</title>
+    <!-- Asegúrate de tener un manifest.json adecuado -->
+    <link rel="manifest" href="/manifest.json" />
+    <!-- Meta tags para PWA en iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="WePayIt" />
+    <link rel="apple-touch-icon" href="/icon-192x192.png" />
     @viteReactRefresh
     @vite(['resources/css/app.css', 'resources/js/main.tsx'])
   </head>
@@ -22,5 +29,20 @@
         <button onclick="document.getElementById('iosAddToHome').style.display='none'" style="margin-top:18px;background:#257C6A;color:#fff;padding:8px 18px;border:none;border-radius:8px;font-weight:600;">Cerrar</button>
       </div>
     </div>
+
+    <!-- Registrar el Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('Service Worker registrado con éxito:', registration.scope);
+            })
+            .catch(error => {
+              console.log('Error al registrar el Service Worker:', error);
+            });
+        });
+      }
+    </script>
   </body>
 </html>

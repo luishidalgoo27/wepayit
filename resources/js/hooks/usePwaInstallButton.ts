@@ -1,10 +1,11 @@
-import { useEffect } from "react";
-
-// Variable global para guardar el evento
-let deferredPrompt: any = null;
+import { useState, useEffect } from "react";
 
 export function usePwaInstallButton(isMenuOpen: boolean) {
+  const [isInstallable, setIsInstallable] = useState(false);
+
   useEffect(() => {
+    let deferredPrompt: any = null;
+
     function isIos() {
       return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
     }
@@ -13,14 +14,13 @@ export function usePwaInstallButton(isMenuOpen: boolean) {
       return ('standalone' in window.navigator) && window.navigator.standalone;
     }
 
-    // Guardar el evento globalmente SOLO la primera vez
     function beforeInstallPromptHandler(e: any) {
       e.preventDefault();
       deferredPrompt = e;
+      setIsInstallable(true);
     }
     window.addEventListener('beforeinstallprompt', beforeInstallPromptHandler);
 
-    // Cuando el menú se abre, asigna el evento al botón
     if (isMenuOpen) {
       const installBtn = document.getElementById('installBtn');
       const iosPopup = document.getElementById('iosAddToHome');
@@ -41,11 +41,11 @@ export function usePwaInstallButton(isMenuOpen: boolean) {
       }
     }
 
-    // Limpieza
     return () => {
       window.removeEventListener('beforeinstallprompt', beforeInstallPromptHandler);
-      const installBtn = document.getElementById('installBtn');
-      if (installBtn) installBtn.onclick = null;
+      setIsInstallable(false);
     };
   }, [isMenuOpen]);
+
+  return { isInstallable };
 }
