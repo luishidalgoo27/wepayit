@@ -14,32 +14,30 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            'Comida',
-            'Supermercado',
-            'Alquiler',
-            'Transporte',
-            'Viajes',
-            'Entretenimiento',
-            'Cine',
-            'Compras',
-            'Regalos',
-            'Salud',
-            'Educación',
-            'Servicios públicos',
-            'Teléfono e Internet',
-            'Mascotas',
-            'Eventos',
-            'Fiestas',
-            'Hogar',
-            'Reparaciones',
-            'Impuestos',
-            'Otros'
+            ['type' => 'Comida', 'emoji' => '🍽️'],
+            ['type' => 'Supermercado', 'emoji' => '🛒'],
+            ['type' => 'Alquiler', 'emoji' => '🏠'],
+            ['type' => 'Transporte', 'emoji' => '🚌'],
+            ['type' => 'Viajes', 'emoji' => '✈️'],
+            ['type' => 'Entretenimiento', 'emoji' => '🎮'],
+            ['type' => 'Cine', 'emoji' => '🎬'],
+            ['type' => 'Compras', 'emoji' => '🛍️'],
+            ['type' => 'Regalos', 'emoji' => '🎁'],
+            ['type' => 'Salud', 'emoji' => '💊'],
+            ['type' => 'Educación', 'emoji' => '📚'],
+            ['type' => 'Servicios públicos', 'emoji' => '💡'],
+            ['type' => 'Teléfono e Internet', 'emoji' => '📱'],
+            ['type' => 'Mascotas', 'emoji' => '🐶'],
+            ['type' => 'Eventos', 'emoji' => '📅'],
+            ['type' => 'Fiestas', 'emoji' => '🥳'],
+            ['type' => 'Hogar', 'emoji' => '🛋️'],
+            ['type' => 'Reparaciones', 'emoji' => '🛠️'],
+            ['type' => 'Impuestos', 'emoji' => '💸'],
+            ['type' => 'Otros', 'emoji' => '🔖'],
         ];
 
         foreach ($categories as $category) {
-            DB::table('categories')->insert([
-                'type' => $category
-            ]);
+            DB::table('categories')->insert($category);
         }
     }
 }
