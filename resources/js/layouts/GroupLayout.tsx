@@ -47,7 +47,7 @@ export const GroupLayout = () => {
                 </div>
 
                 {/* Navegación */}
-                <div className="grid grid-cols-4 bg-500 dark:bg-500 text-950 dark:text-50 border-2 border-300 rounded-xl shadow-sm overflow-hidden text-center text-sm font-medium">
+                <div className="grid grid-cols-4 bg-500 dark:bg-500 text-950 dark:text-50 border-2 border-300 rounded-xl shadow-sm overflow-hidden text-center text-sm font-bold">
                     <Link to={`expenses`} className="py-3 border-r sectionCols">
                         Gastos
                     </Link>
