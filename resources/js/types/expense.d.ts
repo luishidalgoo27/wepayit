@@ -8,7 +8,7 @@ export interface Expense {
     group_id: string
     date: string
     description: string
-    category: string
+    category_id: number
     receipt_url: string
     state: string
 }
