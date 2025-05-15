@@ -18,8 +18,6 @@ export const InvitacionPage = () => {
     }
   }; 
     
-
-
     return (
         <div className="min-h-screen flex flex-col justify-center items-center">
             <h1 className="text-2xl font-extrabold text-600 mb-10 text-center">
