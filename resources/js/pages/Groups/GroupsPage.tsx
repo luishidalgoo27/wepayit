@@ -1,39 +1,29 @@
-import { getGroups, getUserCount } from "@/services/groups";
+import { getUserCount } from "@/services/groups";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import toast from "react-hot-toast";
-import { Group } from "@/types/group";
+import { useGetGroups } from "@/hooks/useGetGroups";
 
 export const GroupsPage = () => {
-    const [groups, setGroups] = useState<Group[]>([]);
-    const [membersCount, setMembersCount] = useState<{ [key: number]: number }>({}); // Estado para almacenar el número de miembros por grupo
+    const { groups } = useGetGroups();
+    const [membersCount, setMembersCount] = useState<{ [key: string]: number }>({});
 
     useEffect(() => {
-        const loadGroups = async () => {
-            try {
-                const data = await getGroups();
-                setGroups(data);
+        const fetchCounts = async () => {
+            const newCounts: { [key: string]: number } = {};
 
-                const membersPromises = data.map(async (group) => {
-                    const count = await getUserCount(group.id); 
-                    return { groupId: group.id, count };
-                });
-
-                const membersData = await Promise.all(membersPromises);
-                const membersMap = membersData.reduce((acc, { groupId, count }) => {
-                    acc[groupId] = count;
-                    return acc;
-                }, {} as { [key: number]: number });
-
-                setMembersCount(membersMap);
-            } catch (error) {
-                toast.error("Error al cargar los grupos o los miembros");
-                console.error(error);
+            for (const group of groups) {
+                const count = await getUserCount(group.id); 
+                newCounts[group.id] = count;
             }
+
+            setMembersCount(newCounts);
         };
 
-        loadGroups();
-    }, []);
+        if (groups.length > 0) {
+            fetchCounts();
+        }
+    }, [groups]);
+
 
     return (
         <div className="container max-w-4xl mx-auto  space-y-6 px-8">

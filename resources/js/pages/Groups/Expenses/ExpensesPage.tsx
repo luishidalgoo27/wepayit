@@ -55,17 +55,17 @@ export const ExpensesPage = () => {
                                 </Link>
                             )}
                         </div>
-                <Link
-                    to={`/groups/${id}/edit-expenses`}
-                    className="bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950  w-auto p-5 text-center  font-semibold py-3 rounded-xl shadow-md"
-                >
-                    Ver gasto
-                </Link>
+
+                        {/* Botón ver gasto */}
+                        <Link
+                            to={`/groups/${id}/edit-expenses`}
+                            className="bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950  w-auto p-5 text-center  font-semibold py-3 rounded-xl shadow-md"
+                        >
+                            Ver gasto
+                        </Link>
                     </div>
                 ))}
             </div>
-
-
         </>
     );
 };
