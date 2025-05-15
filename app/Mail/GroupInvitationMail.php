@@ -28,7 +28,7 @@ class GroupInvitationMail extends Mailable
     {
         $apiUrl = env('VITE_API_URL');
         $url = $apiUrl."/invitations/accept/{$this->invitation->invitation_code}";
-        $rute = "http://localhost/invitation/{$this->invitation->invitation_code}";
+        $rute = $apiUrl."/invitation/{$this->invitation->invitation_code}";
 
         $userInvited = User::where('email', $this->invitation->guest_email)->first();
         $user = User::where('id', $this->invitation->user_id)->first();
