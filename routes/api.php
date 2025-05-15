@@ -42,7 +42,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/deleteUser', [UserGroupController::class, 'deleteUser']);
     
     Route::post('/invitation', [UserGroupController::class, 'sendInvitation']);
-    Route::get('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
+    Route::post('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
     
     Route::post('/notification', [NotificationController::class, 'sendNotification']);
     

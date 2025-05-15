@@ -27,6 +27,7 @@ class GroupInvitationMail extends Mailable
     public function build()
     {
         $apiUrl = env('VITE_API_URL');
+        
         $url = $apiUrl."/invitations/accept/{$this->invitation->invitation_code}";
         $rute = $apiUrl."/invitation/{$this->invitation->invitation_code}";
 
@@ -42,6 +43,6 @@ class GroupInvitationMail extends Mailable
                 'userInvited' => $userInvited,
                 'user' => $user,
                 'group' => $group
-            ]);
+        ]);
     }
 }

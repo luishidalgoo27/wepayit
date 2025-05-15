@@ -2,7 +2,6 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { acceptInvitation } from "@/services/user";
 
-
 export const InvitacionPage = () => {
     const {code} = useParams();
     const acceptUrl = code || "#";
