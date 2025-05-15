@@ -25,20 +25,20 @@ export const GroupLayout = () => {
             {showBackButtonInGroupLayout(location.pathname) && <BackButton />}
             <div className="space-y-6">
                 {/* Header */}
-                <div className="flex flex-col items-center text-center">
+                <div className="flex flex-col items-center text-center space-y-2">
                     {group.photo ? (
-                        <div className="w-20 h-20 rounded-full flex items-center justify-center">
-                            <img 
-                                src={group.photo} 
-                                className="rounded-full object-cover border-4 border-white shadow"
+                        <div className="w-20 h-20 rounded-full overflow-hidden flex items-center justify-center">
+                            <img
+                                src={group.photo}
+                                className="w-full h-full rounded-full object-cover border-4 border-500 dark:border-600 shadow"
                                 alt="Avatar del grupo"
                             />
                         </div>
                     ) : (
-                        <div className="w-20 h-20 rounded-full flex items-center justify-center">
-                            <img 
-                                src="https://res.cloudinary.com/dotw4uex6/image/upload/v1747049502/ChatGPT_Image_12_may_2025_13_30_39_ook44q.png" 
-                                className="rounded-full object-cover border-4 border-white shadow"
+                        <div className="w-20 h-20 rounded-full overflow-hidden flex items-center justify-center">
+                            <img
+                                src="https://res.cloudinary.com/dotw4uex6/image/upload/v1747049502/ChatGPT_Image_12_may_2025_13_30_39_ook44q.png"
+                                className="w-full h-full rounded-full object-cover border-4 border-500 dark:border-600 shadow"
                                 alt="Avatar del grupo"
                             />
                         </div>

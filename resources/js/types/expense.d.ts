@@ -38,7 +38,7 @@ export type CreateExpense = {
     currency_type: string
     date: string
     description: string
-    category: string
+    category_id: number
     receipt_url: string
     group_id: string
     users_division: UserDivision[]

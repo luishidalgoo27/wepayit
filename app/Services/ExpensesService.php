@@ -26,7 +26,7 @@ class ExpensesService
             'group_id'      => $req->group_id,
             'date'          => $req->date,
             'description'   => $req->description,
-            'category'      => $req->category,
+            'category_id'   => $req->category_id,
             'receipt_url'   => $req->receipt_url,
             'recurrent'     => $req->recurrent ?? false,
             'frecuency'     => $req->frecuency,
