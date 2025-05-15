@@ -4,10 +4,17 @@ export const Footer = () => {
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Sección 1: Logo */}
                 <div className="text-center md:text-left">
+                    {/* Logo modo claro */}
                     <img
-                        src="/wepayitlightlogo.png" // Cambia esta ruta al logo real
-                        alt="WePayIt Logo"
-                        className="w-22 mx-auto md:mx-0"
+                        src="/wepayitdarklogoF.png"
+                        alt="WePayIt Logo Claro"
+                        className="w-22 mx-auto md:mx-0 block dark:hidden"
+                    />
+                    {/* Logo modo oscuro */}
+                    <img
+                        src="/wepayitlightlogo.png"
+                        alt="WePayIt Logo Oscuro"
+                        className="w-22 mx-auto md:mx-0 hidden dark:block"
                     />
                 </div>
 

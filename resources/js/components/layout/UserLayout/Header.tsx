@@ -44,7 +44,18 @@ export const Header = () => {
           to="/groups"
           className="text-2xl font-bold tracking-wide hover:text-600 transition-colors"
         >
-          <img src="/wepayitlightlogo.png" className="w-15 h-auto" alt="" />
+          {/* Logo modo claro */}
+          <img
+            src="/wepayitdarklogoF.png"
+            className="w-15 h-auto block dark:hidden"
+            alt="WePayIt Logo Claro"
+          />
+          {/* Logo modo oscuro */}
+          <img
+            src="/wepayitlightlogo.png"
+            className="w-15 h-auto hidden dark:block"
+            alt="WePayIt Logo Oscuro"
+          />
         </Link>
 
         {/* Navigation Links (Visible on larger screens) */}
