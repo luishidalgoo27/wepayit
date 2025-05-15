@@ -18,8 +18,6 @@ export const InvitacionPage = () => {
     }
   }; 
     
-
-
     return (
         <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br px-4">
             <div className="bg-50 rounded-3xl shadow-2xl p-8 md:p-16 flex flex-col items-center max-w-2xl w-full">
