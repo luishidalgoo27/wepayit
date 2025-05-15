@@ -119,7 +119,7 @@ export const CreateExpensePage = () => {
             currency_type: currency,
             date,
             description,
-            category,
+            category_id: Number(category),
             receipt_url: receipt,
             group_id: id,
             users_division: usersDivision
@@ -228,7 +228,7 @@ export const CreateExpensePage = () => {
                 >
                     <option value="">Selecciona una categoría</option>
                     {!loadingCategories && categories && categories.map((cat) => (
-                        <option key={cat.id} value={cat.type}>{cat.type}</option>
+                        <option key={cat.id} value={cat.id}>{cat.type}</option>
                     ))}
                 </select>
             </div>
