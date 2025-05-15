@@ -27,6 +27,6 @@ export const useGetUsers = (id: string) => {
     return {
         users,
         loading,
-        refetch: fetchUsers, 
+        refetch: fetchUsers,
     };
 };
