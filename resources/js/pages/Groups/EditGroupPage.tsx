@@ -1,9 +1,8 @@
-import { BackButton } from "@/components/ui/BackButton";
-import { createGroup } from "@/services/groups";
 import { ImagePlus, FolderKanban, BadgeEuro, Type } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { createGroup } from "@/services/groups";
 
 export const EditGroupPage = () => {
   const navigate = useNavigate()
@@ -74,9 +73,8 @@ export const EditGroupPage = () => {
       setImage(null);
       navigate('/groups')
     } catch (err: any) {
-      // Verificar si el backend envía múltiples errores
       const errors = err.response?.data?.errors
-        ? Object.values(err.response.data.errors).flat() // Aplanar los mensajes de error
+        ? Object.values(err.response.data.errors).flat()
         : [err.response?.data?.message || "Error desconocido. Inténtalo de nuevo."];
 
       // Mostrar cada error como un toast separado
