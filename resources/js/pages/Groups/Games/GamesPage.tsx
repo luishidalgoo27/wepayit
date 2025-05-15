@@ -113,7 +113,7 @@ export const GamesPage = () => {
 
         <button
           onClick={handleChangeExcuse}
-          className="mt-4 px-6 py-2 bg-[var(--color-400)] hover:bg-[var(--color-300)] text-[var(--color-50)] rounded-full transition"
+          className="clickButton mt-4 px-6 py-2"
         >
           Generar excusa
         </button>
@@ -129,13 +129,13 @@ export const GamesPage = () => {
             <div className="flex justify-center gap-4 mt-4">
               <button
                 onClick={copyExcuseToClipboard}
-                className="px-4 py-2 bg-[var(--color-400)] hover:bg-[var(--color-300)] text-[var(--color-50)] rounded-full transition"
+                className="clickButton px-4 py-2"
               >
                 Copiar excusa
               </button>
               <button
                 onClick={handleChangeExcuse}
-                className="px-4 py-2 bg-[var(--color-300)] hover:bg-[var(--color-400)] text-[var(--color-50)] rounded-full transition"
+                className="clickButton px-4 py-2"
               >
                 Nueva excusa
               </button>
