@@ -17,22 +17,25 @@ export const GroupLayout = () => {
         <div className="container max-w-4xl mx-auto py-2 space-y-10 text-950 dark:text-50 px-8">
             <div className="space-y-6">
                 {/* Header */}
-                <div className="flex flex-col items-center text-center space-y-3">
+                <div className="flex flex-col items-center text-center">
                     {group.photo ? (
-                        <img className="w-14 h-14 rounded-full shadow-md" src={group.photo} alt="Grupo" />
+                        <div className="w-20 h-20 rounded-full flex items-center justify-center">
+                            <img 
+                                src={group.photo} 
+                                className="rounded-full object-cover border-4 border-white shadow"
+                                alt="Avatar del grupo"
+                            />
+                        </div>
                     ) : (
-                        <div className="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center">
-                            <svg className="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path
-                                    fillRule="evenodd"
-                                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                    clipRule="evenodd"
-                                />
-                            </svg>
+                        <div className="w-20 h-20 rounded-full flex items-center justify-center">
+                            <img 
+                                src="https://res.cloudinary.com/dotw4uex6/image/upload/v1747049502/ChatGPT_Image_12_may_2025_13_30_39_ook44q.png" 
+                                className="rounded-full object-cover border-4 border-white shadow"
+                                alt="Avatar del grupo"
+                            />
                         </div>
                     )}
                     <h1 className="text-4xl font-bold tracking-tight">{group.name}</h1>
-                    
                 </div>
 
                 {/* Navegación */}

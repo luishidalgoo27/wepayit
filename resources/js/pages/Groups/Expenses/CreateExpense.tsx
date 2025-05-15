@@ -7,11 +7,6 @@ import { useGetUsers } from "@/hooks/useGetUsers";
 import { CreateExpense, UserDivision } from "@/types/expense";
 import { useGetCategories } from "@/hooks/useGetCategories";
 
-export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: string }> {
-    const id = params.id!;
-    return { id };
-}
-
 export const CreateExpensePage = () => {
     const navigate = useNavigate();
     const { id } = useLoaderData() as { id: string };
