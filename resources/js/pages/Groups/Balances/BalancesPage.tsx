@@ -106,12 +106,12 @@ export const BalancesPage = () => {
             {balances.map(user => (
                 <div
                     key={user.id}
-                    className="bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-3"
+                    className="box dark:text-50 shadow-sm px-4 py-3"
                 >
-                    <p className="font-semibold text-gray-800">
-                        {user.name} ({user.email})
+                    <p className="font-semibold">
+                        {user.username}
                     </p>
-                    <p className="text-gray-600">
+                    <p className="dark:text-200">
                         {user.balance > 0
                             ? `Le deben ${user.balance.toFixed(2)}€`
                             : user.balance < 0

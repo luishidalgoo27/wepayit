@@ -119,7 +119,7 @@ export const CreateExpensePage = () => {
             currency_type: currency,
             date,
             description,
-            category,
+            category_id: Number(category),
             receipt_url: receipt,
             group_id: id,
             users_division: usersDivision
@@ -166,44 +166,44 @@ export const CreateExpensePage = () => {
             <h1 className="text-center text-3xl font-bold mb-4">Crear nuevo gasto</h1>
 
             <div className="relative">
-                <FolderKanban className="absolute left-3 top-3 text-emerald-700" size={20} />
+                <FolderKanban className="absolute left-3 top-3 text-700" size={20} />
                 <input
                     type="text"
                     placeholder="Título del gasto"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
+                    className="labelForm"
                 />
             </div>
 
             <div className="relative">
-                <BadgeEuro className="absolute left-3 top-3 text-emerald-700" size={20} />
+                <BadgeEuro className="absolute left-3 top-3 text-700" size={20} />
                 <input
                     type="number"
                     placeholder="Cantidad"
                     value={amount === 0 ? "" : amount}
                     onChange={(e) => setAmount(Number(e.target.value))}
-                    className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
+                    className="labelForm"
                 />
             </div>
 
             <div className="relative">
-                <Calendar className="absolute left-3 top-3 text-emerald-700" size={20} />
+                <Calendar className="absolute left-3 top-3 text-700" size={20} />
                 <input
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
+                    className="labelForm"
                 />
             </div>
 
             {/* Moneda */}
             <div className="relative">
-                <BadgeEuro className="absolute left-3 top-2 text-emerald-700" size={20} />
+                <BadgeEuro className="absolute left-3 top-2 text-700" size={20} />
                 <select
                     value={currency}
                     onChange={(e) => handleCurrencyChange(e.target.value)}
-                    className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
+                    className="labelForm"
                 >
                     <option value="">Selecciona una moneda</option>
                     {currencies.map((currency) => (
@@ -220,27 +220,27 @@ export const CreateExpensePage = () => {
             </div>
 
             <div className="relative">
-                <Type className="absolute left-3 top-3 text-emerald-700" size={20} />
+                <Type className="absolute left-3 top-3 text-700" size={20} />
                 <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
+                    className="labelForm"
                 >
                     <option value="">Selecciona una categoría</option>
                     {!loadingCategories && categories && categories.map((cat) => (
-                        <option key={cat.id} value={cat.type}>{cat.type}</option>
+                        <option key={cat.id} value={cat.id}>{cat.type}</option>
                     ))}
                 </select>
             </div>
 
             <div className="relative">
-                <FileText className="absolute left-3 top-3 text-emerald-700" size={20} />
+                <FileText className="absolute left-3 top-3 text-700" size={20} />
                 <input
                     type="text"
                     placeholder="Descripción"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl"
+                    className="labelForm"
                 />
             </div>
 
@@ -250,26 +250,42 @@ export const CreateExpensePage = () => {
                     placeholder="URL del recibo (opcional)"
                     value={receipt}
                     onChange={(e) => setReceipt(e.target.value)}
-                    className="w-full bg-emerald-100 text-black px-4 py-2 rounded-xl"
+                    className="labelForm"
                 />
             </div>
 
             <div className="space-y-2">
-                <label className="font-semibold text-black flex items-center gap-2">
-                    <Users size={18} className="text-emerald-700" /> Selección de usuarios:
+                <label className="font-semibold dark:text-200 text-700 flex items-center gap-2">
+                    <Users size={18} className="dark:text-100 text-950" /> Selección de usuarios:
                 </label>
 
                 {users.map((user, index) => (
                     <div key={user.id} className="flex items-center gap-4">
-                        <label className="flex items-center gap-2 w-1/2">
-                            <input
-                                type="checkbox"
-                                checked={usersDivision[index]?.selected || false}
-                                onChange={(e) =>
-                                    handleUserDivisionChange(index, "selected", e.target.checked)
-                                }
-                            />
-                            {user.name}
+                        <label className="flex items-center gap-2 w-1/2 cursor-pointer select-none">
+                            <span className="relative">
+                                <input
+                                    type="checkbox"
+                                    checked={usersDivision[index]?.selected || false}
+                                    onChange={(e) =>
+                                        handleUserDivisionChange(index, "selected", e.target.checked)
+                                    }
+                                    className="peer appearance-none w-5 h-5 border-2 border-600 rounded-md bg-100 checked:bg-600 checked:border-400 transition-all duration-200 focus:outline-none"
+                                />
+                                <svg
+                                    className="pointer-events-none absolute left-0 top-0 w-5 h-5 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200"
+                                    viewBox="0 0 20 20"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M6 10.5L9 13.5L14 8.5"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    />
+                                </svg>
+                            </span>
+                            <span className="ml-2 text-900 dark:text-100 font-medium">{user.username}</span>
                         </label>
                         <input
                             type="number"
@@ -282,7 +298,7 @@ export const CreateExpensePage = () => {
                             onChange={(e) =>
                                 handleUserDivisionChange(index, "assigned_amount", Number(e.target.value))
                             }
-                            className="bg-emerald-100 text-black px-4 py-2 rounded-xl w-1/2"
+                            className="bg-100 text-950 px-4 py-2 rounded-xl w-1/2"
                             disabled={!usersDivision[index]?.selected}
                         />
                     </div>
@@ -291,7 +307,7 @@ export const CreateExpensePage = () => {
 
             <button
                 type="submit"
-                className="w-full bg-emerald-100 text-black rounded-xl py-2 font-semibold shadow-md hover:bg-emerald-200 transition"
+                className="w-full clickButton py-2 font-semibold shadow-md"
             >
                 Crear Gasto
             </button>

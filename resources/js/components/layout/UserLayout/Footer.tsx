@@ -1,6 +1,6 @@
 export const Footer = () => {
     return (
-        <footer className="bg-footer-light dark:bg-footer-dark dark:text-100 text-black pt-4 pb-2 px-6">
+        <footer className="bg-footer-light dark:bg-footer-dark dark:text-100 text-950 pt-4 pb-2 px-6">
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Sección 1: Logo */}
                 <div className="text-center md:text-left">
@@ -40,8 +40,8 @@ export const Footer = () => {
             </div>
 
             {/* Línea divisoria */}
-            <div className="border-[var(--color-950)] dark:border-[var(--color-700)]">
-                <p className="text-center text-sm">
+            <div className="border-t border-[var(--color-950)] dark:border-[var(--color-700)] mt-2 ">
+                <p className="text-center text-sm mt-2">
                     © {new Date().getFullYear()} WePayIt. Todos los derechos reservados.
                 </p>
             </div>
