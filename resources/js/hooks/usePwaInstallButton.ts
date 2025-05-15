@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+
+// Variable global fuera del hook
+let deferredPrompt: any = null;
 
 export function usePwaInstallButton(isMenuOpen: boolean) {
-  const [isInstallable, setIsInstallable] = useState(false);
-
   useEffect(() => {
-    let deferredPrompt: any = null;
-
     function isIos() {
       return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
     }
@@ -17,7 +16,6 @@ export function usePwaInstallButton(isMenuOpen: boolean) {
     function beforeInstallPromptHandler(e: any) {
       e.preventDefault();
       deferredPrompt = e;
-      setIsInstallable(true);
     }
     window.addEventListener('beforeinstallprompt', beforeInstallPromptHandler);
 
@@ -43,9 +41,8 @@ export function usePwaInstallButton(isMenuOpen: boolean) {
 
     return () => {
       window.removeEventListener('beforeinstallprompt', beforeInstallPromptHandler);
-      setIsInstallable(false);
+      const installBtn = document.getElementById('installBtn');
+      if (installBtn) installBtn.onclick = null;
     };
   }, [isMenuOpen]);
-
-  return { isInstallable };
 }
