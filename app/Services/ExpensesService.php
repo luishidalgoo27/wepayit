@@ -27,7 +27,6 @@ class ExpensesService
             'date'          => $req->date,
             'description'   => $req->description,
             'category_id'   => $req->category_id,
-            'receipt_url'   => $req->receipt_url,
             'recurrent'     => $req->recurrent ?? false,
             'frecuency'     => $req->frecuency,
         ]);
@@ -61,7 +60,7 @@ class ExpensesService
             'group_id'      => $req->group_id      ?? $expense->group_id,
             'date'          => $req->date          ?? $expense->date,
             'description'   => $req->description   ?? $expense->description,
-            'category'      => $req->category      ?? $expense->category,
+            'category_id'      => $req->category_id      ?? $expense->category_id,
             'recurrent'     => $req->recurrent     ?? $expense->recurrent,
             'frecuency'     => $req->frecuency     ?? $expense->frecuency,
         ]);
