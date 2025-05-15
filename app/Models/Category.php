@@ -8,7 +8,7 @@ class Category extends Model
 {
 
     protected $table = 'categories';
-    protected $fillable = ['type'];
+    protected $fillable = ['type', 'emoji'];
 
     public function expenses()
     {
