@@ -48,18 +48,7 @@ export const Header = () => {
         </Link>
 
         {/* Navigation Links (Visible on larger screens) */}
-        <ul className=" items-center gap-6 pl-16 max-sm:pl-6  ">
-          {NAV_LINKS.map((link, index) => (
-            <li key={index}>
-              <Link
-                to={link.path}
-                className="hover:text-600 transition-colors font-medium "
-              >
-                {link.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+
 
         {/* Actions (Desktop) */}
         <div className="hidden sm:flex items-center gap-3">
