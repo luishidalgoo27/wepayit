@@ -25,7 +25,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/user', [UserController::class, 'update']);
     Route::post('/updateAvatar', [UserController::class, 'updateAvatar']);
     Route::post('/deleteAvatar', [UserController::class, 'deleteImage']);
-
+    
     Route::get('/fullUsers', [UserController::class, 'fullUsers']);
 
     Route::get('/groups', [GroupController::class, 'getGroupsUser']);
