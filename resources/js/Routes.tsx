@@ -21,7 +21,7 @@ import { TermsPage } from "@/pages/FastLinks/TermsPage";
 import { GamesPage } from "@/pages/Groups/Games/GamesPage";
 import { MinimalLayout } from "@/layouts/MinimalLayout";
 import { EditGroupPage } from "./pages/Groups/EditGroupPage";
-import { EditExpensePage, loader as EditExpenseLoader } from "./pages/Groups/Expenses/EditExpensesPage";
+import { EditExpensePage } from "./pages/Groups/Expenses/EditExpensesPage";
 
 const router = createBrowserRouter([
   /* Layout sin header ni footer */
@@ -97,7 +97,6 @@ const router = createBrowserRouter([
           {
             path: "/groups/:id/edit-expense/:expenseId",
             element: <EditExpensePage />,
-            loader: EditExpenseLoader,
           },
           { path: "/user/edit-profile", element: <EditProfilePage /> },
           { path: "/invitation", element: <InvitacionPage /> },
