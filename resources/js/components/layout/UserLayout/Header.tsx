@@ -3,7 +3,6 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
 import { LogOut, User, Menu, X } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { usePwaInstallButton } from "@/hooks/usePwaInstallButton";
 
 const NAV_LINKS = [
   { path: "/groups", name: "Grupos" },
@@ -15,8 +14,6 @@ export const Header = () => {
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation(); // Obtiene la ubicación actual
-
-  usePwaInstallButton(isMenuOpen);
 
   const handleLogout = () => {
     logout();
@@ -111,6 +108,26 @@ export const Header = () => {
             <button
               id="installBtn"
               className="w-full bg-emerald-600 text-white py-2 rounded-lg font-semibold hover:bg-emerald-700 transition mb-2 flex items-center justify-center gap-2"
+              onClick={() => {
+                const popup = document.getElementById('addToHomePopup');
+                const ios = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+                const android = /android/i.test(window.navigator.userAgent);
+                if (popup) {
+                  popup.style.display = 'block';
+                  // Mostrar solo el bloque correspondiente
+                  const iosDiv = document.getElementById('iosInstructions');
+                  const androidDiv = document.getElementById('androidInstructions');
+                  if (iosDiv && androidDiv) {
+                    iosDiv.style.display = ios ? 'block' : 'none';
+                    androidDiv.style.display = android ? 'block' : 'none';
+                    // Si no es ni iOS ni Android, puedes mostrar ambos o uno genérico
+                    if (!ios && !android) {
+                      iosDiv.style.display = 'none';
+                      androidDiv.style.display = 'block';
+                    }
+                  }
+                }
+              }}
             >
               Añadir a inicio
             </button>
