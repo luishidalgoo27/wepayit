@@ -20,14 +20,15 @@ Route::post('/register', [AuthController::class, 'createUser'])->name('auth.regi
 Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
 Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verification.verify');
 
+Route::post('/getExpense', [ExpensesController::class, 'getExpense']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
     Route::post('/user', [UserController::class, 'update']);
     Route::post('/updateAvatar', [UserController::class, 'updateAvatar']);
     Route::post('/deleteAvatar', [UserController::class, 'deleteImage']);
-
+    
     Route::get('/fullUsers', [UserController::class, 'fullUsers']);
-
+    
     Route::get('/groups', [GroupController::class, 'getGroupsUser']);
     Route::post('/get-group', [GroupController::class, 'getGroup']);
     Route::post('/group', [GroupController::class, 'create']);
@@ -44,10 +45,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
     
     Route::post('/notification', [NotificationController::class, 'sendNotification']);
-       
+    
     Route::post('/payments', [PaymentController::class, 'getPaymentUser']);
     Route::post('/paymentGroup', [PaymentController::class, 'getPaymentGroup']);
-  
+    
     Route::post('/expenses', [ExpensesController::class, 'getExpenses']);
     Route::post('/get-expense', [ExpensesController::class, 'getExpense']);
     Route::put('/expense', [ExpensesController::class, 'update']);
