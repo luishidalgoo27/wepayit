@@ -2,13 +2,15 @@
 
 namespace App\Mail;
 
+use App\Models\User;
+use App\Models\Group;
 use App\Models\Invitation;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class GroupInvitationMail extends Mailable
 {
@@ -24,10 +26,20 @@ class GroupInvitationMail extends Mailable
 
     public function build()
     {
-        $url = url("/invitations/accept/{$this->invitation->invitation_code}");
+        $apiUrl = env('VITE_API_URL');
+        $url = $apiUrl."/invitations/accept/{$this->invitation->invitation_code}";
+
+        $userInvited = User::where('email', $this->invitation->guest_email)->first();
+        $user = User::where('id', $this->invitation->user_id)->first();
+        $group = Group::where('id', $this->invitation->group_id)->first();
 
         return $this->subject('Has sido invitado a un grupo')
             ->view('emails.group_invitation')
-            ->with(['url' => $url]);
+            ->with([
+                'url' => $url,
+                'userInvited' => $userInvited,
+                'user' => $user,
+                'group' => $group
+            ]);
     }
 }

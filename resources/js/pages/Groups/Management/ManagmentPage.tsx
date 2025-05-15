@@ -75,11 +75,11 @@ export const ManagementPage = () => {
                 className="flex justify-between items-center bg-[var(--color-100)] dark:bg-[var(--color-700)] p-3 rounded"
               >
                 <span className="text-[var(--color-900)] dark:text-white">
-                  {user.name} ({user.email})
+                  {user.username}
                 </span>
                 <button
                   onClick={() => handleInvite(user.email)}
-                  className="bg-[var(--color-400)] hover:bg-[var(--color-300)] text-white px-3 py-1 rounded"
+                  className="clickButton px-3 py-1 rounded"
                 >
                   Invitar
                 </button>
@@ -102,7 +102,7 @@ export const ManagementPage = () => {
                 className="flex justify-between items-center bg-[var(--color-100)] dark:bg-[var(--color-700)] p-3 rounded"
               >
                 <span className="text-[var(--color-900)] dark:text-white">
-                  👤 {user.name} {user.id === group?.owner_id && <span className="italic text-sm">(Owner)</span>}
+                  👤 {user.username} {user.id === group?.owner_id && <span className="italic text-sm">(Owner)</span>}
                 </span>
                 {user.id !== group?.owner_id && (
                   <button
