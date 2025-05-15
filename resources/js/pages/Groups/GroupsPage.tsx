@@ -58,10 +58,10 @@ export const GroupsPage = () => {
                     >
                         <div className="flex items-center gap-4">
                             {group.photo ? (
-                                <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center">
+                                <div className="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center">
                                     <img
                                         src={group.photo}
-                                        className="w-full h-full rounded-full object-cover border-4 border-white shadow"
+                                        className="w-full h-full rounded-full object-cover border-4 border-500 dark:border-600 shadow"
                                         alt="Avatar del grupo"
                                     />
                                 </div>
@@ -69,7 +69,7 @@ export const GroupsPage = () => {
                                 <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center">
                                     <img
                                         src="https://res.cloudinary.com/dotw4uex6/image/upload/v1747049502/ChatGPT_Image_12_may_2025_13_30_39_ook44q.png"
-                                        className="w-full h-full rounded-full object-cover border-4 border-white shadow"
+                                        className="w-full h-full rounded-full object-cover border-4 border-500 dark:border-600 shadow"
                                         alt="Avatar del grupo"
                                     />
                                 </div>
