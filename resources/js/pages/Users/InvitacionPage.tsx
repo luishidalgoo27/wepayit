@@ -1,13 +1,20 @@
-export const InvitacionPage = () => {
-    return (
-        <main className="container mx-auto py-10 px-4 min-h-screen">           
-            <h1 className="text-center text-lg font-bold mb-8">
-                PULSA ESTE BOTÓN PARA UNIRTE AL GRUPO DE ...
-            </h1>
+import { useSearchParams } from "react-router-dom";
 
-            <button className="bg-[#8FE3C2] text-white font-semibold text-lg px-10 py-3 rounded-full hover:bg-[#7dd8b4] transition">
-                Unete
-            </button>
-        </main>
-    )
-}
+export const InvitacionPage = () => {
+    const [searchParams] = useSearchParams();
+    const acceptUrl = searchParams.get("acceptUrl") || "#";
+
+    return (
+        <div className="min-h-screen flex flex-col justify-center items-center bg-[#F2FBF8]">
+            <h1 className="text-2xl font-extrabold text-[#257C6A] mb-10 text-center">
+                ¡Te han invitado a un grupo!
+            </h1>
+            <a
+                href={acceptUrl}
+                className="bg-[#57BCA3] hover:bg-[#319B83] text-white font-semibold text-lg px-10 py-4 rounded-full shadow-lg transition"
+            >
+                Unirme al grupo
+            </a>
+        </div>
+    );
+};

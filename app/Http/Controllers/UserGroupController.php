@@ -12,7 +12,7 @@ class UserGroupController extends Controller
     public function __construct(
         private UserGroupService $userGroupService,
         ) {}
-
+    
     public function sendInvitation(UserGroupSendInvitationRequest $req)
     {
         $user = $this->userGroupService->sendInvitation($req);
