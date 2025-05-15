@@ -40,8 +40,8 @@ export const Footer = () => {
             </div>
 
             {/* Línea divisoria */}
-            <div className="border-[var(--color-950)] dark:border-[var(--color-700)]">
-                <p className="text-center text-sm">
+            <div className="border-t border-[var(--color-950)] dark:border-[var(--color-700)] mt-2 ">
+                <p className="text-center text-sm mt-2">
                     © {new Date().getFullYear()} WePayIt. Todos los derechos reservados.
                 </p>
             </div>
