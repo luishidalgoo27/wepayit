@@ -16,7 +16,7 @@ export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation(); // Obtiene la ubicación actual
 
-  usePwaInstallButton();
+  usePwaInstallButton(isMenuOpen);
 
   const handleLogout = () => {
     logout();
