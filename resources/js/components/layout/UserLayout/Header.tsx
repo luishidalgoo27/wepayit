@@ -1,57 +1,51 @@
-import { useState } from "react";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
-import { useAuth } from "@/context/AuthContext";
-import { LogOut, User, Menu, X } from "lucide-react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { usePwaInstallButton } from "@/hooks/usePwaInstallButton";
+"use client"
 
-const NAV_LINKS = [
-  { path: "/groups", name: "Grupos" },
-];
+import { useState } from "react"
+import { ThemeToggle } from "@/components/ui/ThemeToggle"
+import { useAuth } from "@/context/AuthContext"
+import { LogOut, User, Menu, X, Download } from "lucide-react"
+import { Link, useNavigate, useLocation } from "react-router-dom"
+import { usePwaInstallButton } from "@/hooks/usePwaInstallButton"
+
+const NAV_LINKS = [{ path: "/groups", name: "Grupos" }]
 
 export const Header = () => {
-  const navigate = useNavigate();
-  const { logout } = useAuth();
-  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation(); // Obtiene la ubicación actual
+  const navigate = useNavigate()
+  const { logout } = useAuth()
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const location = useLocation()
 
-  usePwaInstallButton(isMenuOpen);
+  // Usar el hook mejorado y obtener si la app es instalable
+  const { isInstallable } = usePwaInstallButton(isMenuOpen)
 
   const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
+    logout()
+    navigate("/login")
+  }
 
   const handleConfirmLogout = () => {
-    setShowConfirmPopup(true);
-    setIsMenuOpen(false); // Cierra el menú cuando se hace clic en cerrar sesión
-  };
+    setShowConfirmPopup(true)
+    setIsMenuOpen(false)
+  }
 
   const handleCancelLogout = () => {
-    setShowConfirmPopup(false);
-  };
+    setShowConfirmPopup(false)
+  }
 
-  // Determinar si la ruta actual es "/user/edit-profile"
-  const isProfilePage = location.pathname === "/user/edit-profile";
+  const isProfilePage = location.pathname === "/user/edit-profile"
 
   const handleProfileClick = () => {
-    setIsMenuOpen(false); // Cierra el menú cuando se hace clic en "Perfil"
-  };
+    setIsMenuOpen(false)
+  }
 
   return (
     <header className="sticky top-0 z-50 bg-200 dark:bg-header-dark shadow-md pl-7 pr-7">
-      <nav className="container mx-auto  flex items-center justify-between">
+      <nav className="container mx-auto flex items-center justify-between">
         {/* Logo */}
-        <Link
-          to="/groups"
-          className="text-2xl font-bold tracking-wide hover:text-600 transition-colors"
-        >
+        <Link to="/groups" className="text-2xl font-bold tracking-wide hover:text-600 transition-colors">
           <img src="/wepayitlightlogo.png" className="w-15 h-auto" alt="" />
         </Link>
-
-        {/* Navigation Links (Visible on larger screens) */}
-
 
         {/* Actions (Desktop) */}
         <div className="hidden sm:flex items-center gap-3">
@@ -59,8 +53,8 @@ export const Header = () => {
 
           <Link
             to="/user/edit-profile"
-            onClick={handleProfileClick} // Cierra el menú cuando se hace clic en "Perfil"
-            className={`p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-150 duration-150 ${isProfilePage ? 'text-green-600 dark:text-amber-600' : ''}`}
+            onClick={handleProfileClick}
+            className={`p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-150 duration-150 ${isProfilePage ? "text-green-600 dark:text-amber-600" : ""}`}
             title="Perfil"
           >
             <User size={20} />
@@ -80,10 +74,7 @@ export const Header = () => {
           <ThemeToggle />
 
           {/* Hamburger Button (Mobile) */}
-          <button
-            onClick={() => setIsMenuOpen(true)}
-            className="p-2"
-          >
+          <button onClick={() => setIsMenuOpen(true)} className="p-2">
             <Menu size={24} />
           </button>
         </div>
@@ -95,30 +86,27 @@ export const Header = () => {
           className="fixed inset-0 z-50 items-center backdrop-blur-xs bg-opacity-50 flex justify-end"
           onClick={() => setIsMenuOpen(false)}
         >
-          <div
-            className="w-72 bg-white dark:bg-950 h-full p-5 space-y-5"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              className="absolute top-4 right-4"
-              onClick={() => setIsMenuOpen(false)}
-            >
+          <div className="w-72 bg-white dark:bg-950 h-full p-5 space-y-5" onClick={(e) => e.stopPropagation()}>
+            <button className="absolute top-4 right-4" onClick={() => setIsMenuOpen(false)}>
               <X size={24} />
             </button>
             <h2 className="text-lg font-semibold mb-4">Acciones</h2>
 
-            {/* Botón "Añadir a inicio" SOLO en el menú móvil */}
-            <button
-              id="installBtn"
-              className="w-full bg-emerald-600 text-white py-2 rounded-lg font-semibold hover:bg-emerald-700 transition mb-2 flex items-center justify-center gap-2"
-            >
-              Añadir a inicio
-            </button>
+            {/* Mostrar el botón solo si la app es instalable o en iOS */}
+            {(isInstallable || /iphone|ipad|ipod/i.test(navigator.userAgent)) && (
+              <button
+                id="installBtn"
+                className="w-full bg-emerald-600 text-white py-2 rounded-lg font-semibold hover:bg-emerald-700 transition mb-2 flex items-center justify-center gap-2"
+              >
+                <Download size={18} />
+                Añadir a inicio
+              </button>
+            )}
 
             <Link
               to="/user/edit-profile"
               onClick={handleProfileClick}
-              className={`p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-110 duration-150 flex items-center gap-2 ${isProfilePage ? 'text-green-600 dark:text-amber-600' : ''}`}
+              className={`p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-110 duration-150 flex items-center gap-2 ${isProfilePage ? "text-green-600 dark:text-amber-600" : ""}`}
             >
               <User size={20} />
               Perfil
@@ -137,13 +125,10 @@ export const Header = () => {
       {/* Confirmation Popup */}
       {showConfirmPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-opacity-30 backdrop-blur-md">
-          <div className="bg-50 dark:bg-950 text-950 dark:text-100  p-6 rounded-lg shadow-lg text-center">
+          <div className="bg-50 dark:bg-950 text-950 dark:text-100 p-6 rounded-lg shadow-lg text-center">
             <p className="mb-4 text-lg font-medium">¿Estás seguro de que deseas cerrar sesión?</p>
             <div className="flex justify-center gap-4">
-              <button
-                onClick={handleLogout}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-              >
+              <button onClick={handleLogout} className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
                 Sí
               </button>
               <button
@@ -157,5 +142,5 @@ export const Header = () => {
         </div>
       )}
     </header>
-  );
-};
+  )
+}
