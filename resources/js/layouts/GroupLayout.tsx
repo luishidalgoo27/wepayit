@@ -1,6 +1,13 @@
 import { useGetGroup } from "@/hooks/useGetGroup";
 import { useGetUserGroupExpenses } from "@/hooks/useGetUserGroupExpenses";
-import { Link, LoaderFunctionArgs, Outlet, useLoaderData } from "react-router-dom";
+import { Link, LoaderFunctionArgs, Outlet, useLoaderData, useLocation } from "react-router-dom";
+import { BackButton } from "@/components/ui/BackButton";
+
+// Función para decidir si mostrar el BackButton en este layout
+function showBackButtonInGroupLayout(pathname: string) {
+    // Oculta el botón solo en la página principal de grupos
+    return !(pathname === "/groups" || pathname === "/groups/");
+}
 
 export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: string }> {
     const id = params.id!;
@@ -10,11 +17,12 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<{ id: stri
 export const GroupLayout = () => {
     const { id } = useLoaderData() as { id: string };
     const { group } = useGetGroup(id);
-
     const { userExpense, totalExpenses } = useGetUserGroupExpenses(id);
+    const location = useLocation();
 
     return (
         <div className="container max-w-4xl mx-auto py-2 space-y-10 text-950 dark:text-50 px-8">
+            {showBackButtonInGroupLayout(location.pathname) && <BackButton />}
             <div className="space-y-6">
                 {/* Header */}
                 <div className="flex flex-col items-center text-center space-y-3">
@@ -32,7 +40,6 @@ export const GroupLayout = () => {
                         </div>
                     )}
                     <h1 className="text-4xl font-bold tracking-tight">{group.name}</h1>
-                    
                 </div>
 
                 {/* Navegación */}
