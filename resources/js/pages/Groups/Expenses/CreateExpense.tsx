@@ -10,10 +10,9 @@ import { useGetCategories } from "@/hooks/useGetCategories";
 export const CreateExpensePage = () => {
     const navigate = useNavigate();
     const { id } = useLoaderData() as { id: string };
+
     const { users, loading: loadingUsers } = useGetUsers(id);
     const { categories, loading: loadingCategories } = useGetCategories();
-
-    const loading = loadingUsers || loadingCategories;
 
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState(0);
@@ -29,6 +28,39 @@ export const CreateExpensePage = () => {
         { code: "JPY", name: "Yen (¥)" },
     ]);
     const [showAllCurrencies, setShowAllCurrencies] = useState(false);
+
+    const loading = loadingUsers || loadingCategories;
+
+    useEffect(() => {
+        if (!loading && usersDivision.length === 0) {
+            setUsersDivision(
+                users.map((user) => ({
+                    user_id: user.id,
+                    assigned_amount: 0,
+                    selected: true,
+                }))
+            );
+        }
+    }, [loading, users]);
+
+
+
+    useEffect(() => {
+        const selectedUsers = usersDivision.filter(u => u.selected);
+        const count = selectedUsers.length;
+        if (count === 0 || isNaN(amount)) return;
+
+        const divided = parseFloat((amount / count).toFixed(2));
+
+        const updated = usersDivision.map(user => {
+            if (user.selected) {
+                return { ...user, assigned_amount: divided };
+            }
+            return user;
+        });
+
+        setUsersDivision(updated);
+    }, [amount]);
 
     const handleShowMoreCurrencies = async () => {
         try {
@@ -69,36 +101,6 @@ export const CreateExpensePage = () => {
         }
     };
 
-    useEffect(() => {
-        if (!loading) {
-            setUsersDivision(
-                users.map((user) => ({
-                    user_id: user.id,
-                    assigned_amount: 0,
-                    selected: true,
-                }))
-            );
-        }
-    }, [users, loading]);
-
-    useEffect(() => {
-        const selectedUsers = usersDivision.filter(u => u.selected);
-        const count = selectedUsers.length;
-        if (count === 0 || isNaN(amount)) return;
-
-        const divided = parseFloat((amount / count).toFixed(2));
-
-        const updated = usersDivision.map(user => {
-            if (user.selected) {
-                return { ...user, assigned_amount: divided };
-            }
-            return user;
-        });
-
-        setUsersDivision(updated);
-    }, [amount, JSON.stringify(usersDivision.map(u => u.selected))]);
-
-
     const handleUserDivisionChange = (
         index: number,
         field: "assigned_amount" | "selected",
@@ -106,7 +108,54 @@ export const CreateExpensePage = () => {
     ) => {
         const updated = [...usersDivision];
         updated[index][field] = value as never;
-        setUsersDivision(updated);
+
+        if (field === "assigned_amount") {
+            const newAmount = value as number;
+            const selectedUsers = updated.filter(u => u.selected);
+            const selectedCount = selectedUsers.length;
+
+            // No permitir si hay menos de 2 seleccionados
+            if (selectedCount <= 1) {
+                toast.error("Debe haber al menos 2 usuarios seleccionados para dividir el gasto.");
+                return;
+            }
+
+            // Verificar que no sea negativo
+            if (newAmount < 0) {
+                toast.error("La cantidad no puede ser negativa.");
+                return;
+            }
+
+            // Establecer el nuevo valor al usuario editado
+            updated[index].assigned_amount = newAmount;
+
+            // Calcular el total restante
+            const remainingAmount = amount - newAmount;
+
+            // Obtener índices de los otros usuarios seleccionados (excepto el que se editó)
+            const otherSelectedIndexes = updated
+                .map((u, i) => ({ ...u, index: i }))
+                .filter((u, i) => u.selected && i !== index);
+
+            const remainingCount = otherSelectedIndexes.length;
+
+            // Verificar que no se supere el total
+            if (remainingAmount < 0) {
+                toast.error("La suma de las cantidades no puede superar el monto total.");
+                return;
+            }
+
+            // Repartir el resto equitativamente entre los demás
+            const share = parseFloat((remainingAmount / remainingCount).toFixed(2));
+
+            otherSelectedIndexes.forEach(({ index: i }) => {
+                updated[i].assigned_amount = share;
+            });
+
+            setUsersDivision(updated);
+            return;
+        }
+
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -128,20 +177,8 @@ export const CreateExpensePage = () => {
         try {
             await createExpense(newExpense);
             toast.success("Gasto creado correctamente");
-
-            // Reset
-            setTitle("");
-            setAmount(0);
-            setDate("");
-            setCurrency("");
-            setDescription("");
-            setCategory("");
-            setUsersDivision(users.map(user => ({
-                user_id: user.id,
-                assigned_amount: 0,
-                selected: true,
-            })));
             navigate(`/groups/${id}/expenses`);
+
         } catch (err: any) {
             const errors = err.response?.data?.errors
                 ? Object.values(err.response.data.errors).flat()
