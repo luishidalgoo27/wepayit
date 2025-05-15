@@ -43,3 +43,10 @@ export const deleteAvatar = async (): Promise<User> => {
   return res.data;
 };
 
+export const acceptInvitation = async (code:string): Promise<Object> => {
+  const res = await api.get(`${API_URL}/invitations/accept/${code}`);
+  return res.data;
+};
+
+
+
