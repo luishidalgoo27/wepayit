@@ -58,7 +58,7 @@ export const GroupsPage = () => {
                     >
                         <div className="flex items-center gap-4">
                             {group.photo ? (
-                                <div className="w-10 h-10 rounded-full flex items-center justify-center">
+                                <div className="w-16 h-16 rounded-full flex items-center justify-center">
                                     <img
                                         src={group.photo}
                                         className="rounded-full object-cover border-4 border-white shadow"
