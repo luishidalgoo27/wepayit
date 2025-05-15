@@ -11,7 +11,7 @@ import { GroupsPage } from "@/pages/Groups/GroupsPage";
 import { CreateGroupPage } from "@/pages/Groups/CreateGroupPage";
 import { ExpensesPage } from "@/pages/Groups/Expenses/ExpensesPage";
 import { BalancesPage } from "@/pages/Groups/Balances/BalancesPage";
-import { PhotosPage } from "@/pages/Groups/Photos/PhotosPage";
+import { ManagementPage } from "@/pages/Groups/Management/ManagmentPage";
 import { CreateExpensePage, loader as CreateExpenseLoader } from "@/pages/Groups/Expenses/CreateExpense";
 import { EditProfilePage } from "@/pages/Users/EditProfilePage";
 import { InvitacionPage } from "@/pages/Users/InvitacionPage";
@@ -19,7 +19,6 @@ import { GroupLayout, loader as GroupLoader } from "./layouts/GroupLayout";
 import { AboutPage } from "@/pages/FastLinks/AboutPage";
 import { TermsPage } from "@/pages/FastLinks/TermsPage";
 import { GamesPage } from "@/pages/Groups/Games/GamesPage";
-import { GroupProvider } from "@/context/GroupContext"; 
 import { MinimalLayout } from "@/layouts/MinimalLayout";
 import { EditGroupPage } from "./pages/Groups/EditGroupPage";
 import { EditExpensePage } from "./pages/Groups/Expenses/EditExpensesPage";
@@ -84,13 +83,13 @@ const router = createBrowserRouter([
                 loader: GroupLoader,
               },
               {
-                path: "photos",
-                element: <PhotosPage />,
+                path: "games",
+                element: <GamesPage />,
                 loader: GroupLoader,
               },
               {
-                path: "games",
-                element: <GamesPage />,
+                path: "management",
+                element: <ManagementPage />,
                 loader: GroupLoader,
               },
             ],
