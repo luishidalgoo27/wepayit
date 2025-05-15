@@ -13,11 +13,11 @@
       </div>
 
       <div style="font-size:20px;font-weight:600;color:#319B83;margin-bottom:20px;">
-        Hola [Nombre del user],
+        Hola {{$userInvited->name}},
       </div>
 
       <div style="font-size:16px;line-height:1.6;margin-bottom:30px;color:#216457;">
-        [Nombre del que invita] te ha invitado a unirte al grupo <span style="font-weight:600;color:#57BCA3;">[Nombre del grupo]</span> en WePayIt.
+        {{$user->name}} te ha invitado a unirte al grupo <span style="font-weight:600;color:#57BCA3;">{{$group->name}}</span> en WePayIt.
       </div>
 
       <h2 style="font-size:20px;color:#257C6A;margin:30px 0 15px 0;padding-left:15px;border-left:4px solid #57BCA3;">
@@ -32,7 +32,7 @@
       </div>
 
       <div style="text-align:center;margin:35px 0;">
-        <a href="[URL_INVITACION]" style="background:#57BCA3;color:#ffffff;text-decoration:none;padding:14px 30px;font-size:16px;font-weight:600;border-radius:8px;display:inline-block;">Unirme al grupo</a>
+        <a href="{{$url}}"" style="background:#57BCA3;color:#ffffff;text-decoration:none;padding:14px 30px;font-size:16px;font-weight:600;border-radius:8px;display:inline-block;">Unirme al grupo</a>
       </div>
 
       <div style="font-style:italic;background:#E6E3FF;padding:15px;border-radius:8px;margin:25px 0;color:#257C6A;">

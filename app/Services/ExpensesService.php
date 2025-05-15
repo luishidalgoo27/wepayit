@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\ExpenseGetRequest;
 use App\Models\Expense;
 use App\Models\Payment;
 use App\Models\Expense_division;
@@ -27,7 +28,6 @@ class ExpensesService
             'date'          => $req->date,
             'description'   => $req->description,
             'category_id'   => $req->category_id,
-            'receipt_url'   => $req->receipt_url,
             'recurrent'     => $req->recurrent ?? false,
             'frecuency'     => $req->frecuency,
         ]);
@@ -61,12 +61,11 @@ class ExpensesService
             'group_id'      => $req->group_id      ?? $expense->group_id,
             'date'          => $req->date          ?? $expense->date,
             'description'   => $req->description   ?? $expense->description,
-            'category'      => $req->category      ?? $expense->category,
-            'receipt_url'   => $req->receipt_url   ?? $expense->receipt_url,
+            'category_id'      => $req->category_id      ?? $expense->category_id,
             'recurrent'     => $req->recurrent     ?? $expense->recurrent,
             'frecuency'     => $req->frecuency     ?? $expense->frecuency,
         ]);
-
+        
         if ($req->has('users_division')) {
             $this->expenseDivision->where('expense_id', $expense->id)->delete();
 
@@ -96,6 +95,11 @@ class ExpensesService
         return response()->json($expense, 200);
     }
 
+    public function getExpense(ExpenseGetRequest $req)
+    {
+        $expense = Expense::where('id', $req->expense_id)->get();
+        return $expense;
+    }
 
     public function getExpenses(ExpensesGetRequest $req)
     {
