@@ -38,7 +38,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::post('/getUsers', [GroupController::class, 'getUsers']);
     
-    Route::delete('/deleteUser', [UserGroupController::class, 'deleteUser']);
+    Route::post('/deleteUser', [UserGroupController::class, 'deleteUser']);
     
     Route::post('/invitation', [UserGroupController::class, 'sendInvitation']);
     Route::get('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);

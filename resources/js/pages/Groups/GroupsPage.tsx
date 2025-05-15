@@ -12,7 +12,7 @@ export const GroupsPage = () => {
             const newCounts: { [key: string]: number } = {};
 
             for (const group of groups) {
-                const count = await getUserCount(group.id); 
+                const count = await getUserCount(group.id);
                 newCounts[group.id] = count;
             }
 
@@ -58,25 +58,20 @@ export const GroupsPage = () => {
                     >
                         <div className="flex items-center gap-4">
                             {group.photo ? (
-                                <img
-                                    className="w-10 h-10 rounded-full border border-[var(--color-300)] dark:border-[var(--color-600)]"
-                                    src={group.photo}
-                                    alt="Rounded avatar"
-                                />
+                                <div className="w-16 h-16 rounded-full flex items-center justify-center">
+                                    <img
+                                        src={group.photo}
+                                        className="rounded-full object-cover border-4 border-white shadow"
+                                        alt="Avatar del grupo"
+                                    />
+                                </div>
                             ) : (
-                                <div className="relative w-10 h-10 overflow-hidden bg-[var(--color-200)] dark:bg-[var(--color-800)] rounded-full">
-                                    <svg
-                                        className="absolute w-12 h-12 text-[var(--color-400)] dark:text-[var(--color-600)] -left-1"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            fillRule="evenodd"
-                                            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                            clipRule="evenodd"
-                                        ></path>
-                                    </svg>
+                                <div className="w-16 h-16 rounded-full flex items-center justify-center">
+                                    <img
+                                        src="https://res.cloudinary.com/dotw4uex6/image/upload/v1747049502/ChatGPT_Image_12_may_2025_13_30_39_ook44q.png"
+                                        className="rounded-full object-cover border-4 border-white shadow"
+                                        alt="Avatar del grupo"
+                                    />
                                 </div>
                             )}
                             <h2 className="text-xl font-semibold text-[var(--color-600)] dark:text-[var(--color-100)]">

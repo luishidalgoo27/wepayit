@@ -65,12 +65,12 @@ export const inviteUserToGroup = async (group_id: string, userEmail:string): Pro
 }
 
 /* REMOVE USER GROUP */
-export const removeUserFromGroup = async (group_id: string, userEmail:string): Promise<Object> => {
-    const res = await api.post(`${API_URL}/userCount`, {
+export const removeUserFromGroup = async (group_id: string, user_id: string): Promise<Object> => {
+    const res = await api.post(`${API_URL}/deleteUser`, {
         group_id: group_id,
-        userEmail: userEmail,
+        user_id: user_id
     });
-    return res.data.user_count;
+    return res.data;
 }
 
 /* SEARCH USERS GROUP */
