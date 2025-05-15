@@ -128,16 +128,19 @@ export const RegisterPage = () => {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">
-          <div className="bg-300 dark:bg-950 rounded-lg p-6 w-96 text-center">
+          <div className="bg-300 dark:bg-950 rounded-lg p-6 w-104.1 text-center">
             <h3 className="text-lg text-700 dark:text-100 font-semibold mb-4">¡Registro exitoso!</h3>
             <p className="dark:text-50 text-700 mb-6">
-              Te has registrado correctamente. Por favor, verifica tu correo electrónico antes de iniciar sesión.
+              Verifica tu correo electrónico antes de iniciar sesión.
+            </p>
+            <p className="text-xs dark:text-200 text-700 mb-6">
+              *Mira en la bandeja de spam si no encuentras el correo*
             </p>
             <button
               onClick={handleRedirectToLogin}
               className="px-6 py-2 bg-950 text-50 dark:bg-600 dark:text-50 font-medium rounded-lg hover:bg-800 dark:hover:bg-500 transition"
             >
-              Ir al login
+              Iniciar Sesión
             </button>
           </div>
         </div>
