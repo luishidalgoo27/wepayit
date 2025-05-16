@@ -122,18 +122,31 @@ export const ManagementPage = () => {
               key={user.id}
               className="flex justify-between items-center bg-[var(--color-100)] dark:bg-[var(--color-700)] p-3 rounded"
               >
-                <span className="text-[var(--color-900)] dark:text-white">
-                  👤 {user.username} {user.id === group?.owner_id && <span className="italic text-sm">(Admin)</span>}
+                <span className="text-[var(--color-900)] dark:text-white flex gap-4">
+                  
+
+                    {user.avatar ? (
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center">
+                        <img
+                          src={user.avatar}
+                          className="rounded-full object-cover border-4 border-white shadow"
+                          alt="Avatar del usuario"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-20 h-20 rounded-full flex items-center justify-center">
+                        <img
+                          src="https://res.cloudinary.com/dotw4uex6/image/upload/v1747049503/ChatGPT_Image_12_may_2025_13_30_34_x0b7aa.png"
+                          className="rounded-full object-cover border-4 border-white shadow"
+                          alt="Avatar del usuario"
+                        />
+                      </div>
+                    )}
+
+
+                   {user.username} {user.id === group?.owner_id && <span className="italic text-sm ">(Admin)</span>}
                 </span>
                 <button>🗑️</button>
-                {user.id !== group?.owner_id && (
-                  <button
-                    onClick={() => handleRemove(String(user.id))}
-                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
-                  >
-                    Eliminar
-                  </button>
-                )}
               </li>
             ))}
           </ul>
