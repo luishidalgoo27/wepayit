@@ -49,7 +49,6 @@ class UserService
 
         $user->update([
             'name' => $req->name ?? $user->name,
-            'telephone' => $req->telephone ?? $user->telephone,
             'languague' => $req->language ?? $user->languague,
             'username' => $req->username ?? $user->username
         ]);

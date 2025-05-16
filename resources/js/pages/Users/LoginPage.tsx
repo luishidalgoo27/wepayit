@@ -2,31 +2,37 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 import { Link } from "react-router-dom";
+import { LoadingOverlay } from "@/components/LoadingOverlay";
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null); // Nuevo estado de error
+  const [uploading, setUploading] = useState(false);
 
   const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null); // Limpia el error antes de intentar
-
+    
     try {
+      setUploading(true)
       await login(email, password);
       toast.success("Has iniciado sesión correctamente");
     } catch (error: any) {
       setError(error.message); // Guarda el error
       console.error("Error al iniciar sesión:", error.message);
       toast.error(error.message || "Credenciales incorrectas");
+      setUploading(false)
     }
   };
 
   return (
     <main className=" flex items-center justify-center px-4">
+    <LoadingOverlay show={uploading} message="Iniciando Sesión..."/>
+
       <div className="w-full max-w-md p-8 bg-[var(--color-50)] dark:bg-[var(--color-900)] border border-[var(--color-200)] dark:border-[var(--color-700)] rounded-2xl shadow-xl">
         <h2 className="text-2xl font-bold text-center text-950 dark:text-50 mb-6">
           Inicia sesión en <span className="text-400">Wepayit</span>

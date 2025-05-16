@@ -14,10 +14,10 @@ export const getUsersByGroup = async (groupId: string): Promise<User[]> => {
   return res.data;
 }
 
-export const updateUser = async (name: string, telephone: string): Promise<User> => {
+export const updateUser = async (name: string, username: string): Promise<User> => {
   const res = await api.post(`${API_URL}/user`, {
     name,
-    telephone
+    username,
   });
   return res.data;
 };
