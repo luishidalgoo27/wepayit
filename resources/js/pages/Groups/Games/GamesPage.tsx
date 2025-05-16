@@ -60,46 +60,6 @@ export const GamesPage = () => {
 
   return (
     <div className="box-2 flex flex-col items-center gap-8 px-6 py-8">
-      <h1 className="text-3xl font-bold text-[var(--color-400)] dark:text-[var(--color-200)]">Usuarios del grupo</h1>
-
-      {!users?.length ? (
-        <p className="text-center text-lg text-700 dark:text-300">
-          No hay usuarios en este grupo.
-        </p>
-      ) : (
-        <ul className="grid sm:grid-cols-2 md:grid-cols-3 gap-2 text-600 bg-200 dark:bg-800 border-400 dark:border-600 border-1 p-4 rounded shadow">
-          {users.map((user: any) => (
-            <li key={user.id} className="text-lg text-800 dark:text-50">
-              👤 {user.username}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <section className="w-full max-w-3xl mt-6">
-        <h2 className="text-2xl font-semibold text-600 dark:text-200 mb-4 text-center">
-          Equivalencias divertidas
-        </h2>
-        <div className="grid sm:grid-cols-2 gap-6">
-          {statsData.map(({ icon, label, value }) => (
-            <div
-              key={label}
-              className="flex items-start gap-4 p-4 rounded-lg bg-50 dark:bg-800 shadow border-l-4 border-400"
-            >
-              <div className="text-3xl">{icon}</div>
-              <div>
-                <p className="font-medium text-700 dark:text-300">
-                  Has pagado el equivalente a
-                </p>
-                <p className="text-500 dark:text-200 font-bold text-lg">
-                  {value} {label}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       <section className="w-full max-w-2xl mt-10 text-center">
         <h2 className="text-xl font-bold text-600 dark:text-200">Generador de Excusas</h2>
         <p className="text-700 dark:text-300">
@@ -138,6 +98,30 @@ export const GamesPage = () => {
           </div>
         )}
       </section>
+      <section className="w-full max-w-3xl mt-6">
+        <h2 className="text-2xl font-semibold text-600 dark:text-200 mb-4 text-center">
+          Equivalencias divertidas
+        </h2>
+        <div className="grid sm:grid-cols-2 gap-6">
+          {statsData.map(({ icon, label, value }) => (
+            <div
+              key={label}
+              className="flex items-start gap-4 p-4 rounded-lg bg-50 dark:bg-800 shadow border-l-4 border-400"
+            >
+              <div className="text-3xl">{icon}</div>
+              <div>
+                <p className="font-medium text-700 dark:text-300">
+                  Has pagado el equivalente a
+                </p>
+                <p className="text-500 dark:text-200 font-bold text-lg">
+                  {value} {label}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
     </div>
   );
 };
