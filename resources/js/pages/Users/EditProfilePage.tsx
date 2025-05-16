@@ -85,7 +85,7 @@ export const EditProfilePage = () => {
               <div className="w-20 h-20 rounded-full flex items-center justify-center">
                 <img
                   src={user.avatar}
-                  className="rounded-full object-cover border-4 border-white shadow"
+                  className="w-full h-full rounded-full object-cover border-4 border-500 dark:border-600 shadow"
                   alt="Avatar del usuario"
                 />
               </div>

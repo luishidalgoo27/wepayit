@@ -2,9 +2,30 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WePayIt</title>
+    <meta name="description" content="Wepayit te ayuda a dividir y controlar gastos entre amigos o grupos. Como Tricount pero mejor.">
+    <title>WePayIt - Gestiona tus pagos en grupo fácilmente</title>
+    <meta name="keywords" content="wepayit, dividir gastos, pagos en grupo, tricount, finanzas personales, app de pagos">
+    <meta name="author" content="WePayIt" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://wepayit.es/" />
+    <meta property="og:title" content="WePayIt - Gestiona tus pagos en grupo" />
+    <meta property="og:description" content="Divide gastos con amigos, rápido y sin líos. Gratis y fácil." />
+    <meta property="og:image" content="https://wepayit.es/assets/og-image.png" />
+    <meta property="og:url" content="https://wepayit.es/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="WePayIt" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="WePayIt - Gestiona tus pagos en grupo" />
+    <meta name="twitter:description" content="Divide gastos con amigos, rápido y sin líos. Gratis y fácil." />
+    <meta name="twitter:image" content="https://wepayit.es/assets/og-image.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#67BCA3" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon">
+    
     @viteReactRefresh
     @vite(['resources/css/app.css', 'resources/js/main.tsx'])
   </head>
