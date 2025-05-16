@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Wepayit te ayuda a dividir y controlar gastos entre amigos o grupos. Como Tricount pero mejor.">
     <title>WePayIt - Gestiona tus pagos en grupo fácilmente</title>
-    {{-- <meta name="keywords" content="wepayit, dividir gastos, pagos en grupo, tricount, finanzas personales, app de pagos">
+    <meta name="keywords" content="wepayit, dividir gastos, pagos en grupo, tricount, finanzas personales, app de pagos">
     <meta name="author" content="WePayIt" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://wepayit.es/" />
@@ -23,7 +23,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#67BCA3" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> --}}
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon">
     
     @viteReactRefresh
