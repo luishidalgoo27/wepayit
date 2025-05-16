@@ -10,14 +10,11 @@ export const BalancesPage = () => {
     const { divisions } = useGetDivisions(id);
     const { expenses } = useGetExpenses(id);
 
-    // Indexamos users y expenses para acceso rápido
     const usersMap = Object.fromEntries(users.map(u => [u.id, u]));
     const expensesMap = Object.fromEntries(expenses.map(e => [e.id, e]));
 
-    // Filtramos divisiones pendientes
     const pendientes = divisions.filter(d => d.status === "pending");
 
-    // Solo mostramos deudas donde el usuario NO es el que ha pagado
     const deudas = pendientes.filter(d => {
         const expense = expensesMap[d.expense_id];
         const user = usersMap[d.user_id];
