@@ -96,22 +96,30 @@ export const BalancesPage = () => {
     return (
         <div className="space-y-4">
             <p className="text-center">{getMessageCuñao()}</p>
-            {/* Lista de balances */}
+
+            {/* Lista de deudas */}
             {balances.map(user => (
-                <div
-                    key={user.id}
-                    className="box dark:text-50 shadow-sm px-4 py-3"
-                >
-                    <p className="font-semibold">
-                        {user.username}
-                    </p>
-                    <p className="dark:text-200">
-                        {user.balance < 0
-                                ? `Debe ${(user.balance * -1).toFixed(2)}€ 💸`
-                                : `No debe nada 🤝`}
-                    </p>
-                </div>
+                user.balance < 0 && (
+                    <div
+                        key={user.id}
+                        className="box dark:text-50 shadow-sm px-4 py-3"
+                    >
+                        <p className="font-semibold">
+                            {user.username}
+                        </p>
+                        <p className="dark:text-200">
+                            Debe {(user.balance * -1).toFixed(2)}€
+                        </p>
+                    </div>
+                )
             ))}
+
+            {/* Si nadie debe nada */}
+            {balances.every(user => user.balance >= 0) && (
+                <div className="text-center text-gray-500 dark:text-gray-400">
+                    <p>Nadie tiene deudas pendientes en este grupo.</p>
+                </div>
+            )}
         </div>
     );
 };
