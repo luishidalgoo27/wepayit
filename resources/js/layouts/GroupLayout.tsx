@@ -4,9 +4,7 @@ import { Link, LoaderFunctionArgs, Outlet, useLoaderData, useLocation } from "re
 import { BackButton } from "@/components/ui/BackButton";
 import { Pencil } from "lucide-react";
 
-// Función para decidir si mostrar el BackButton en este layout
 function showBackButtonInGroupLayout(pathname: string) {
-    // Oculta el botón solo en la página principal de grupos
     return !(pathname === "/groups" || pathname === "/groups/");
 }
 

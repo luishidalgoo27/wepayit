@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
+import { LoadingOverlay } from "@/components/LoadingOverlay";
 
 export const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -11,6 +12,7 @@ export const RegisterPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const { register } = useAuth();
   const navigate = useNavigate();
@@ -20,12 +22,14 @@ export const RegisterPage = () => {
     setError(null);
 
     try {
+      setUploading(true)
       await register(username, name, email, password);
       setShowModal(true);
     } catch (error: any) {
       setError(error.message);
       console.error("Error al iniciar sesión:", error.message);
       toast.error(error.message || "Credenciales incorrectas");
+      setUploading(false)
     }
   };
 
@@ -36,6 +40,8 @@ export const RegisterPage = () => {
 
   return (
     <main className=" flex items-center justify-center px-4 dark:text-50 text-950">
+      <LoadingOverlay show={uploading}/>
+      
       <div className="w-full max-w-md p-8 bg-[var(--color-50)] dark:bg-[var(--color-900)] border border-[var(--color-200)] dark:border-[var(--color-700)] rounded-2xl shadow-xl">
         <h2 className="text-2xl font-bold text-center text-950 dark:text-50 mb-6">
           Crear cuenta en <span className="dark:text-300 text-400">Wepayit</span>
