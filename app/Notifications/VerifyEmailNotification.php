@@ -19,6 +19,7 @@ class VerifyEmailNotification extends BaseVerifyEmail
 
     protected function verificationUrl($notifiable)
     {
+
         $baseUrl = app()->environment('production') 
             ? 'https://www.wepayit.es' 
             : config('app.url');
