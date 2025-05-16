@@ -6,6 +6,7 @@ import { deleteGroup, inviteUserToGroup, removeUserFromGroup, searchUsers } from
 import { User } from "@/types/user";
 import { useDebounce } from "@/hooks/useDebounce";
 import Swal from "sweetalert2";
+import {Trash2} from "lucide-react";
 
 export const ManagementPage = () => {
   const { id } = useLoaderData() as { id: string };
@@ -126,7 +127,7 @@ export const ManagementPage = () => {
                   
 
                     {user.avatar ? (
-                      <div className="w-10 h-10 rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center ">
                         <img
                           src={user.avatar}
                           className="rounded-full object-cover border-4 border-white shadow"
@@ -143,10 +144,11 @@ export const ManagementPage = () => {
                       </div>
                     )}
 
-
-                   {user.username} {user.id === group?.owner_id && <span className="italic text-sm ">(Admin)</span>}
+                    <div className="mt-2">
+                   {user.username} {user.id === group?.owner_id && <span className="italic text-sm  ">(Admin)</span>}
+                   </div>
                 </span>
-                <button>🗑️</button>
+                <Trash2 size={20}/>
               </li>
             ))}
           </ul>
