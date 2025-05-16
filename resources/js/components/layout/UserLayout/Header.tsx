@@ -143,6 +143,31 @@ export const Header = () => {
               Añadir a inicio
             </button>
 
+            {/* Botón "Compartir app" SOLO en móvil */}
+            {typeof window !== "undefined" && /iphone|ipad|ipod|android/i.test(window.navigator.userAgent) && (
+              <button
+                className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition mb-2 flex items-center justify-center gap-2"
+                onClick={async () => {
+                  const shareData = {
+                    title: "WePayIt",
+                    text: "¡Únete a WePayIt y olvídate de los líos de cuentas con tus amigos! 💸😎",
+                    url: window.location.origin,
+                  };
+                  if (navigator.share) {
+                    try {
+                      await navigator.share(shareData);
+                    } catch (err) {
+                      // El usuario canceló o no se pudo compartir
+                    }
+                  } else {
+                    alert("La función de compartir solo está disponible en dispositivos móviles compatibles.");
+                  }
+                }}
+              >
+                Compartir app
+              </button>
+            )}
+
             <Link
               to="/user/edit-profile"
               onClick={handleProfileClick}

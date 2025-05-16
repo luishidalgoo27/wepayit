@@ -16,9 +16,9 @@
       <div style="background:#fff;max-width:350px;margin:80px auto;padding:24px 18px;border-radius:16px;box-shadow:0 2px 16px #0002;text-align:center;">
         <h2 style="color:#257C6A;font-size:1.2em;margin-bottom:12px;">Añadir a pantalla de inicio</h2>
         <div id="iosInstructions" style="display:none;">
-          <p style="color:#216457;font-size:1em;">
+          <p style="color:#216457;font-size:1em; display: flex; flex-direction: column; align-items: center;">
             Pulsa el botón <b>Compartir</b>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Ios-share-icon.png" alt="Compartir" style="height:1.2em;vertical-align:middle;">
+            <img src="/shareIOS.jpeg" alt="Compartir" style="height:1.8em;vertical-align:middle; margin: 8px auto;">
             y selecciona <b>"Añadir a pantalla de inicio"</b>
           </p>
         </div>
