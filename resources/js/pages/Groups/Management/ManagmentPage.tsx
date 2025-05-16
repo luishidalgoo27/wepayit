@@ -92,7 +92,7 @@ export const ManagementPage = () => {
       {/* Miembros del grupo */}
       <section className="bg-[var(--color-50)] dark:bg-[var(--color-800)] p-6 rounded shadow">
         <h2 className="text-xl font-semibold text-[var(--color-400)] dark:text-[var(--color-200)] mb-4">
-          Group Members
+          Miembros del Grupo
         </h2>
         {sortedUsers.length > 0 ? (
           <ul className="space-y-2">
@@ -102,14 +102,14 @@ export const ManagementPage = () => {
                 className="flex justify-between items-center bg-[var(--color-100)] dark:bg-[var(--color-700)] p-3 rounded"
               >
                 <span className="text-[var(--color-900)] dark:text-white">
-                  👤 {user.username} {user.id === group?.owner_id && <span className="italic text-sm">(Owner)</span>}
+                  👤 {user.username} {user.id === group?.owner_id && <span className="italic text-sm">(Admin)</span>}
                 </span>
                 {user.id !== group?.owner_id && (
                   <button
                     onClick={() => handleRemove(String(user.id))}
                     className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
                   >
-                    Remove
+                    Eliminar
                   </button>
                 )}
               </li>

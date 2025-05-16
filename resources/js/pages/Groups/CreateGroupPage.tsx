@@ -70,9 +70,11 @@ export const CreateGroupPage = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await createGroup(name, currency, description, image);
+      // Cambia aquí: guarda el grupo creado
+      const group = await createGroup(name, currency, description, image);
       toast.success("Grupo creado correctamente");
-      navigate("/groups");
+      // Redirige a la página del grupo usando su id
+      navigate(`/groups/${group.id}/games`);
     } catch (err: any) {
       const errors = err.response?.data?.errors
         ? Object.values(err.response.data.errors).flat()
