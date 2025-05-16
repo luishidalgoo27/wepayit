@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('payments_users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('expense_id');
+            $table->unsignedBigInteger('payment_id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('expense_id')->references('id')->on('expenses');
+            $table->foreign('payment_id')->references('id')->on('payments');
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('amount');
             $table->enum('status', ['pending', 'paid'])->default('pending');
