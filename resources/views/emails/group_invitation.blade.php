@@ -32,7 +32,7 @@
       </div>
 
       <div style="text-align:center;margin:35px 0;">
-        <a href="{{$rute}}"" style="background:#57BCA3;color:#ffffff;text-decoration:none;padding:14px 30px;font-size:16px;font-weight:600;border-radius:8px;display:inline-block;">Unirme al grupo</a>
+        <a href="{{$rute}}"" style="background:#57BCA3;color:#ffffff;text-decoration:none;padding:14px 30px;font-size:16px;font-weight:600;border-radius:8px;display:inline-block;cursor: pointer;">Unirme al grupo</a>
       </div>
 
       <div style="font-style:italic;background:#E6E3FF;padding:15px;border-radius:8px;margin:25px 0;color:#257C6A;">
