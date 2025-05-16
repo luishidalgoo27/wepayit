@@ -96,12 +96,6 @@ export const BalancesPage = () => {
     return (
         <div className="space-y-4">
             <p className="text-center">{getMessageCuñao()}</p>
-
-            {/* Mini gráfico */}
-            <div className="h-48 bg-white rounded-xl border border-gray-200 shadow-sm p-4">
-                <Bar data={chartData} options={chartOptions} />
-            </div>
-
             {/* Lista de balances */}
             {balances.map(user => (
                 <div
@@ -112,11 +106,9 @@ export const BalancesPage = () => {
                         {user.username}
                     </p>
                     <p className="dark:text-200">
-                        {user.balance > 0
-                            ? `Le deben ${user.balance.toFixed(2)}€`
-                            : user.balance < 0
-                                ? `Debe ${(user.balance * -1).toFixed(2)}€`
-                                : `No debe nada`}
+                        {user.balance < 0
+                                ? `Debe ${(user.balance * -1).toFixed(2)}€ 💸`
+                                : `No debe nada 🤝`}
                     </p>
                 </div>
             ))}
