@@ -1,15 +1,18 @@
 import { useGetGroup } from "@/hooks/useGetGroup";
 import { useGetUsers } from "@/hooks/useGetUsers";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { inviteUserToGroup, removeUserFromGroup, searchUsers } from "@/services/groups";
+import { deleteGroup, inviteUserToGroup, removeUserFromGroup, searchUsers } from "@/services/groups";
 import { User } from "@/types/user";
 import { useDebounce } from "@/hooks/useDebounce";
+import Swal from "sweetalert2";
 
 export const ManagementPage = () => {
   const { id } = useLoaderData() as { id: string };
   const { group } = useGetGroup(id);
   const { users, refetch: refreshUsers } = useGetUsers(id);
+  
+  const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<User[]>([]);
@@ -41,6 +44,24 @@ export const ManagementPage = () => {
     await inviteUserToGroup(id, userEmail);
     await refreshUsers();
   };
+
+  const handleRemoveGroup = async (id: number) => {
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción eliminará el grupo y no se puede deshacer.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, borrar grupo",
+      cancelButtonText: "Cancelar"
+    });
+
+    if (result.isConfirmed) {
+      await deleteGroup(id);
+      navigate("/");
+    }
+  }
 
   const handleRemove = async (userId: string) => {
     await removeUserFromGroup(id, userId);
@@ -120,6 +141,14 @@ export const ManagementPage = () => {
           <p className="text-[var(--color-700)] dark:text-[var(--color-300)]">No users in this group.</p>
         )}
       </section>
+
+      {/* Botón borrar grupo */}
+      <button
+        onClick={() => handleRemoveGroup(Number(id))}
+        className="mt-8 bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-xl shadow transition"
+      >
+        Borrar grupo
+      </button>
     </div>
   );
 };

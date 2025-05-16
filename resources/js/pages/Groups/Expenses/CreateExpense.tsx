@@ -6,6 +6,7 @@ import { createExpense } from "@/services/expenses";
 import { useGetUsers } from "@/hooks/useGetUsers";
 import { CreateExpense, UserDivision } from "@/types/expense";
 import { useGetCategories } from "@/hooks/useGetCategories";
+import { LoadingOverlay } from "@/components/LoadingOverlay";
 
 export const CreateExpensePage = () => {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ export const CreateExpensePage = () => {
 
     const { users, loading: loadingUsers } = useGetUsers(id);
     const { categories, loading: loadingCategories } = useGetCategories();
-
+    const [uploading, setUploading] = useState(false);
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState(0);
     const [date, setDate] = useState("");
@@ -175,16 +176,18 @@ export const CreateExpensePage = () => {
         };
 
         try {
+            setUploading(true);
             await createExpense(newExpense);
             toast.success("Gasto creado correctamente");
             navigate(`/groups/${id}/expenses`);
-
+            
         } catch (err: any) {
             const errors = err.response?.data?.errors
-                ? Object.values(err.response.data.errors).flat()
-                : [err.response?.data?.message || "Error desconocido. Inténtalo de nuevo."];
-
+            ? Object.values(err.response.data.errors).flat()
+            : [err.response?.data?.message || "Error desconocido. Inténtalo de nuevo."];
+            
             errors.forEach((message: string) => toast.error(message));
+            setUploading(false);
         }
     };
 
@@ -197,6 +200,8 @@ export const CreateExpensePage = () => {
             onSubmit={handleSubmit}
             className="container max-w-2xl mx-auto py-8 space-y-6 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20"
         >
+        <LoadingOverlay show={uploading} message="Creando Gasto..."/>
+
             <h1 className="text-center text-3xl font-bold mb-6">Crear nuevo gasto</h1>
 
             <div className="grid md:grid-cols-2 gap-4">

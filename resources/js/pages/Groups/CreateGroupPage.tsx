@@ -4,6 +4,7 @@ import { ImagePlus, FolderKanban, BadgeEuro, Type } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { LoadingOverlay } from "@/components/LoadingOverlay";
 
 export const CreateGroupPage = () => {
   const navigate = useNavigate();
@@ -19,10 +20,10 @@ export const CreateGroupPage = () => {
     { code: "JPY", name: "Yen (¥)" },
   ]);
   const [showAllCurrencies, setShowAllCurrencies] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const handleShowMoreCurrencies = async () => {
-    setLoading(true);
+    setUploading(true);
     try {
       const response = await fetch(
         "https://api.exchangerate.host/list?access_key=545bfb975ab03c81e3f1a344a7ecd593"
@@ -42,7 +43,7 @@ export const CreateGroupPage = () => {
     } catch (error) {
       toast.error("Error al cargar las monedas.");
     } finally {
-      setLoading(false);
+      setUploading(false);
     }
   };
 
@@ -68,7 +69,7 @@ export const CreateGroupPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setUploading(true);
     try {
       // Cambia aquí: guarda el grupo creado
       const group = await createGroup(name, currency, description, image);
@@ -82,24 +83,15 @@ export const CreateGroupPage = () => {
 
       errors.forEach((message: string) => toast.error(message));
     } finally {
-      setLoading(false);
+      setUploading(false);
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-[75vh] px-4">
       <div className="relative w-full max-w-xl">
-        {loading && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-            <div className="flex flex-col items-center">
-              <svg className="animate-spin h-14 w-14 text-emerald-500 mb-4" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-              </svg>
-              <span className="text-white text-lg font-semibold">Creando Grupo...</span>
-            </div>
-          </div>
-        )}
+        <LoadingOverlay show={uploading} message="Creando Grupo..."/>
+        
 
         <form
           onSubmit={handleSubmit}

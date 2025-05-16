@@ -23,11 +23,13 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userId = $this->user()->id; // Si usas auth()->user()
+        // O si tu ruta es /users/{user}, puedes usar: $this->route('user')->id
+
         return [
             'name' => 'string',
-            'telephone' => 'integer|nullable',
             'languague' => 'string',
-            'username' => 'string|unique:users,username'
+            'username' => 'string|unique:users,username,' . $userId,
         ];
     }
 
@@ -42,7 +44,6 @@ class UserUpdateRequest extends FormRequest
         return [
             'name.string'        => 'El nombre debe ser una cadena de texto.',
             'avatar.string'      => 'El avatar debe ser una cadena de texto.',
-            'telephone.integer'  => 'El teléfono debe ser un número.',
             'languague.string'   => 'El idioma debe ser una cadena de texto.',
             'username.string'   => 'El nombre de usuario debe ser una cadena de texto.',
             'username.unique'   => 'Este nombre de usuario ya está en uso.',
