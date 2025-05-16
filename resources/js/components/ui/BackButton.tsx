@@ -9,6 +9,8 @@ export const BackButton = () => {
 
         if (path.startsWith("/groups/create")) {
             navigate("/groups");
+        } else if (path.match(/^\/groups\/\d+\/create-expense/)) {
+            navigate(-1);
         } else if (path.match(/^\/groups\/\d+/)) {
             navigate("/");
         } else {
