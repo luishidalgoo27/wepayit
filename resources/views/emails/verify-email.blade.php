@@ -23,7 +23,7 @@
       </div>
 
       <div style="text-align: center; margin: 35px 0;">
-        <a href="{{ $url }}" style="background: #57BCA3; color: #ffffff; border: none; padding: 14px 30px; font-size: 16px; font-weight: 600; border-radius: 8px; text-decoration: none; display: inline-block;">
+        <a href="{{ $url }}" style="background: #57BCA3; color: #ffffff; border: none; padding: 14px 30px; font-size: 16px; font-weight: 600; border-radius: 8px; text-decoration: none; display: inline-block; cursor: pointer;">
           Verificar correo
         </a>
       </div>
