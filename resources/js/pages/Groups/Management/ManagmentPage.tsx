@@ -98,12 +98,13 @@ export const ManagementPage = () => {
           <ul className="space-y-2">
             {sortedUsers.map((user) => (
               <li
-                key={user.id}
-                className="flex justify-between items-center bg-[var(--color-100)] dark:bg-[var(--color-700)] p-3 rounded"
+              key={user.id}
+              className="flex justify-between items-center bg-[var(--color-100)] dark:bg-[var(--color-700)] p-3 rounded"
               >
                 <span className="text-[var(--color-900)] dark:text-white">
                   👤 {user.username} {user.id === group?.owner_id && <span className="italic text-sm">(Owner)</span>}
                 </span>
+                <button>🗑️</button>
                 {user.id !== group?.owner_id && (
                   <button
                     onClick={() => handleRemove(String(user.id))}
