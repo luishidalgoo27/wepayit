@@ -2,6 +2,7 @@ import { useGetGroup } from "@/hooks/useGetGroup";
 import { useGetUserGroupExpenses } from "@/hooks/useGetUserGroupExpenses";
 import { Link, LoaderFunctionArgs, Outlet, useLoaderData, useLocation } from "react-router-dom";
 import { BackButton } from "@/components/ui/BackButton";
+import { Pencil } from "lucide-react";
 
 // Función para decidir si mostrar el BackButton en este layout
 function showBackButtonInGroupLayout(pathname: string) {
@@ -44,10 +45,10 @@ export const GroupLayout = () => {
                         </div>
                     )}
                     <div className="flex">
+                        <h1 className="text-4xl font-bold tracking-tight ml-9">{group.name}</h1>
                         <Link to="/groups/edit-group" className=" p-2">
-                        ✏️
+                        <Pencil />
                         </Link>
-                        <h1 className="text-4xl font-bold tracking-tight mr-9">{group.name}</h1>
                     </div>
                 </div>
 

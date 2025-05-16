@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
-import { LogOut, User, Menu, X } from "lucide-react";
+import { LogOut, User, Menu, X, House, Share } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const NAV_LINKS = [
@@ -128,7 +128,7 @@ export const Header = () => {
               {/* Botón "Añadir a inicio" SOLO en el menú móvil */}
               <button
                 id="installBtn"
-                className="w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 rounded-xl font-bold shadow-lg hover:from-emerald-600 hover:to-emerald-800 transition mb-3 flex items-center justify-center gap-3 text-base tracking-wide border border-emerald-700"
+                className="p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-150 duration-150 flex gap-2"
                 onClick={() => {
                   const popup = document.getElementById('addToHomePopup');
                   const ios = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
@@ -150,14 +150,14 @@ export const Header = () => {
                   }
                 }}
               >
-                <span className="text-2xl">🏠</span>
-                <span className="pr-3">Añadir a inicio</span>
+                <House size={20}/>
+                <span className="">Añadir a inicio</span>
               </button>
 
               {/* Botón "Compartir app" SOLO en móvil */}
               {typeof window !== "undefined" && /iphone|ipad|ipod|android/i.test(window.navigator.userAgent) && (
                 <button
-                  className="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white py-3 rounded-xl font-bold shadow-lg hover:from-blue-600 hover:to-blue-800 transition mb-3 flex items-center justify-center gap-3 text-base tracking-wide border border-blue-700"
+                  className="p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-150 duration-150 flex gap-2"
                   onClick={async () => {
                     const shareData = {
                       title: "WePayIt",
@@ -175,8 +175,8 @@ export const Header = () => {
                     }
                   }}
                 >
-                  <img src="/public/shareIOSF.png" alt="Compartir" className="w-auto h-8" />
-                  <span className="-ml-2 pr-3">Compartir app</span>
+                  <Share size={20} />
+                  <span>Compartir app</span>
                 </button>
               )}
             </div>
