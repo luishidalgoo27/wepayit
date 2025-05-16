@@ -63,7 +63,7 @@ export const GroupLayout = () => {
                         Juegos
                     </Link>
                     <Link to={`management`} className="py-3 sectionCols">
-                        Gestión
+                        Usuarios
                     </Link>
                 </div>
 

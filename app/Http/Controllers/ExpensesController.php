@@ -51,6 +51,7 @@ class ExpensesController extends Controller
         $divisions = $this->expensesService->getDivisions($req);
         return response()->json($divisions, 200);
     }
+    
 
     
 
