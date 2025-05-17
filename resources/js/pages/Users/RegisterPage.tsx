@@ -35,7 +35,7 @@ export const RegisterPage = () => {
   };
   
   const handleGoogleLogin = () => {
-    window.location.href = `${APP_URL}/auth/google`;    
+    window.location.href = `https://wepayit.es/auth/google`;    
   };
 
   const handleRedirectToLogin = () => {
