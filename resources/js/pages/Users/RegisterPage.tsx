@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 import { LoadingOverlay } from "@/components/LoadingOverlay";
-import { APP_URL } from "@/config"
 
 export const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -35,7 +34,7 @@ export const RegisterPage = () => {
   };
   
   const handleGoogleLogin = () => {
-    window.location.href = `https://wepayit.es/auth/google`;    
+    window.location.href = "https://wepayit.es/auth/google";    
   };
 
   const handleRedirectToLogin = () => {

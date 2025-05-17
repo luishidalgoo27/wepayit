@@ -3,7 +3,6 @@ import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 import { Link } from "react-router-dom";
 import { LoadingOverlay } from "@/components/LoadingOverlay";
-import { APP_URL } from "@/config"
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +14,7 @@ export const LoginPage = () => {
   const { login } = useAuth();
 
   const handleGoogleLogin = () => {
-    window.location.href = `https://wepayit.es/auth/google`;    
+    window.location.href = "https://wepayit.es/auth/google";    
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
