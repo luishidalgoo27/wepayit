@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 import { LoadingOverlay } from "@/components/LoadingOverlay";
-import { API_URL } from "@/config"
+export const APP_URL = import.meta.env.VITE_APP_URL;
 
 export const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -33,13 +33,10 @@ export const RegisterPage = () => {
       setUploading(false)
     }
   };
-
   
-
   const handleGoogleLogin = () => {
-    window.location.href = `${API_URL}/auth/google`;
+    window.location.href = `${APP_URL}/auth/google`;    
   };
-
 
   const handleRedirectToLogin = () => {
     setShowModal(false);

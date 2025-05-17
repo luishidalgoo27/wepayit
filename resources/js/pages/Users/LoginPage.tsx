@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 import { Link } from "react-router-dom";
 import { LoadingOverlay } from "@/components/LoadingOverlay";
-import { API_URL } from "@/config"
+export const APP_URL = import.meta.env.VITE_APP_URL;
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +15,7 @@ export const LoginPage = () => {
   const { login } = useAuth();
 
   const handleGoogleLogin = () => {
-    window.location.href = `${API_URL}/auth/google`;
+    window.location.href = `${APP_URL}/auth/google`;    
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
