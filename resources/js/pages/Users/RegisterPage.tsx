@@ -33,6 +33,11 @@ export const RegisterPage = () => {
     }
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost/auth/google";    
+  };
+
+
   const handleRedirectToLogin = () => {
     setShowModal(false);
     navigate("/login");
@@ -48,6 +53,23 @@ export const RegisterPage = () => {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+         <button
+            onClick={() => handleGoogleLogin()}
+            type="submit"
+            className="clickButton w-full py-2 px-4 font-semibold rounded-full flex items-center justify-center gap-2"
+          >
+            <img
+              src="/googleIcon.png"
+              alt="Google logo"
+              className="w-5 h-5"
+            />
+            Iniciar sesión con Google
+          </button>
+          <div className="flex items-center my-4">
+            <div className="flex-grow h-px bg-800 dark:bg-50"></div>
+            <span className="px-4 text-950 dark:text-200 text-sm">O continuar con</span>
+            <div className="flex-grow h-px bg-800 dark:bg-50"></div>
+          </div>
           <div>
             <label htmlFor="name" className="block text-sm font-medium">
               Nombre

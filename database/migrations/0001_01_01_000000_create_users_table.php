@@ -38,6 +38,11 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+         Schema::table('users', function (Blueprint $table) {
+            $table->string('google_id')->nullable()->after('email');
+            $table->string('auth_type')->default('local')->after('google_id');
+        });
     }
 
     /**
@@ -48,5 +53,8 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['google_id', 'auth_type']);
+        });
     }
 };
