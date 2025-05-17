@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 import { Link } from "react-router-dom";
 import { LoadingOverlay } from "@/components/LoadingOverlay";
-export const APP_URL = import.meta.env.VITE_APP_URL;
+import { APP_URL } from "@/config"
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
