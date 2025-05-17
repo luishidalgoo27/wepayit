@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 import { LoadingOverlay } from "@/components/LoadingOverlay";
+import { API_URL } from "@/config"
 
 export const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -33,8 +34,10 @@ export const RegisterPage = () => {
     }
   };
 
+  
+
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost/auth/google";    
+    window.location.href = `${API_URL}/auth/google`;
   };
 
 
