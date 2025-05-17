@@ -28,6 +28,8 @@
           Pagar ahora 
         </a>
       </div>
+      <p>Si el botón no funciona, copia y pega esta URL en tu navegador:</p>
+      <p style="word-break:break-all;color:#319B83;">{{ $url }}</p>
 
       <div style="font-style: italic; background: #E6E3FF; padding: 15px; border-radius: 8px; margin: 25px 0; color: #257C6A;">
         {{ $fraseAleatoria }}
