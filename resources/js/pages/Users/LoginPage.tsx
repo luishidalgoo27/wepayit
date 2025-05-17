@@ -15,7 +15,7 @@ export const LoginPage = () => {
   const { login } = useAuth();
 
   const handleGoogleLogin = () => {
-    window.location.href = `${APP_URL}/auth/google`;    
+    window.location.href = `https://wepayit.es/auth/google`;    
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
