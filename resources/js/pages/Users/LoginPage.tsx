@@ -13,6 +13,9 @@ export const LoginPage = () => {
 
   const { login } = useAuth();
 
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost/auth/google";    
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null); // Limpia el error antes de intentar
@@ -32,13 +35,30 @@ export const LoginPage = () => {
   return (
     <main className=" flex items-center justify-center px-4">
     <LoadingOverlay show={uploading} message="Iniciando Sesión..."/>
-
       <div className="w-full max-w-md p-8 bg-[var(--color-50)] dark:bg-[var(--color-900)] border border-[var(--color-200)] dark:border-[var(--color-700)] rounded-2xl shadow-xl">
         <h2 className="text-2xl font-bold text-center text-950 dark:text-50 mb-6">
           Inicia sesión en <span className="text-400">Wepayit</span>
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+        <button
+          onClick={() => handleGoogleLogin()}
+          type="submit"
+          className="clickButton w-full py-2 px-4 font-semibold rounded-full flex items-center justify-center gap-2"
+        >
+        <img
+          src="/googleIcon.png"
+          alt="Google logo"
+          className="w-5 h-5"
+        />
+        Iniciar sesión con Google
+        </button>
+
+        <div className="flex items-center my-4">
+        <div className="flex-grow h-px bg-800 dark:bg-50"></div>
+        <span className="px-4 text-950 dark:text-200 text-sm">O continuar con</span>
+        <div className="flex-grow h-px bg-800 dark:bg-50"></div>
+        </div>
           <div>
             <label
               htmlFor="email"

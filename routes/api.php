@@ -19,6 +19,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 Route::post('/register', [AuthController::class, 'createUser'])->name('auth.register');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
 Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+Route::post('/auth/exchange-token', [App\Http\Controllers\Auth\GoogleController::class, 'exchangeSessionForToken']);
 
 Route::post('/getExpense', [ExpensesController::class, 'getExpense']);
 Route::middleware(['auth:sanctum'])->group(function () {
