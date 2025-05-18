@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Wepayit te ayuda a dividir y controlar gastos entre amigos o grupos. Como Tricount pero mejor.">
+    <meta name="description" content="Wepayit te ayuda a dividir y controlar gastos entre amigos o grupos.">
     <title>WePayIt - Gestiona tus pagos en grupo fácilmente</title>
-    <meta name="keywords" content="wepayit, dividir gastos, pagos en grupo, tricount, finanzas personales, app de pagos">
+    <meta name="keywords" content="wepayit, dividir gastos, pagos en grupo, finanzas personales, app de pagos">
     <meta name="author" content="WePayIt" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://wepayit.es/" />
