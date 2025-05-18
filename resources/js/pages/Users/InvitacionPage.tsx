@@ -29,11 +29,12 @@ export const InvitacionPage = () => {
                     </p>
                 </div>
                 <button
-                    onClick={handleAcceptInvitation}
-                    className="clickButton font-bold text-lg px-10 py-4 rounded-full shadow-lg w-full text-center mb-4"
+                    onClick={() => handleAcceptInvitation()}
+                    className="clickButton font-bold text-lg px-10 py-4 rounded-full shadow-lg w-full text-center mb-4 cursor-pointer "
                 >
                     Unirme al grupo
                 </button>
+                <p>Si el botón no funciona </p><a onClick={() => handleAcceptInvitation()}>Pulsa aquí</a>
             </div>
         </div>
     );
