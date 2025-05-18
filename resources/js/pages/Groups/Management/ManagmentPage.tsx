@@ -113,7 +113,7 @@ export const ManagementPage = () => {
                         />
                       </div>
                     )}
-                <span className="text-[var(--color-900)] dark:text-white">
+                <span className="text-[var(--color-900)] mt-2 dark:text-white">
                   {user.username}
                 </span>
                 <button
