@@ -4,7 +4,7 @@ import { getGroup } from "@/services/groups"
 import { Group } from "@/types/group"
 
 export const useGetGroup = (id:string) => {
-    const [group, setGroup] = useState<Group>()
+    const [group, setGroup] = useState<Group>({} as Group)
 
     const fetchGroup = async () => {
         try{

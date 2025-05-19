@@ -1,39 +1,29 @@
-import { getGroups, getUserCount } from "@/services/groups";
+import { getUserCount } from "@/services/groups";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import toast from "react-hot-toast";
-import { Group } from "@/types/group";
+import { useGetGroups } from "@/hooks/useGetGroups";
 
 export const GroupsPage = () => {
-    const [groups, setGroups] = useState<Group[]>([]);
-    const [membersCount, setMembersCount] = useState<{ [key: number]: number }>({}); // Estado para almacenar el número de miembros por grupo
+    const { groups } = useGetGroups();
+    const [membersCount, setMembersCount] = useState<{ [key: string]: number }>({});
 
     useEffect(() => {
-        const loadGroups = async () => {
-            try {
-                const data = await getGroups();
-                setGroups(data);
+        const fetchCounts = async () => {
+            const newCounts: { [key: string]: number } = {};
 
-                const membersPromises = data.map(async (group) => {
-                    const count = await getUserCount(group.id); 
-                    return { groupId: group.id, count };
-                });
-
-                const membersData = await Promise.all(membersPromises);
-                const membersMap = membersData.reduce((acc, { groupId, count }) => {
-                    acc[groupId] = count;
-                    return acc;
-                }, {} as { [key: number]: number });
-
-                setMembersCount(membersMap);
-            } catch (error) {
-                toast.error("Error al cargar los grupos o los miembros");
-                console.error(error);
+            for (const group of groups) {
+                const count = await getUserCount(group.id);
+                newCounts[group.id] = count;
             }
+
+            setMembersCount(newCounts);
         };
 
-        loadGroups();
-    }, []);
+        if (groups.length > 0) {
+            fetchCounts();
+        }
+    }, [groups]);
+
 
     return (
         <div className="container max-w-4xl mx-auto  space-y-6 px-8">
@@ -63,32 +53,28 @@ export const GroupsPage = () => {
                 {groups.map((group) => (
                     <Link
                         key={group.id}
-                        to={`/groups/${group.id}`}
+                        to={`/groups/${group.id}/games`}
                         className="box p-4 shadow-md flex flex-col gap-2 transition"
                     >
                         <div className="flex items-center gap-4">
                             {group.photo ? (
-                                <img
-                                    className="w-10 h-10 rounded-full border border-[var(--color-300)] dark:border-[var(--color-600)]"
-                                    src={group.photo}
-                                    alt="Rounded avatar"
-                                />
+                                <div className="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center">
+                                    <img
+                                        src={group.photo}
+                                        className="w-full h-full rounded-full object-cover border-4 border-500 dark:border-600 shadow"
+                                        alt="Avatar del grupo"
+                                    />
+                                </div>
                             ) : (
-                                <div className="relative w-10 h-10 overflow-hidden bg-[var(--color-200)] dark:bg-[var(--color-800)] rounded-full">
-                                    <svg
-                                        className="absolute w-12 h-12 text-[var(--color-400)] dark:text-[var(--color-600)] -left-1"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            fillRule="evenodd"
-                                            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                            clipRule="evenodd"
-                                        ></path>
-                                    </svg>
+                                <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center">
+                                    <img
+                                        src="https://res.cloudinary.com/dotw4uex6/image/upload/v1747049502/ChatGPT_Image_12_may_2025_13_30_39_ook44q.png"
+                                        className="w-full h-full rounded-full object-cover border-4 border-500 dark:border-600 shadow"
+                                        alt="Avatar del grupo"
+                                    />
                                 </div>
                             )}
+
                             <h2 className="text-xl font-semibold text-[var(--color-600)] dark:text-[var(--color-100)]">
                                 {group.name}
                             </h2>

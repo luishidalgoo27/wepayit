@@ -22,7 +22,7 @@ class SearchUsersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => 'required|string|exists:users,username'
+            'username' => 'required|string'
         ];
     }
 
@@ -31,7 +31,6 @@ class SearchUsersRequest extends FormRequest
         return [
             'username.required' => 'El nombre de usuario es obligatorio',
             'username.string' => 'El nombre de usuario es una cadena de texto',
-            'username.exists' => 'El nombre de usuario no esta en nuestra base de datos',
         ];
     }
 }

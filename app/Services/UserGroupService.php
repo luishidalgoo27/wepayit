@@ -68,7 +68,7 @@ class UserGroupService
             'group_id' => $invitation->group_id,
             'user_id' => Auth::id()
         ]);
-
+        
         $invitation->delete();
 
         return response()->json(['message' => 'You have successfully joined the group']);

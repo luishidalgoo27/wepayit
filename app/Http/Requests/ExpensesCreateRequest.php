@@ -31,7 +31,7 @@ class ExpensesCreateRequest extends FormRequest
             'group_id'      => 'required|exists:groups,id',
             'date'          => 'sometimes|date',
             'description'   => 'nullable|string',
-            'category'      => 'nullable|string|max:255',
+            'category_id'      => 'nullable|numeric',
             'receipt_url'   => 'nullable|url',
             'state'         => 'nullable|string|max:100',
             'recurrent'     => 'boolean',
@@ -71,8 +71,7 @@ class ExpensesCreateRequest extends FormRequest
 
             'description.string'     => 'La descripción debe ser una cadena de texto.',
 
-            'category.string'        => 'La categoría debe ser una cadena de texto.',
-            'category.max'           => 'La categoría no puede tener más de 255 caracteres.',
+            'category_id.numeric'    => 'La id de categoría debe ser un número.',
 
             'receipt_url.url'        => 'El enlace del recibo debe ser una URL válida.',
 

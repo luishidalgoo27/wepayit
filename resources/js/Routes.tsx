@@ -10,21 +10,26 @@ import { UserLayout } from "@/layouts/UserLayout";
 import { GroupsPage } from "@/pages/Groups/GroupsPage";
 import { CreateGroupPage } from "@/pages/Groups/CreateGroupPage";
 import { ExpensesPage } from "@/pages/Groups/Expenses/ExpensesPage";
-import { BalancesPage } from "./pages/Groups/Balances/BalancesPage";
-import { PhotosPage } from "./pages/Groups/Photos/PhotosPage";
-import { CreateExpensePage, loader as CreateExpenseLoader } from "@/pages/Groups/Expenses/CreateExpense";
+import { BalancesPage } from "@/pages/Groups/Balances/BalancesPage";
+import { ManagementPage } from "@/pages/Groups/Management/ManagmentPage";
+import { CreateExpensePage } from "@/pages/Groups/Expenses/CreateExpense";
 import { EditProfilePage } from "@/pages/Users/EditProfilePage";
 import { InvitacionPage } from "@/pages/Users/InvitacionPage";
 import { GroupLayout, loader as GroupLoader } from "./layouts/GroupLayout";
 import { AboutPage } from "@/pages/FastLinks/AboutPage";
 import { TermsPage } from "@/pages/FastLinks/TermsPage";
-import { GamesPage } from "@/pages/Games/GamesPage";
-import { GroupProvider } from "@/context/GroupContext"; // Importar el contexto
+import { GamesPage } from "@/pages/Groups/Games/GamesPage";
+import { MinimalLayout } from "@/layouts/MinimalLayout";
+import { InvitacionLayout } from "@/layouts/InvitacionLayout";
 import { EditGroupPage } from "./pages/Groups/EditGroupPage";
+import { EditExpensePage, loader as EditExpenseLoader } from "./pages/Groups/Expenses/EditExpensesPage";
+import { AuthCallbackPage } from "./pages/Users/AuthCallbackPage";
+import { ExpenseDetallesPage } from "./pages/Groups/Expenses/ExpenseDetallesPage";
 
 const router = createBrowserRouter([
+  /* Layout sin header ni footer */
   {
-    element: <GuestLayout />,
+    element: <MinimalLayout />,
     errorElement: <ErrorPage />,
     children: [
       { path: "/about", element: <AboutPage /> },
@@ -32,6 +37,16 @@ const router = createBrowserRouter([
     ],
   },
 
+  /* Layout sin header ni footer */
+  {
+    element: <InvitacionLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { path: "/invitation/:code", element: <InvitacionPage /> },
+    ],
+  },
+
+  /* Rutas publicas */
   {
     element: <PublicRoute />,
     errorElement: <ErrorPage />,
@@ -42,11 +57,13 @@ const router = createBrowserRouter([
           { path: "/", element: <HomePage /> },
           { path: "/register", element: <RegisterPage /> },
           { path: "/login", element: <LoginPage /> },
+          { path: "/auth/callback", element: <AuthCallbackPage /> },
         ],
       },
     ],
   },
 
+  /* Rutas privadas */
   {
     element: <ProtectedRoute />,
     errorElement: <ErrorPage />,
@@ -57,14 +74,11 @@ const router = createBrowserRouter([
           { path: "/groups", element: <GroupsPage /> },
           { path: "/groups/create-group", element: <CreateGroupPage /> },
           { path: "/groups/edit-group", element: <EditGroupPage /> },
+          { path: "/groups/:id/expenses/:idExp", element: <ExpenseDetallesPage /> },
 
           {
             path: "/groups/:id",
-            element: (
-              <GroupProvider>
-                <GroupLayout />
-              </GroupProvider>
-            ), 
+            element: <GroupLayout />,
             loader: GroupLoader,
             children: [
               {
@@ -78,13 +92,13 @@ const router = createBrowserRouter([
                 loader: GroupLoader,
               },
               {
-                path: "photos",
-                element: <PhotosPage />,
+                path: "games",
+                element: <GamesPage />,
                 loader: GroupLoader,
               },
               {
-                path: "games",
-                element: <GamesPage />,
+                path: "management",
+                element: <ManagementPage />,
                 loader: GroupLoader,
               },
             ],
@@ -92,10 +106,16 @@ const router = createBrowserRouter([
           {
             path: "/groups/:id/create-expense",
             element: <CreateExpensePage />,
-            loader: CreateExpenseLoader,
+            loader: GroupLoader,
+          },
+          {
+            path: "/groups/:id/edit-expense/:expenseId",
+            element: <EditExpensePage />,
+            loader: EditExpenseLoader
           },
           { path: "/user/edit-profile", element: <EditProfilePage /> },
-          { path: "/invitation", element: <InvitacionPage /> },
+          { path: "/invitations/accept/:code", element: <InvitacionPage /> },
+
         ],
       },
     ],

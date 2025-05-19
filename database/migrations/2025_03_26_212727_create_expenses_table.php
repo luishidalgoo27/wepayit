@@ -21,15 +21,13 @@ return new class extends Migration
             $table->date('date');   
             $table->text('description')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
-            $table->string('receipt_url')->nullable()->default('https://res.cloudinary.com/dotw4uex6/image/upload/v1747049502/ChatGPT_Image_12_may_2025_13_30_39_ook44q.png');
-            $table->string('receipt_url_public_id')->nullable();
             $table->enum('state', ['pending', 'closed'])->default('pending');
             $table->boolean('recurrent')->default(false);
             $table->string('frecuency')->nullable();
             $table->timestamps();
 
             $table->foreign('paid_by')->references('id')->on('users');
-            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories');
         });
     }
