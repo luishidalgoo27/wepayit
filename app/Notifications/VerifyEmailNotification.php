@@ -19,20 +19,17 @@ class VerifyEmailNotification extends BaseVerifyEmail
 
     protected function verificationUrl($notifiable)
     {
-        // Determinar la URL base correcta según el entorno
+
         $baseUrl = app()->environment('production') 
-            ? 'https://wepayit.vercel.app' 
+            ? 'https://www.wepayit.es' 
             : config('app.url');
         
-        // Determinar la ruta correcta según el entorno
         $routePath = app()->environment('production')
             ? '/api/api/verify-email'  // Ruta para producción
             : '/api/verify-email';     // Ruta para local
         
-        // Construir la URL base
         $baseVerificationUrl = $baseUrl . $routePath . '?id=' . $notifiable->getKey();
         
-        // Firmar la URL con nuestro método personalizado
         return CustomUrlSigner::sign($baseVerificationUrl, now()->addDays(7));
     }
 }

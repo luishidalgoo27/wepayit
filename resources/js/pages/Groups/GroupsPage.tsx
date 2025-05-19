@@ -53,7 +53,7 @@ export const GroupsPage = () => {
                 {groups.map((group) => (
                     <Link
                         key={group.id}
-                        to={`/groups/${group.id}`}
+                        to={`/groups/${group.id}/games`}
                         className="box p-4 shadow-md flex flex-col gap-2 transition"
                     >
                         <div className="flex items-center gap-4">

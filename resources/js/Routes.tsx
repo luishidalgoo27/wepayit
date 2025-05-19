@@ -23,6 +23,8 @@ import { MinimalLayout } from "@/layouts/MinimalLayout";
 import { InvitacionLayout } from "@/layouts/InvitacionLayout";
 import { EditGroupPage } from "./pages/Groups/EditGroupPage";
 import { EditExpensePage, loader as EditExpenseLoader } from "./pages/Groups/Expenses/EditExpensesPage";
+import { AuthCallbackPage } from "./pages/Users/AuthCallbackPage";
+import { ExpenseDetallesPage } from "./pages/Groups/Expenses/ExpenseDetallesPage";
 
 const router = createBrowserRouter([
   /* Layout sin header ni footer */
@@ -55,6 +57,7 @@ const router = createBrowserRouter([
           { path: "/", element: <HomePage /> },
           { path: "/register", element: <RegisterPage /> },
           { path: "/login", element: <LoginPage /> },
+          { path: "/auth/callback", element: <AuthCallbackPage /> },
         ],
       },
     ],
@@ -71,6 +74,7 @@ const router = createBrowserRouter([
           { path: "/groups", element: <GroupsPage /> },
           { path: "/groups/create-group", element: <CreateGroupPage /> },
           { path: "/groups/edit-group", element: <EditGroupPage /> },
+          { path: "/groups/:id/expenses/:idExp", element: <ExpenseDetallesPage /> },
 
           {
             path: "/groups/:id",

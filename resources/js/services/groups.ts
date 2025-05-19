@@ -39,13 +39,12 @@ export const updateGroup = async (): Promise<Group[]> => {
 }
 
 /* DELETE GROUP */
-export const deleteGroup = async (): Promise<Group[]> => {
-    const res = await api.get(`${API_URL}/group`)
+export const deleteGroup = async (group_id: number): Promise<Group[]> => {
+    const res = await api.post(`${API_URL}/deleteGroup`, {
+        group_id: group_id,
+    });
     return res.data
 }
-
-
-
 
 /* CANTIDAD DE USUARIOS EN UN GRUPO */
 export const getUserCount = async (group_id: number): Promise<number> => {

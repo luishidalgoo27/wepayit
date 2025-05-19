@@ -19,6 +19,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 Route::post('/register', [AuthController::class, 'createUser'])->name('auth.register');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
 Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+Route::post('/auth/exchange-token', [App\Http\Controllers\Auth\GoogleController::class, 'exchangeSessionForToken']);
 
 Route::post('/getExpense', [ExpensesController::class, 'getExpense']);
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -33,7 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/get-group', [GroupController::class, 'getGroup']);
     Route::post('/group', [GroupController::class, 'create']);
     Route::put('/group', [GroupController::class, 'update']);
-    Route::delete('/group', [GroupController::class, 'delete']);
+    Route::post('/deleteGroup', [GroupController::class, 'delete']);
     Route::post('/deletePhoto', [GroupController::class, 'deleteImage']);
     Route::post('/userCount', [UserGroupController::class, 'userCount']);
     
@@ -42,7 +43,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/deleteUser', [UserGroupController::class, 'deleteUser']);
     
     Route::post('/invitation', [UserGroupController::class, 'sendInvitation']);
-    Route::get('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
+    Route::post('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
     
     Route::post('/notification', [NotificationController::class, 'sendNotification']);
     
