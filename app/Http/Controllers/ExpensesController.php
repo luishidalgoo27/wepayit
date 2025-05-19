@@ -7,6 +7,8 @@ use App\Services\ExpensesService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ExpenseGetRequest;
 use App\Http\Requests\ExpensesGetRequest;
+use App\Http\Requests\MarkPaidDivRequest;
+use App\Http\Requests\MarkPaidExpRequest;
 use App\Http\Requests\ExpensesCreateRequest;
 use App\Http\Requests\ExpensesDeleteRequest;
 use App\Http\Requests\ExpensesUpdateRequest;
@@ -52,6 +54,19 @@ class ExpensesController extends Controller
         return response()->json($divisions, 200);
     }
     
+    public function markPaidExp(MarkPaidExpRequest $req)
+    {
+        $this->expensesService->markPaidExp($req);
+        return response()->json(['message', 'Gasto marcado como completado']);
+    }
+
+    public function markPaidDiv(MarkPaidDivRequest $req)
+    {
+        $this->expensesService->markPaidDiv($req);
+        return response()->json(['message', 'Gasto marcado como completado']);
+    }
+
+
 
     
 

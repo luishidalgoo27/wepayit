@@ -22,18 +22,20 @@ class AuthController extends Controller
      * @return User
      */
     public function createUser(AuthRequest $req)
-{
-    $user = User::create([
-        'username' => $req->username,
-        'name' => $req->name,
-        'email' => $req->email,
-        'password' => Hash::make($req->password),
-    ]);
+    {
+        $user = User::create([
+            'username' => $req->username,
+            'name' => $req->name,
+            'email' => $req->email,
+            'password' => Hash::make($req->password),
+            'auth_type' => 'local', // Especificar que es un usuario local
+        ]);
 
-    event(new Registered($user));
+        event(new Registered($user));
 
-    return response()->json(['message' => 'Usuario registrado correctamente. Por favor, verifica tu correo.'], 201);
-}
+        return response()->json(['message' => 'Usuario registrado correctamente. Por favor, verifica tu correo.'], 201);
+    }
+    
     /**
      * Login The User
      * @param AuthRequest $req
@@ -43,6 +45,22 @@ class AuthController extends Controller
     {
         try {
             $user = User::where('email', $req->email)->first();
+            
+            if (!$user) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'El correo y la contraseña no coinciden con nuestros registros.',
+                ], 401);
+            }
+            
+            // Si el usuario se registró con Google, mostrar un mensaje específico
+            if ($user->auth_type === 'google') {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Este usuario se registró con Google. Por favor, usa el botón "Iniciar sesión con Google".',
+                    'auth_type' => 'google'
+                ], 401);
+            }
 
             if (!$user->hasVerifiedEmail()) {
                 return response()->json([
@@ -51,15 +69,12 @@ class AuthController extends Controller
                 ], 403);
             }
 
-
             if (!Auth::attempt($req->only(['email', 'password']))) {
                 return response()->json([
                     'status' => false,
                     'message' => 'El correo y la contraseña no coinciden con nuestros registros.',
                 ], 401);
             }
-
-            $user = User::where('email', $req->email)->first();
 
             return response()->json([
                 'status'  => true,
@@ -79,36 +94,34 @@ class AuthController extends Controller
     }
 
     public function verifyEmail(Request $request)
-{
-    $user = User::find($request->query('id'));
+    {
+        $user = User::find($request->query('id'));
 
-    if (!$user) {
-        return response()->json(['message' => 'Usuario no encontrado'], 404);
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        // Usar nuestra validación personalizada en lugar del middleware signed
+        if (!app()->environment('local') && ! CustomUrlSigner::validate($request)) {
+            Log::warning('Firma inválida en verificación de correo', [
+                'url' => $request->fullUrl(),
+                'user_id' => $request->query('id')
+            ]);
+            
+            return response()->json(['message' => 'Enlace inválido o expirado'], 403);
+        }
+
+        if ($user->hasVerifiedEmail()) {
+            return response()->json(['message' => 'Correo ya verificado']);
+        }
+
+        $user->markEmailAsVerified();
+        event(new Verified($user));
+
+        if ($request->wantsJson()) {
+            return response()->json(['message' => 'Correo verificado correctamente']);
+        } else {
+            return redirect('https://wepayit.es/login?verified=1');
+        }
     }
-
-    // Usar nuestra validación personalizada en lugar del middleware signed
-    if (!app()->environment('local') && ! CustomUrlSigner::validate($request)) {
-        Log::warning('Firma inválida en verificación de correo', [
-            'url' => $request->fullUrl(),
-            'user_id' => $request->query('id')
-        ]);
-        
-        return response()->json(['message' => 'Enlace inválido o expirado'], 403);
-    }
-
-    if ($user->hasVerifiedEmail()) {
-        return response()->json(['message' => 'Correo ya verificado']);
-    }
-
-    $user->markEmailAsVerified();
-    event(new Verified($user));
-
-    // Redirigir según el tipo de solicitud
-    if ($request->wantsJson()) {
-        return response()->json(['message' => 'Correo verificado correctamente']);
-    } else {
-        return redirect('https://wepayit.vercel.app/login?verified=1');
-    }
-}
-
 }

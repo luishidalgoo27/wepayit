@@ -29,10 +29,23 @@ export const InvitacionPage = () => {
                     </p>
                 </div>
                 <button
-                    onClick={handleAcceptInvitation}
-                    className="clickButton font-bold text-lg px-10 py-4 rounded-full shadow-lg w-full text-center mb-4"
+                type="button"
+                onClick={() => {
+                    console.log("Click detectado");
+                    handleAcceptInvitation();
+                }}
+                style={{
+                    background: "linear-gradient(to bottom, #2F274E, #03061C)",
+                    color: "#E6E3FF",
+                    padding: "1rem 2.5rem",
+                    borderRadius: "9999px",
+                    boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+                    width: "100%",
+                    fontWeight: "bold",
+                    fontSize: "1.125rem",
+                }}
                 >
-                    Unirme al grupo
+                Unirme al grupo
                 </button>
             </div>
         </div>
