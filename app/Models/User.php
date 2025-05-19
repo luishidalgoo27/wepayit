@@ -63,19 +63,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Expense_division::class);
     }
-
-    
-    public function payments()
-    {
-        return $this->hasMany(Payment::class, 'payer_id');
-    }
-
-   
-    public function paymentsInvolved()
-    {
-        return $this->hasMany(Payment_user::class);
-    }
-
     
     public function groupInvitations()
     {
