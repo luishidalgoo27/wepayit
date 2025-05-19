@@ -27,7 +27,7 @@ class GroupUpdateRequest extends FormRequest
             'group_id' => 'required|integer|exists:groups,id',
             'name' => 'string|nullable',
             'photo' => 'string|nullable',
-            'currency_type' => 'required|string',
+            'currency_type' => 'string',
             'description' => 'nullable|string|max:255'
         ];
     }
@@ -47,9 +47,6 @@ class GroupUpdateRequest extends FormRequest
             'name.string'       => 'El nombre debe ser una cadena de texto.',
             
             'photo.string'      => 'La foto debe ser una cadena de texto.',
-            
-            'currency_type.required' => 'El tipo de moneda es obligatorio.',
-            'currency_type.string'   => 'El tipo de moneda debe ser una cadena de texto.',
             
             'description.nullable' => 'La descripcion puede ser null',
             'description.string' => 'La descripcion debe ser una cadena de texto',

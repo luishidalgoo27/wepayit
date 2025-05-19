@@ -70,4 +70,5 @@ class AuthRequest extends FormRequest
             'username.unique'   => 'Este nombre de usuario ya está en uso.',
         ];
     }
+  
 }

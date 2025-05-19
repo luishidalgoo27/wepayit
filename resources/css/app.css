@@ -30,7 +30,11 @@
 }
 
 .box {
-    @apply bg-[var(--color-50)] dark:bg-[var(--color-900)] hover:bg-[var(--color-100)] dark:hover:bg-[var(--color-800)] border border-[var(--color-200)] dark:border-[var(--color-700)] rounded-2xl;
+    @apply bg-50 dark:bg-900 hover:bg-100 dark:hover:bg-800 border border-200 dark:border-700 rounded-2xl;
+}
+
+.box-2 {
+    @apply bg-50 dark:bg-900 border border-200 dark:border-700 rounded-2xl;
 }
 
 .clickButton {
@@ -43,6 +47,26 @@
 
 .statistics {
     @apply flex items-center p-4 shadow hover:shadow-md transition-transform transform hover:-translate-y-1 cursor-pointer;
+}
+
+.textTerm {
+    @apply font-medium text-600 dark:text-50;
+}
+
+.textTerm2{
+    @apply mt-1 text-800 dark:text-200;
+}
+
+.borderTerm {
+   @apply text-xl font-semibold text-950 dark:text-50 border-l-4 border-500 pl-4 mb-4;
+}
+
+.boxTerm{
+    @apply bg-100 dark:bg-600 p-4 rounded-xl border border-300 dark:border-400;
+}
+
+.labelForm {
+    @apply w-full pl-10 bg-100 text-950 px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-300 transition;
 }
 
 

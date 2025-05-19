@@ -17,11 +17,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('avatar')->nullable()->default('https://res.cloudinary.com/dotw4uex6/image/upload/v1747049503/ChatGPT_Image_12_may_2025_13_30_34_x0b7aa.png');
-            $table->string('avatar_public_id')->nullable();
-            $table->string('telephone')->nullable();
             $table->string('language')->default('es');
-            $table->boolean('active_notifications')->default(true);
-            $table->boolean('premium')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
@@ -42,6 +38,11 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+         Schema::table('users', function (Blueprint $table) {
+            $table->string('google_id')->nullable()->after('email');
+            $table->string('auth_type')->default('local')->after('google_id');
+        });
     }
 
     /**
@@ -52,5 +53,8 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['google_id', 'auth_type']);
+        });
     }
 };

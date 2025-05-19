@@ -8,7 +8,7 @@ export interface Expense {
     group_id: string
     date: string
     description: string
-    category: string
+    category_id: number
     receipt_url: string
     state: string
 }
@@ -38,8 +38,19 @@ export type CreateExpense = {
     currency_type: string
     date: string
     description: string
-    category: string
-    receipt_url: string
+    category_id: number
+    group_id: string
+    users_division: UserDivision[]
+}
+
+export type UpdateExpense = {
+    expense_id: number
+    title: string
+    amount: number
+    currency_type: string
+    date: string
+    description: string
+    category_id: number
     group_id: string
     users_division: UserDivision[]
 }
