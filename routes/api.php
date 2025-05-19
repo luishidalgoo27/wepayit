@@ -44,6 +44,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::post('/invitation', [UserGroupController::class, 'sendInvitation']);
     Route::post('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
+    Route::get('/accept-invitation/{code}', [UserGroupController::class, 'acceptInvitation'])->name('api.accept-invitation');
     
     Route::post('/notification', [NotificationController::class, 'sendNotification']);
     
@@ -68,5 +69,3 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/converter', [ConverterController::class, 'convert']);
     Route::post('/search-users', [UserController::class, 'searchUsers']);
 });
-
-

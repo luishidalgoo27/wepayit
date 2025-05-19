@@ -42,9 +42,7 @@ export const InvitacionPage = () => {
                 
                 <button
                     type="button"
-                    onTouchEnd={handleAcceptInvitation}
                     onClick={handleAcceptInvitation}
-                    disabled={isLoading}
                     style={{
                         background: "linear-gradient(to bottom, #2F274E, #03061C)",
                         color: "#E6E3FF",
