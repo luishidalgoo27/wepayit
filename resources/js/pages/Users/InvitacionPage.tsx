@@ -5,6 +5,7 @@ import { acceptInvitation } from "@/services/user";
 
 export const InvitacionPage = () => {
     const {code} = useParams();
+    const acceptUrl = code || "#";
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -14,10 +15,9 @@ export const InvitacionPage = () => {
         if (isLoading) return;
         
         setIsLoading(true);
-        
         try {
-            console.log("Intentando aceptar invitación con código:", code);
-            await acceptInvitation(code || '');
+            console.log("Intentando aceptar invitación con código:", acceptUrl);
+            await acceptInvitation(acceptUrl);
             toast.success("¡Invitación aceptada con éxito!");
             navigate("/");
         } catch (error) {
@@ -39,10 +39,11 @@ export const InvitacionPage = () => {
                         Únete y empieza a compartir gastos fácilmente con tus amigos.
                     </p>
                 </div>
-                
                 <button
                     type="button"
+                    onTouchEnd={handleAcceptInvitation}
                     onClick={handleAcceptInvitation}
+                    disabled={isLoading}
                     style={{
                         background: "linear-gradient(to bottom, #2F274E, #03061C)",
                         color: "#E6E3FF",
@@ -56,16 +57,12 @@ export const InvitacionPage = () => {
                         WebkitTapHighlightColor: 'transparent',
                         opacity: isLoading ? 0.7 : 1,
                         cursor: isLoading ? 'not-allowed' : 'pointer',
-                        border: 'none',
                     }}
                 >
                     {isLoading ? 'Procesando...' : 'Unirme al grupo'}
                 </button>
-                
                 {isLoading && (
-                    <p className="mt-4 text-sm text-gray-500">
-                        Por favor, espera mientras procesamos tu solicitud...
-                    </p>
+                    <p className="mt-4 text-sm text-gray-500">Por favor, espera mientras procesamos tu solicitud...</p>
                 )}
             </div>
         </div>

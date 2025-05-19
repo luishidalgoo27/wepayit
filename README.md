@@ -1,66 +1,134 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 💸 WePayIt
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> **WePayIt** es una aplicación web colaborativa que facilita la gestión de gastos compartidos en grupo. Desde viajes y cenas hasta el día a día en un piso compartido, WePayIt automatiza el cálculo de deudas, envía recordatorios y ofrece herramientas lúdicas para hacer más divertida la experiencia.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📖 Tabla de contenidos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. [Motivación y visión](#motivación-y-visión)  
+2. [Características principales](#características-principales)  
+3. [Capturas de pantalla](#capturas-de-pantalla)  
+4. [Tecnologías y arquitectura](#tecnologías-y-arquitectura)  
+   - [Frontend](#frontend)  
+   - [Backend](#backend)  
+   - [Base de datos](#base-de-datos)  
+   - [Despliegue](#despliegue)  
+5. [Modelo de datos](#modelo-de-datos)  
+6. [Flujo de comunicación](#flujo-de-comunicación)  
+7. [Instalación y puesta en marcha](#instalación-y-puesta-en-marcha)  
+8. [Guía de uso](#guía-de-uso)  
+9. [Control de calidad y pruebas](#control-de-calidad-y-pruebas)  
+10. [Diseño UI/UX](#diseño-uiux)  
+11. [Contribuciones](#contribuciones)  
+12. [Licencia](#licencia)  
+13. [Equipo y contacto](#equipo-y-contacto)  
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Motivación y visión
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+En grupos de amigos, compañeros de piso o trabajo, dividir gastos suele ser fuente de errores y discusiones. Con WePayIt queremos:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Eliminar confusiones**: automatizar los cálculos y registrar quién paga qué.
+- **Fomentar la transparencia**: mantener historiales accesibles y detallados.
+- **Hacerlo divertido**: añadir dinámicas como ruleta de pago y amigo invisible.
+- **Escalar a futuro**: ofrecer versión Premium, app móvil y nuevas integraciones.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Nuestra visión es convertirnos en la herramienta de referencia para cualquier situación que implique gastos compartidos, apostando por la simplicidad, la colaboración y la innovación constante.
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Características principales
 
-### Premium Partners
+1. **Autenticación y perfiles**  
+   - Registro y login seguros  
+   - Verificación de email opcional  
+   - Avatares personalizados
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+2. **Gestión de grupos**  
+   - Crear, editar y eliminar grupos (solo creador)  
+   - Invitar miembros vía correo  
+   - Roles: creador (admin), miembros
 
-## Contributing
+3. **Control de gastos**  
+   - Crear gastos con título, descripción, fecha y categoría  
+   - División automática entre participantes  
+   - Visualización de balances individuales y globales  
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. **Pagos y recordatorios**  
+   - Registrar pagos parciales o totales  
+   - Notificaciones por email para deudas pendientes  
+   - Historial detallado de transacciones
 
-## Code of Conduct
+5. **Dinámicas lúdicas**  
+   - **Ruleta de pago**: sortear quién paga  
+   - **Excusas**: Excusas para no pagar  
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+6. **Modos claro/oscuro**  
+   - Paleta “modo claro” (#f2fbf8)  
+   - Paleta “modo oscuro” (#1d443c)
 
-## Security Vulnerabilities
+7. **Futuras ampliaciones**  
+   - Versiones Premium con estadísticas avanzadas  
+   - App nativa iOS/Android  
+   - Integración con Bizum, Stripe y otras pasarelas  
+   - Chat de soporte y FAQ interactiva  
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Tecnologías y arquitectura
 
-## License
+### Frontend
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **React** + **TypeScript**  
+- **Vite** (bundler)  
+- **Tailwind CSS** (estilos utilitarios)  
+- **React Router DOM** (SPA)  
+- **React Hot Toast** (notificaciones)  
+- **Lucide React Icons** (iconos SVG)  
+- **Axios** (cliente HTTP)
+
+### Backend
+
+- **Laravel 10** (framework PHP MVC)  
+- **Laravel Sanctum** (autenticación token)  
+- **MySQL** (base de datos relacional)  
+- **Cloudinary** (almacenamiento multimedia)  
+- **Excalidraw** (diagramas colaborativos internos)
+
+### Base de datos
+
+- Tablas principales: `users`, `groups`, `expenses`, `divisions`, `notifications`, `invitations`  
+- Revisiones de integridad y claves foráneas  
+- Migraciones y seeders automáticos  
+
+### Despliegue
+
+- **Frontend**: Vercel (CI/CD desde GitHub)  
+- **Backend**: Servidor Laravel (Heroku / VPS / Laravel Vapor)  
+- Certificados SSL, variables de entorno seguras  
+
+
+## Flujo de comunicación
+
+1. **Acción en UI** → React captura el evento  
+2. **Axios** envía petición HTTP (JSON)  
+3. **Laravel** recibe, valida (`Form Request`), aplica lógica y persiste en BD  
+4. **Respuesta JSON** con datos o errores → React actualiza la vista sin recarga  
+
+---
+
+## Instalación y puesta en marcha
+
+### Requisitos
+
+- Node.js ≥ 18  
+- PHP ≥ 8.1  
+- Composer  
+- MySQL  
+- Cuenta en Cloudinary (opcional)  
+
+### Clonar y configurar
+
+```bash
+git clone https://github.com/tu_usuario/wepayit.git
+cd wepayit
