@@ -30,6 +30,7 @@ export const InvitacionPage = () => {
                 </div>
                 <button
                 type="button"
+                onTouchStart={handleAcceptInvitation}
                 onClick={() => {
                     console.log("Click detectado");
                     handleAcceptInvitation();
@@ -43,6 +44,8 @@ export const InvitacionPage = () => {
                     width: "100%",
                     fontWeight: "bold",
                     fontSize: "1.125rem",
+                    touchAction: 'manipulation',
+                    WebkitTapHighlightColor: 'transparent'
                 }}
                 >
                 Unirme al grupo
