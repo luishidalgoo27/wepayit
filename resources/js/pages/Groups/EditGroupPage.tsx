@@ -1,15 +1,19 @@
 import { ImagePlus, FolderKanban, BadgeEuro, Type } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import { createGroup } from "@/services/groups";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { updateGroup } from "@/services/groups";
+import { useGetGroup } from "@/hooks/useGetGroup";
 
 export const EditGroupPage = () => {
   const navigate = useNavigate()
+
+  const { id } = useLoaderData() as { id: string };
+  const { group } = useGetGroup(id)
   
   const [name, setName] = useState("");
   const [currency, setCurrency] = useState("");
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState<string>("");
   const [image, setImage] = useState<File | null>(null);
   const [currencies, setCurrencies] = useState([
     { code: "EUR", name: "Euro (€)" },
@@ -18,6 +22,15 @@ export const EditGroupPage = () => {
     { code: "JPY", name: "Yen (¥)" },
   ]);
   const [showAllCurrencies, setShowAllCurrencies] = useState(false);
+
+  useEffect(() => {
+    if (group) {
+      setName(group.name);
+      setCurrency(group.currency_type);
+      setDescription(group.description);
+    }
+  }, [group]);
+
 
   const handleShowMoreCurrencies = async () => {
     try {
@@ -65,13 +78,13 @@ export const EditGroupPage = () => {
     e.preventDefault();
 
     try {
-      await createGroup(name, currency, description, image);
-      toast.success("Grupo creado correctamente");
+      await updateGroup(id, name, currency, description, image);
+      toast.success("Grupo actualizado correctamente");
       setName("");
       setCurrency("");
       setDescription("");
       setImage(null);
-      navigate('/groups')
+      navigate(`/groups/${group.id}/management`)
     } catch (err: any) {
       const errors = err.response?.data?.errors
         ? Object.values(err.response.data.errors).flat()

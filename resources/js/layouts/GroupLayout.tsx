@@ -44,7 +44,7 @@ export const GroupLayout = () => {
                     )}
                     <div className="flex">
                         <h1 className="text-4xl font-bold tracking-tight ml-9">{group.name}</h1>
-                        <Link to="/groups/edit-group" className=" p-2">
+                        <Link to={`edit-group`} className=" p-2">
                         <Pencil />
                         </Link>
                     </div>
