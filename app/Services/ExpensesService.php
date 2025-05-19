@@ -131,7 +131,7 @@ class ExpensesService
         return $paymentUsers;
     }
 
-     public function getPaymentGroup(PaymentRequest $req)
+    public function getPaymentGroup(PaymentRequest $req)
     {
         $groupId = $req->group_id;
 
