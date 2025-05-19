@@ -52,33 +52,15 @@ class UserGroupService
         if (!$invitation) {
             return [
                 'success' => false,
-                'message' => 'Invitación no encontrada o ya ha sido usada.',
-                'requires_login' => true
+                'message' => 'Invitación no encontrada o ya ha sido usada.'
             ];
         }
 
-        // Si el usuario no está autenticado, devolver URL de login con redirección
-        if (!Auth::check()) {
-            $loginUrl = URL::temporarySignedRoute(
-                'login',
-                now()->addHour(),
-                ['redirect' => URL::route('api.accept-invitation', ['code' => $code])]
-            );
-            
+        // Verificar que el usuario autenticado coincida con el correo de la invitación
+        if (Auth::user()->email !== $invitation->guest_email) {
             return [
                 'success' => false,
-                'requires_auth' => true,
-                'login_url' => $loginUrl,
-                'message' => 'Por favor, inicia sesión para aceptar la invitación.'
-            ];
-        }
-
-        // Verificar que el correo coincida
-        if ($invitation->guest_email !== Auth::user()->email) {
-            return [
-                'success' => false,
-                'message' => 'Esta invitación no es para tu dirección de correo.',
-                'requires_logout' => true
+                'message' => 'Esta invitación no es para tu cuenta de correo.'
             ];
         }
 
