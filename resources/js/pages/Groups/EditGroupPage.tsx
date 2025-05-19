@@ -84,7 +84,7 @@ export const EditGroupPage = () => {
       setCurrency("");
       setDescription("");
       setImage(null);
-      navigate(`/groups/${group.id}/management`)
+      navigate(`/groups/${id}/management`)
     } catch (err: any) {
       const errors = err.response?.data?.errors
         ? Object.values(err.response.data.errors).flat()
