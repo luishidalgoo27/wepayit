@@ -32,7 +32,9 @@
       </div>
 
       <div style="text-align:center;margin:35px 0;">
-        <a href="{{ $rute }}?preview=true" style="background:#57BCA3;color:#ffffff;text-decoration:none;padding:14px 30px;font-size:16px;font-weight:600;border-radius:8px;display:inline-block;cursor:pointer;-webkit-text-size-adjust:none;mso-hide:all;">Unirme al grupo</a>
+        <a href="{{ $rute }}" target="_blank" rel="noopener noreferrer" style="background:#57BCA3;color:#ffffff;text-decoration:none;padding:14px 30px;font-size:16px;font-weight:600;border-radius:8px;display:inline-block;cursor:pointer;-webkit-text-size-adjust:none;mso-hide:all;">
+          Unirme al grupo
+        </a>
       </div>
       <p style="margin:15px 0;color:#666;font-size:14px;">Si el botón no funciona, copia y pega esta URL en tu navegador:</p>
       <p style="word-break:break-all;color:#319B83;background:#f5f5f5;padding:10px;border-radius:4px;font-family:monospace;font-size:14px;">{{ $rute }}</p>
