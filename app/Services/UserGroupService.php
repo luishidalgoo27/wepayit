@@ -71,7 +71,8 @@ class UserGroupService
 
         $invitation->delete();
 
-        return response()->json(['message' => 'You have successfully joined the group']);
+        return redirect(env('APP_URL') . '/groups');
+
     }
 
     public function deleteUser(UserGroupDeleteRequest $req)
