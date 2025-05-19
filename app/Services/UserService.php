@@ -29,15 +29,15 @@ class UserService
     {
         $username = $req->username;
 
-
         if (!$username) {
             return response()->json(['error' => 'El campo username es requerido.'], 400);
         }
 
-        $users = User::where('username', 'like', '%' . $username . '%')->get();
+        $users = User::whereRaw('LOWER(username) LIKE ?', ['%' . strtolower($username) . '%'])->get();
 
         return $users;
     }
+
 
     public function update(UserUpdateRequest $req)
     {

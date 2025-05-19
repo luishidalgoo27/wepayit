@@ -87,7 +87,7 @@ export const ManagementPage = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="border p-2 rounded w-full mb-4 bg-white dark:bg-[var(--color-700)] text-[var(--color-900)] dark:text-white"
         />
-        {loadingSearch && <p className="text-sm text-[var(--color-700)] dark:text-[var(--color-300)]">Searching...</p>}
+        {loadingSearch && <p className="text-sm text-[var(--color-700)] dark:text-[var(--color-300)]">Buscando...</p>}
 
         {searchResults.length > 0 && (
           <ul className="space-y-2">
@@ -96,7 +96,24 @@ export const ManagementPage = () => {
                 key={user.id}
                 className="flex justify-between items-center bg-[var(--color-100)] dark:bg-[var(--color-700)] p-3 rounded"
               >
-                <span className="text-[var(--color-900)] dark:text-white">
+                {user.avatar ? (
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center ">
+                        <img
+                          src={user.avatar}
+                          className="rounded-full object-cover border-4 border-white shadow"
+                          alt="Avatar del usuario"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-20 h-20 rounded-full flex items-center justify-center">
+                        <img
+                          src="https://res.cloudinary.com/dotw4uex6/image/upload/v1747049503/ChatGPT_Image_12_may_2025_13_30_34_x0b7aa.png"
+                          className="rounded-full object-cover border-4 border-white shadow"
+                          alt="Avatar del usuario"
+                        />
+                      </div>
+                    )}
+                <span className="text-[var(--color-900)] mt-2 dark:text-white">
                   {user.username}
                 </span>
                 <button

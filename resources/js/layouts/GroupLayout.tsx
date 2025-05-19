@@ -56,7 +56,7 @@ export const GroupLayout = () => {
                         Gastos
                     </Link>
                     <Link to={`balances`} className="py-3 sectionCols">
-                        Saldos
+                        Deudas
                     </Link>
                     <Link to={`games`} className="py-3 border-x sectionCols">
                         Juegos
