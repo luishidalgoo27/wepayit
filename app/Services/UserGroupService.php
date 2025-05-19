@@ -68,11 +68,10 @@ class UserGroupService
             'group_id' => $invitation->group_id,
             'user_id' => Auth::id()
         ]);
-
+        
         $invitation->delete();
 
-        return redirect(env('APP_URL') . '/groups');
-
+        return response()->json(['message' => 'You have successfully joined the group']);
     }
 
     public function deleteUser(UserGroupDeleteRequest $req)
