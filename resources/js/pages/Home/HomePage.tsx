@@ -61,7 +61,7 @@ export const HomePage = () => {
                         className="clickButton mt-2 md:mt-4 px-4 md:px-6 py-2 md:py-3 text-base md:text-lg shadow"
                         onClick={() => navigate('/register')}
                     >
-                        Empieza gratis
+                        Empieza ya
                     </motion.button>
                 </div>
             </motion.section>

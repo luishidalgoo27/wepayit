@@ -2,10 +2,9 @@ import { useGetGroup } from "@/hooks/useGetGroup";
 import { useGetUserGroupExpenses } from "@/hooks/useGetUserGroupExpenses";
 import { Link, LoaderFunctionArgs, Outlet, useLoaderData, useLocation } from "react-router-dom";
 import { BackButton } from "@/components/ui/BackButton";
+import { Pencil } from "lucide-react";
 
-// Función para decidir si mostrar el BackButton en este layout
 function showBackButtonInGroupLayout(pathname: string) {
-    // Oculta el botón solo en la página principal de grupos
     return !(pathname === "/groups" || pathname === "/groups/");
 }
 
@@ -43,7 +42,12 @@ export const GroupLayout = () => {
                             />
                         </div>
                     )}
-                    <h1 className="text-4xl font-bold tracking-tight">{group.name}</h1>
+                    <div className="flex">
+                        <h1 className="text-4xl font-bold tracking-tight ml-9">{group.name}</h1>
+                        <Link to="/groups/edit-group" className=" p-2">
+                        <Pencil />
+                        </Link>
+                    </div>
                 </div>
 
                 {/* Navegación */}
@@ -52,13 +56,13 @@ export const GroupLayout = () => {
                         Gastos
                     </Link>
                     <Link to={`balances`} className="py-3 sectionCols">
-                        Saldos
+                        Deudas
                     </Link>
                     <Link to={`games`} className="py-3 border-x sectionCols">
                         Juegos
                     </Link>
                     <Link to={`management`} className="py-3 sectionCols">
-                        Gestión
+                        Usuarios
                     </Link>
                 </div>
 

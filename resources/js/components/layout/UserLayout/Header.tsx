@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
-import { LogOut, User, Menu, X } from "lucide-react";
+import { LogOut, User, Menu, X, House, Share } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const NAV_LINKS = [
@@ -104,53 +104,83 @@ export const Header = () => {
           onClick={() => setIsMenuOpen(false)}
         >
           <div
-            className="w-72 bg-white dark:bg-950 h-full p-5 space-y-5"
+            className="w-72 bg-white dark:bg-950 h-full p-5 space-y-5 flex flex-col justify-between"
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              className="absolute top-4 right-4"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <X size={24} />
-            </button>
-            <h2 className="text-lg font-semibold mb-4">Acciones</h2>
+            <div>
+              <button
+                className="absolute top-4 right-4"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <X size={24} />
+              </button>
+              <h2 className="text-lg font-semibold mb-4">Acciones</h2>
 
-            {/* Botón "Añadir a inicio" SOLO en el menú móvil */}
-            <button
-              id="installBtn"
-              className="w-full bg-emerald-600 text-white py-2 rounded-lg font-semibold hover:bg-emerald-700 transition mb-2 flex items-center justify-center gap-2"
-              onClick={() => {
-                const popup = document.getElementById('addToHomePopup');
-                const ios = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
-                const android = /android/i.test(window.navigator.userAgent);
-                if (popup) {
-                  popup.style.display = 'block';
-                  // Mostrar solo el bloque correspondiente
-                  const iosDiv = document.getElementById('iosInstructions');
-                  const androidDiv = document.getElementById('androidInstructions');
-                  if (iosDiv && androidDiv) {
-                    iosDiv.style.display = ios ? 'block' : 'none';
-                    androidDiv.style.display = android ? 'block' : 'none';
+              {/* Botón "Perfil" */}
+              <Link
+                to="/user/edit-profile"
+                onClick={handleProfileClick}
+                className={`p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-110 duration-150 flex items-center gap-2 ${isProfilePage ? 'text-green-600 dark:text-amber-600' : ''}`}
+              >
+                <User size={20} />
+                Perfil
+              </Link>
+              {/* Botón "Añadir a inicio" SOLO en el menú móvil */}
+              <button
+                id="installBtn"
+                className="p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-150 duration-150 flex gap-2"
+                onClick={() => {
+                  const popup = document.getElementById('addToHomePopup');
+                  const ios = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+                  const android = /android/i.test(window.navigator.userAgent);
+                  if (popup) {
+                    popup.style.display = 'block';
+                    // Mostrar solo el bloque correspondiente
+                    const iosDiv = document.getElementById('iosInstructions');
+                    const androidDiv = document.getElementById('androidInstructions');
+                    if (iosDiv && androidDiv) {
+                      iosDiv.style.display = ios ? 'block' : 'none';
+                      androidDiv.style.display = android ? 'block' : 'none';
                     // Si no es ni iOS ni Android, puedes mostrar ambos o uno genérico
-                    if (!ios && !android) {
-                      iosDiv.style.display = 'none';
-                      androidDiv.style.display = 'block';
+                      if (!ios && !android) {
+                        iosDiv.style.display = 'none';
+                        androidDiv.style.display = 'block';
+                      }
                     }
                   }
-                }
-              }}
-            >
-              Añadir a inicio
-            </button>
+                }}
+              >
+                <House size={20}/>
+                <span className="">Añadir a inicio</span>
+              </button>
 
-            <Link
-              to="/user/edit-profile"
-              onClick={handleProfileClick}
-              className={`p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-110 duration-150 flex items-center gap-2 ${isProfilePage ? 'text-green-600 dark:text-amber-600' : ''}`}
-            >
-              <User size={20} />
-              Perfil
-            </Link>
+              {/* Botón "Compartir app" SOLO en móvil */}
+              {typeof window !== "undefined" && /iphone|ipad|ipod|android/i.test(window.navigator.userAgent) && (
+                <button
+                  className="p-2 rounded-full text-950 dark:text-50 transition transform hover:scale-150 duration-150 flex gap-2"
+                  onClick={async () => {
+                    const shareData = {
+                      title: "WePayIt",
+                      text: "¡Únete a WePayIt y olvídate de los líos de cuentas con tus amigos! 💸😎",
+                      url: window.location.origin,
+                    };
+                    if (navigator.share) {
+                      try {
+                        await navigator.share(shareData);
+                      } catch (err) {
+                        // El usuario canceló o no se pudo compartir
+                      }
+                    } else {
+                      alert("La función de compartir solo está disponible en dispositivos móviles compatibles.");
+                    }
+                  }}
+                >
+                  <Share size={20} />
+                  <span>Compartir app</span>
+                </button>
+              )}
+            </div>
+            {/* Botón cerrar sesión abajo del todo */}
             <button
               onClick={handleConfirmLogout}
               className="p-2 rounded-full bg-red-600 hover:bg-red-700 text-50 transition transform hover:scale-110 duration-200 flex items-center gap-2 w-full"
