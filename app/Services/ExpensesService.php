@@ -2,12 +2,15 @@
 
 namespace App\Services;
 
-use App\Http\Requests\ExpenseGetRequest;
 use App\Models\Expense;
 use App\Models\Payment;
 use App\Models\Expense_division;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PaymentRequest;
+use App\Http\Requests\ExpenseGetRequest;
 use App\Http\Requests\ExpensesGetRequest;
+use App\Http\Requests\MarkPaidDivRequest;
+use App\Http\Requests\MarkPaidExpRequest;
 use App\Http\Requests\ExpensesCreateRequest;
 use App\Http\Requests\ExpensesDeleteRequest;
 use App\Http\Requests\ExpensesUpdateRequest;
@@ -15,7 +18,7 @@ use App\Http\Requests\ExpensesDivisionsRequest;
 
 class ExpensesService
 {
-    public function __construct(private Expense $expense, private Expense_division $expenseDivision, private Payment $payment) {}
+    public function __construct(private Expense $expense, private Expense_division $expenseDivision) {}
 
     public function create(ExpensesCreateRequest $req)
     {
@@ -37,15 +40,9 @@ class ExpensesService
                 'expense_id' => $expense->id,
                 'user_id' => $user['user_id'],
                 'assigned_amount' => $user['assigned_amount'],
+                'status' => $user['user_id'] == Auth::id() ? 'paid' : 'pending',
             ]);
         }
-
-        $this->payment->create([
-            'expense_id' => $expense->id,
-            'payer_id' => $expense->paid_by,
-            'amount' => $expense->amount,
-            'payment_date' => $expense->date
-        ]);
 
         return $expense;
     }
@@ -78,14 +75,6 @@ class ExpensesService
             }
         }
 
-        $payment = $this->payment->where('expense_id', $expense->id)->first();
-        if ($payment) {
-            $payment->update([
-                'amount'       => $expense->amount,
-                'payment_date' => $expense->date,
-            ]);
-        }
-
         return $expense;
     }
 
@@ -115,5 +104,41 @@ class ExpensesService
         return $divisions;
     }
     
+    public function markPaidExp(MarkPaidExpRequest $req)
+    {
+        $expense = Expense::where('id', $req->expense_id)->update([
+            'state' => 'closed'
+        ]);
+        return $expense;
+    }
+
+    public function markPaidDiv(MarkPaidDivRequest $req)
+    {
+        $division = Expense_division::where('id', $req->division_id)->update([
+            'status' => 'paid'
+        ]);
+        return $division;
+    }
+
+    public function getPaymentUser(PaymentRequest $req)
+    {
+        $groupId = $req->group_id;
+
+        $expenseIds = Expense::where('group_id', $groupId)->pluck('id');
+        $paymentUsers = Expense_division::where('user_id', Auth::id())->whereIn('expense_id', $expenseIds)->sum('assigned_amount');    
+
+
+        return $paymentUsers;
+    }
+
+     public function getPaymentGroup(PaymentRequest $req)
+    {
+        $groupId = $req->group_id;
+
+        $expenseIds = Expense::where('group_id', $groupId)->pluck('id');
+        $paymentUsers = Expense::whereIn('id', $expenseIds)->sum('amount');    
+
+        return $paymentUsers;
+    }
 }
 ?>

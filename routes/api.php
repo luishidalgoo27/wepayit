@@ -7,21 +7,21 @@ use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\ConverterController;
 use App\Http\Controllers\UserGroupController;
+use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\PaymentController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::post('/register', [AuthController::class, 'createUser'])->name('auth.register');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
 Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verification.verify');
-Route::post('/auth/exchange-token', [App\Http\Controllers\Auth\GoogleController::class, 'exchangeSessionForToken']);
+Route::post('/auth/exchange-token', [GoogleController::class, 'exchangeSessionForToken']);
 
-Route::post('/getExpense', [ExpensesController::class, 'getExpense']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
     Route::post('/user', [UserController::class, 'update']);
@@ -47,8 +47,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::post('/notification', [NotificationController::class, 'sendNotification']);
     
-    Route::post('/payments', [PaymentController::class, 'getPaymentUser']);
-    Route::post('/paymentGroup', [PaymentController::class, 'getPaymentGroup']);
+    Route::post('/getExpense', [ExpensesController::class, 'getExpense']);
+    Route::post('/payments', [ExpensesController::class, 'getPaymentUser']);
+    Route::post('/paymentGroup', [ExpensesController::class, 'getPaymentGroup']);
     
     Route::post('/expenses', [ExpensesController::class, 'getExpenses']);
     Route::post('/get-expense', [ExpensesController::class, 'getExpense']);
@@ -56,6 +57,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/expense', [ExpensesController::class, 'create']);
     Route::post('/delete-expense', [ExpensesController::class, 'delete']);
     
+    Route::post('/markPaidExp', [ExpensesController::class, 'markPaidExp']);
+    Route::post('/markPaidDiv', [ExpensesController::class, 'markPaidDiv']);
+
     Route::post('/divisions', [ExpensesController::class, 'getDivisions']);
     
     Route::get('/categories', [CategoryController::class, 'index']);
