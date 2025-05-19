@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\ExpensesService;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PaymentRequest;
 use App\Http\Requests\ExpenseGetRequest;
 use App\Http\Requests\ExpensesGetRequest;
 use App\Http\Requests\MarkPaidDivRequest;
@@ -66,6 +67,17 @@ class ExpensesController extends Controller
         return response()->json(['message', 'Gasto marcado como completado']);
     }
 
+    public function getPaymentGroup(PaymentRequest $req)
+    {
+        $payment = $this->expensesService->getPaymentGroup($req);
+        return response()->json($payment, 200);
+    }
+    
+    public function getPaymentUser(PaymentRequest $req)
+    {
+        $payment = $this->expensesService->getPaymentUser($req);
+        return response()->json($payment, 200);
+    }
 
 
     
