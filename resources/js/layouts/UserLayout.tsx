@@ -3,6 +3,7 @@ import { Header } from "@/components/layout/UserLayout/Header"
 import { Toaster } from "react-hot-toast"
 import { Outlet, useLocation } from "react-router-dom"
 import { BackButton } from "@/components/ui/BackButton"
+import { BreadCrumb } from "@/components/ui/BreadCrumb"
 
 export const UserLayout = () => {
     const location = useLocation();
@@ -20,6 +21,7 @@ export const UserLayout = () => {
             <Toaster position="top-right" reverseOrder={false} />
             
             <Header />
+            <BreadCrumb />
             
             <main className="flex-1 container mx-auto py-4">
                 {showBackButton && <BackButton />}
