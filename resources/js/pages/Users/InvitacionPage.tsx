@@ -25,8 +25,7 @@ export const InvitacionPage = () => {
         
         try {
             if (isPreview) {
-                // En vista previa, redirigir directamente a la versión web
-                window.location.href = `https://tudominio.com/invitacion/${code}`;
+                window.location.href = `https://wepayit.es/invitacion/${code}`;
                 return;
             }
             
@@ -61,7 +60,7 @@ export const InvitacionPage = () => {
                 
                 {isPreview ? (
                     <a 
-                        href={`https://tudominio.com/invitacion/${code}`}
+                        href={`https://wepayit.es/invitacion/${code}`}
                         className="block w-full text-center"
                         style={{
                             background: "linear-gradient(to bottom, #2F274E, #03061C)",
