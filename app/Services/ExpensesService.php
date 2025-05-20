@@ -125,8 +125,10 @@ class ExpensesService
         $groupId = $req->group_id;
 
         $expenseIds = Expense::where('group_id', $groupId)->pluck('id');
-        $paymentUsers = Expense_division::where('user_id', Auth::id())->whereIn('expense_id', $expenseIds)->sum('assigned_amount');    
-
+        $paymentUsers = Expense_division::where('user_id', Auth::id())
+            ->whereIn('expense_id', $expenseIds)
+            ->where('status', 'paid')
+            ->sum('assigned_amount');    
 
         return $paymentUsers;
     }
