@@ -146,7 +146,7 @@ class ExpensesService
 
     public function getDivisionsExp(ExpenseDivisionsExpRequest $req)
     {
-        $divisions = Expense_division::whereIn('id', $req->expense_id)->get();
+        $divisions = Expense_division::where('expense_id', $req->expense_id)->get();
         return $divisions;
     }
 }
