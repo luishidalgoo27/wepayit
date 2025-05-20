@@ -130,8 +130,8 @@ export const HomePage = () => {
                 </motion.div>
 
                 <motion.img
-                    src="/vistaGrupos.avif"
-                    className="ml-0 md:ml-24 w-full md:w-80 h-auto rounded-2xl md:rounded-3xl"
+                    src="/public/fotoGastosHomeP.png"
+                    className="ml-10 pt-8  w-full  h-auto rounded-2xl md:rounded-3xl"
                     alt="Vista de grupos en la app"
                     variants={zoomIn}
                 />
