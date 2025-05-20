@@ -33,8 +33,18 @@ export const createGroup = async (name: string, currency_type: string, descripti
 }
 
 /* EDIT GROUP */
-export const updateGroup = async (): Promise<Group[]> => {
-    const res = await api.get(`${API_URL}/group`)
+export const updateGroup = async (id:string, name: string, currency_type: string, description: string, image: File | null): Promise<Group> => {
+    const res = await api.put(`${API_URL}/group`, {
+        group_id: id,
+        name: name,
+        currency_type: currency_type,
+        description: description,
+        image: image
+    }, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    })
     return res.data
 }
 

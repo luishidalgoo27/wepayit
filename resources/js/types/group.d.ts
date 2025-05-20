@@ -1,7 +1,7 @@
 export interface Group {
     id: number,
     name: string,
-    description: string|null,
+    description: string,
     currency_type: string
     photo: string|null
     owner_id: number
