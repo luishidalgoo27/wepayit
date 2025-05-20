@@ -3,6 +3,7 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
 import { LogOut, User, Menu, X, House, Share } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const NAV_LINKS = [
   { path: "/groups", name: "Grupos" },
@@ -171,7 +172,7 @@ export const Header = () => {
                         // El usuario canceló o no se pudo compartir
                       }
                     } else {
-                      alert("La función de compartir solo está disponible en dispositivos móviles compatibles.");
+                      toast.error("La función de compartir solo está disponible en dispositivos móviles compatibles.");
                     }
                   }}
                 >

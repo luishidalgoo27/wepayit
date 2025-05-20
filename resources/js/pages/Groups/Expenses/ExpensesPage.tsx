@@ -1,5 +1,6 @@
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { useGetExpenses } from "@/hooks/useGetExpenses";
+import { PlusCircle } from "lucide-react";
 import { useEffect } from "react";
 
 export const ExpensesPage = () => {
@@ -17,16 +18,16 @@ export const ExpensesPage = () => {
   if (!expenses) return <p className="text-center text-gray-500 mt-6">Cargando gastos...</p>;
 
   return (
-    <>
+    <div className="py-2">
       {/* Botón para añadir gasto */}
       <div
         onClick={() => navigate(`/groups/${id}/create-expense`)}
         onKeyDown={(e) => e.key === "Enter" && navigate(`/groups/${id}/create-expense`)}
         role="button"
         tabIndex={0}
-        className="clickButton block w-full text-center bg-gradient-to-b font-semibold py-3 shadow-md cursor-pointer rounded-full"
+        className="mb-2 flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--color-500)] to-[var(--color-700)] text-white font-semibold py-3 px-6 shadow-lg cursor-pointer rounded-full text-lg transition hover:scale-105 hover:shadow-xl"
       >
-        + Añadir gasto
+        <PlusCircle className="w-6 h-6" /> Añadir gasto
       </div>
 
       {/* Lista de gastos */}
@@ -38,16 +39,15 @@ export const ExpensesPage = () => {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
           {expenses.map((expense) => (
             <Link
               key={expense.id}
               to={`/groups/${id}/expenses/${expense.id}`}
-              className="box p-4 shadow-md flex flex-col gap-2 transition hover:bg-[var(--color-50)] dark:hover:bg-[var(--color-800)] rounded-xl"
+              className="group bg-white dark:bg-[var(--color-800)] rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-200 flex flex-col justify-between p-5 border border-transparent hover:border-[var(--color-400)]"
             >
-              {/* Izquierda: Emoji circular + Info */}
-              <div className="flex gap-4 items-start">
-                <div className="w-14 h-14 shrink-0 rounded-full overflow-hidden border-2 border-white shadow flex items-center justify-center text-2xl bg-white dark:bg-[var(--color-700)]">
+              <div className="flex gap-4 items-center">
+                <div className="w-16 h-16 shrink-0 rounded-full overflow-hidden border-2 border-white shadow flex items-center justify-center text-3xl bg-white dark:bg-[var(--color-700)]">
                   {expense.category_id
                     ? categoryIcons[expense.category_id]
                     : (
@@ -58,51 +58,55 @@ export const ExpensesPage = () => {
                       />
                     )}
                 </div>
-
-                <div>
-                  <p className="font-semibold text-[var(--color-950)] dark:text-white leading-snug">
+                <div className="flex-1">
+                  <p className="font-bold text-lg text-[var(--color-950)] dark:text-white truncate">
                     {expense.title}
                   </p>
                   <p className="text-xs text-[var(--color-600)] dark:text-[var(--color-400)]">
                     {new Date(expense.date).toLocaleDateString()}
                   </p>
+                  {expense.description && (
+                    <p className="text-xs text-[var(--color-500)] dark:text-[var(--color-300)] mt-1 truncate">
+                      {expense.description}
+                    </p>
+                  )}
                 </div>
               </div>
-
-              {/* Derecha: Monto, estado, recibo */}
-              <div className="text-right space-y-1">
-                <p className="text-lg font-semibold text-[var(--color-700)] dark:text-[var(--color-200)]">
-                  {expense.amount} {expense.currency_type}
-                </p>
-
-                {expense.state && (
-                  <span
-                    className={`inline-block text-xs px-2 py-0.5 rounded-full font-medium ${
-                      expense.state === "pending"
-                        ? "bg-yellow-100 text-yellow-700"
-                        : "bg-[var(--color-500)] text-white"
-                    }`}
-                  >
-                    {expense.state}
+              <div className="flex items-end justify-between mt-4">
+                <div>
+                  {expense.state && (
+                    <span
+                      className={`inline-block text-xs px-3 py-1 rounded-full font-semibold shadow-sm ${
+                        expense.state === "pending"
+                          ? "bg-yellow-100 text-yellow-700"
+                          : "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                      }`}
+                    >
+                      {expense.state === "pending" ? "Pendiente" : "Pagado"}
+                    </span>
+                  )}
+                  {expense.receipt_url && (
+                    <a
+                      href={expense.receipt_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-xs text-blue-500 hover:underline mt-1"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Ver recibo
+                    </a>
+                  )}
+                </div>
+                <div className="text-right">
+                  <span className="text-2xl font-bold text-[var(--color-700)] dark:text-[var(--color-100)]">
+                    {expense.amount} {expense.currency_type}
                   </span>
-                )}
-
-                {expense.receipt_url && (
-                  <a
-                    href={expense.receipt_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-xs text-blue-500 hover:underline"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    Ver recibo
-                  </a>
-                )}
+                </div>
               </div>
             </Link>
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 };
