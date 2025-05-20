@@ -45,7 +45,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/deleteUser', [UserGroupController::class, 'deleteUser']);
     
     Route::post('/create-test-user', [GroupController::class, 'createTestUser']);
-    // Añadir esta ruta a tu archivo de rutas
 
     Route::post('/invitation', [UserGroupController::class, 'sendInvitation']);
     Route::post('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
@@ -67,7 +66,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/markPaidDiv', [ExpensesController::class, 'markPaidDiv']);
 
     Route::post('/divisions', [ExpensesController::class, 'getDivisions']);
-    
+    Route::post('/divisionsExp', [ExpensesController::class, 'getDivisionsExp']);
     Route::get('/categories', [CategoryController::class, 'index']);
     
     Route::post('/converter', [ConverterController::class, 'convert']);
