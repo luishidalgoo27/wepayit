@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { Trash2, Pencil, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { LoadingOverlay } from "@/components/LoadingOverlay";
 import { useGetUser } from "@/hooks/useGetUser";
 import { deleteAvatar, updateAvatar, updateUser } from "@/services/user";
@@ -43,13 +44,26 @@ export const EditProfilePage = () => {
   };
 
   const handleDeleteAvatar = async () => {
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción eliminará tu foto de perfil y no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar foto',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (!result.isConfirmed) return;
+
     try {
       setLoadingAvatar(true);
       await deleteAvatar();
-      toast.success("Avatar eliminado");
+      toast.success("Foto de perfil eliminada");
       navigate(0);
     } catch (error) {
-      toast.error("Error al eliminar avatar");
+      toast.error("Error al eliminar la foto de perfil");
     } finally {
       setLoadingAvatar(false);
     }
