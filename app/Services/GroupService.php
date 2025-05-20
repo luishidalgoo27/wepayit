@@ -136,5 +136,34 @@ class GroupService
         return $group;
     }
 
+    public function createTestUser($groupId, $username)
+    {
+        $group = $this->group->findOrFail($groupId);
+        
+        if ($group->owner_id !== Auth::id()) {
+            throw new \Exception('No tienes permiso para crear usuarios de prueba en este grupo');
+        }
+
+        $username = trim($username);
+        if (empty($username)) {
+            throw new \Exception('El nombre del usuario no puede estar vacío');
+        }
+
+        $user = User::create([
+            'name' => $username,
+            'username' => 'invitado_' . uniqid(),
+            'email' => 'invitado_' . uniqid() . '@wepayit.test',
+            'password' => bcrypt(uniqid()),
+            'email_verified_at' => now(),
+            'is_test_user' => true,
+        ]);
+
+        $this->user_group->create([
+            'group_id' => $groupId,
+            'user_id' => $user->id,
+        ]);
+
+        return $user;
+    }
 }
 ?>

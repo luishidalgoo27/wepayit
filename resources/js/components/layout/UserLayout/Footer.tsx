@@ -37,9 +37,9 @@ export const Footer = () => {
                 <div className="text-center md:text-right">
                     <h3 className="text-lg font-semibold mb-2 flex flex-col items-center md:items-end">
                         <span>Síguenos</span>
-                        <div className="flex mt-2">
-                        <Instagram size={40}/>
-                        <Facebook size={40} />
+                        <div className="flex mt-2 gap-1">
+                        <Instagram className="dark:bg-600 bg-400 rounded-full dark:text-50 text-900 p-0.5" size={35} />
+                        <Facebook className="dark:bg-600 bg-400 rounded-full dark:text-50 text-900 p-0.5" size={35} />
                         </div>
 
                     </h3>
