@@ -46,8 +46,8 @@ export const getExpensesDivisions = async (id: string):Promise<ExpenseDivision[]
 }
 
 export const getExpensesDivisionsByExpense = async (expense_id: string):Promise<ExpenseDivision[]> => {
-    const res = await api.post(`${API_URL}/divisions`, {
-        expense_id
+    const res = await api.post(`${API_URL}/divisionsExp`, {
+        expense_id: expense_id
     })
     return res.data
 }
