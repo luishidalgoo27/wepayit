@@ -33,6 +33,7 @@ export interface Payment {
 
 /* CREATE, EDIT AND DELETE */
 export type CreateExpense = {
+    paid_by: number
     title: string
     amount: number
     currency_type: string
@@ -44,6 +45,7 @@ export type CreateExpense = {
 }
 
 export type UpdateExpense = {
+    paid_by: number
     expense_id: number
     title: string
     amount: number

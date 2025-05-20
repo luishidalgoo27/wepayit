@@ -165,7 +165,7 @@ export const EditProfilePage = () => {
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950 dark:text-50 rounded-xl py-2 mt-2 shadow-md hover:brightness-110 transition-all duration-300 disabled:opacity-50"
+            className="clickButton w-full py-2 mt-2 shadow-md hover:brightness-110 disabled:opacity-50"
           >
             Guardar
           </button>

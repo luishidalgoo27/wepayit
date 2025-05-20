@@ -15,6 +15,8 @@ export const CreateExpensePage = () => {
     const { users, loading: loadingUsers } = useGetUsers(id);
     const { categories, loading: loadingCategories } = useGetCategories();
     const [uploading, setUploading] = useState(false);
+
+    const [payerId, setPayerId] = useState<number>(0);
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState(0);
     const [date, setDate] = useState("");
@@ -107,70 +109,93 @@ export const CreateExpensePage = () => {
         field: "assigned_amount" | "selected",
         value: number | boolean
     ) => {
-        const updated = [...usersDivision];
-        updated[index][field] = value as never;
+        // Copia profunda para evitar problemas de referencia
+        const updated = usersDivision.map(u => ({ ...u }));
 
-        const selectedUsers = updated.filter(u => u.selected);
-        const selectedCount = selectedUsers.length;
-
-        // Si se está cambiando el checkbox
         if (field === "selected") {
-            // No permitir que quede solo uno seleccionado
-            if (!value && selectedCount <= 1) {
+            // Cambia la selección
+            updated[index].selected = value as boolean;
+
+            // No permitir que quede ninguno seleccionado
+            const selectedCount = updated.filter(u => u.selected).length;
+            if (selectedCount === 0) {
                 toast.error("Debe haber al menos 1 usuario seleccionado.");
                 return;
             }
 
-            // Repartimos de nuevo
-            if (selectedCount > 0 && amount > 0) {
+            // Reparto equitativo si hay más de uno seleccionado y hay amount
+            if (amount > 0) {
                 const divided = parseFloat((amount / selectedCount).toFixed(2));
-                const repartidos = updated.map((u, i) => {
+                let total = 0;
+                updated.forEach((u, i) => {
                     if (u.selected) {
-                        return { ...u, assigned_amount: divided };
+                        // El último recibe el ajuste para cuadrar decimales
+                        if (i === updated.length - 1 || updated.filter(x => x.selected).length === 1) {
+                            u.assigned_amount = parseFloat((amount - total).toFixed(2));
+                        } else {
+                            u.assigned_amount = divided;
+                            total += divided;
+                        }
+                    } else {
+                        u.assigned_amount = 0;
                     }
-                    return { ...u, assigned_amount: 0 };
                 });
-
-                setUsersDivision(repartidos);
             } else {
-                setUsersDivision(updated);
+                updated.forEach(u => {
+                    if (!u.selected) u.assigned_amount = 0;
+                });
             }
 
+            setUsersDivision(updated);
             return;
         }
 
-        // Si se está editando el assigned_amount manualmente
         if (field === "assigned_amount") {
-            const newAmount = value as number;
+            // Solo usuarios seleccionados
+            const selectedIndexes = updated
+                .map((u, i) => (u.selected ? i : -1))
+                .filter(i => i !== -1);
 
-            if (newAmount < 0) {
-                toast.error("La cantidad no puede ser negativa.");
-                return;
-            }
-
-            const selectedCount = selectedUsers.length;
-            if (selectedCount <= 1) {
+            if (selectedIndexes.length <= 1) {
                 toast.error("Debe haber al menos 2 usuarios seleccionados para dividir el gasto.");
                 return;
             }
 
-            updated[index].assigned_amount = newAmount;
+            // Limitar el valor máximo posible
+            let inputValue = Math.max(0, Math.min(Number(value), amount));
+            updated[index].assigned_amount = inputValue;
 
-            const remainingAmount = amount - newAmount;
+            // Si el assigned es igual al amount o está vacío, deselecciona el usuario
+            if (inputValue === amount || !inputValue) {
+                updated[index].selected = false;
+                updated[index].assigned_amount = 0;
+            }
 
-            if (remainingAmount < 0) {
+            // Repartir el resto entre los demás seleccionados
+            const otherIndexes = updated
+                .map((u, i) => (u.selected ? i : -1))
+                .filter(i => i !== -1)
+                .filter(i => i !== index);
+
+            let remaining = amount - inputValue;
+
+            if (remaining < 0) {
                 toast.error("La suma de las cantidades no puede superar el monto total.");
                 return;
             }
 
-            const otherSelectedIndexes = updated
-                .map((u, i) => ({ ...u, index: i }))
-                .filter((u, i) => u.selected && i !== index);
-
-            const remainingCount = otherSelectedIndexes.length;
-            const share = parseFloat((remainingAmount / remainingCount).toFixed(2));
-
-            otherSelectedIndexes.forEach(({ index: i }) => {
+            // Reparto equitativo, el último recibe el ajuste para cuadrar decimales
+            let totalAssigned = 0;
+            otherIndexes.forEach((i, idx) => {
+                let share = 0;
+                if (otherIndexes.length === 1) {
+                    share = remaining;
+                } else if (idx === otherIndexes.length - 1) {
+                    share = Number((remaining - totalAssigned).toFixed(2));
+                } else {
+                    share = Number((remaining / otherIndexes.length).toFixed(2));
+                    totalAssigned += share;
+                }
                 updated[i].assigned_amount = share;
             });
 
@@ -183,6 +208,7 @@ export const CreateExpensePage = () => {
         e.preventDefault();
 
         const newExpense: CreateExpense = {
+            paid_by: payerId,
             title,
             amount,
             currency_type: currency,
@@ -216,156 +242,175 @@ export const CreateExpensePage = () => {
     }
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="container max-w-2xl mx-auto py-8 space-y-6 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20"
-        >
-            <LoadingOverlay show={uploading} message="Creando Gasto..." />
-
-            <h1 className="text-center text-3xl font-bold mb-6">Crear nuevo gasto</h1>
-
-            <div className="grid md:grid-cols-2 gap-4">
-                <div className="relative">
-                    <FolderKanban className="absolute left-3 top-3 text-700" size={20} />
-                    <input
-                        type="text"
-                        placeholder="Título del gasto"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        className="labelForm"
-                    />
-                </div>
-
-                <div className="relative">
-                    <BadgeEuro className="absolute left-3 top-3 text-700" size={20} />
-                    <input
-                        type="number"
-                        placeholder="Cantidad"
-                        value={amount === 0 ? "" : amount}
-                        onChange={(e) => setAmount(Number(e.target.value))}
-                        className="labelForm"
-                    />
-                </div>
-
-                <div className="relative">
-                    <Calendar className="absolute left-3 top-3 text-700" size={20} />
-                    <input
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        className="labelForm"
-                    />
-                </div>
-
-                <div className="relative">
-                    <BadgeEuro className="absolute left-3 top-2 text-700" size={20} />
-                    <select
-                        value={currency}
-                        onChange={(e) => handleCurrencyChange(e.target.value)}
-                        className="labelForm"
-                    >
-                        <option value="">Selecciona una moneda</option>
-                        {currencies.map((currency) => (
-                            <option key={currency.code} value={currency.code}>
-                                {currency.name}
-                            </option>
-                        ))}
-                        {!showAllCurrencies ? (
-                            <option value="show_more">Mostrar más monedas</option>
-                        ) : (
-                            <option value="show_less">Mostrar menos monedas</option>
-                        )}
-                    </select>
-                </div>
-
-                <div className="relative md:col-span-2">
-                    <Type className="absolute left-3 top-3 text-700" size={20} />
-                    <select
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                        className="labelForm"
-                    >
-                        <option value="">Selecciona una categoría</option>
-                        {!loadingCategories && categories.map((cat) => (
-                            <option key={cat.id} value={cat.id}>{cat.type}</option>
-                        ))}
-                    </select>
-                </div>
-
-                <div className="relative md:col-span-2">
-                    <FileText className="absolute left-3 top-3 text-700" size={20} />
-                    <input
-                        type="text"
-                        placeholder="Descripción"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        className="labelForm"
-                    />
-                </div>
-            </div>
-
-            <div className="space-y-2">
-                <label className="font-semibold dark:text-200 text-700 flex items-center gap-2 mb-2">
-                    <Users size={18} className="dark:text-100 text-950" /> Selección de usuarios:
-                </label>
-
-                <div className="space-y-3">
-                    {users.map((user, index) => (
-                        <div key={user.id} className="grid grid-cols-12 items-center gap-4">
-                            <label className="col-span-6 flex items-center gap-2 cursor-pointer select-none">
-                                <span className="relative">
-                                    <input
-                                        type="checkbox"
-                                        checked={usersDivision[index]?.selected || false}
-                                        onChange={(e) =>
-                                            handleUserDivisionChange(index, "selected", e.target.checked)
-                                        }
-                                        className="peer appearance-none w-5 h-5 border-2 border-600 rounded-md bg-100 checked:bg-600 checked:border-400 transition-all duration-200 focus:outline-none"
-                                    />
-                                    <svg
-                                        className="pointer-events-none absolute left-0 top-0 w-5 h-5 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200"
-                                        viewBox="0 0 20 20"
-                                        fill="none"
-                                    >
-                                        <path
-                                            d="M6 10.5L9 13.5L14 8.5"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                    </svg>
-                                </span>
-                                <span className="ml-2 text-900 dark:text-100 font-medium">
-                                    {user.username}
-                                </span>
-                            </label>
-                            <input
-                                type="number"
-                                placeholder="Cantidad asignada"
-                                value={
-                                    usersDivision[index]?.assigned_amount === 0
-                                        ? ""
-                                        : usersDivision[index]?.assigned_amount
-                                }
-                                onChange={(e) =>
-                                    handleUserDivisionChange(index, "assigned_amount", Number(e.target.value))
-                                }
-                                className="bg-100 text-950 px-4 py-2 rounded-xl col-span-6"
-                                disabled={!usersDivision[index]?.selected}
-                            />
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            <button
-                type="submit"
-                className="w-full clickButton py-2 font-semibold shadow-md mt-6"
+        <div className="flex items-center justify-center min-h-[75vh]">
+            <form
+                onSubmit={handleSubmit}
+                className="container max-w-2xl mx-auto py-8 space-y-6 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20"
             >
-                Crear Gasto
-            </button>
-        </form>
+                <LoadingOverlay show={uploading} message="Creando Gasto..." />
+
+                <h1 className="text-center text-3xl font-bold mb-6">Crear nuevo gasto</h1>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                    <div className="relative">
+                        <FolderKanban className="absolute left-3 top-3 text-700" size={20} />
+                        <input
+                            type="text"
+                            placeholder="Título del gasto"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            className="labelForm"
+                        />
+                    </div>
+
+                    <div className="relative">
+                        <Calendar className="absolute left-3 top-3 text-700" size={20} />
+                        <input
+                            type="date"
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
+                            className="labelForm"
+                        />
+                    </div>
+
+                    <div className="relative">
+                        <BadgeEuro className="absolute left-3 top-3 text-700" size={20} />
+                        <input
+                            type="number"
+                            placeholder="Cantidad"
+                            value={amount === 0 ? "" : amount}
+                            onChange={(e) => setAmount(Number(e.target.value))}
+                            className="labelForm"
+                        />
+                    </div>
+
+                    <div className="relative">
+                        <BadgeEuro className="absolute left-3 top-2 text-700" size={20} />
+                        <select
+                            value={currency}
+                            onChange={(e) => handleCurrencyChange(e.target.value)}
+                            className="labelForm"
+                        >
+                            <option value="">Selecciona una moneda</option>
+                            {currencies.map((currency) => (
+                                <option key={currency.code} value={currency.code}>
+                                    {currency.name}
+                                </option>
+                            ))}
+                            {!showAllCurrencies ? (
+                                <option value="show_more">Mostrar más monedas</option>
+                            ) : (
+                                <option value="show_less">Mostrar menos monedas</option>
+                            )}
+                        </select>
+                    </div>
+
+                    <div className="relative">
+                        <Users className="absolute left-3 top-2 text-700" size={20} />
+                        <select
+                            value={payerId ?? ""}
+                            onChange={e => setPayerId(Number(e.target.value))}
+                            className="labelForm"
+                            required
+                        >
+                            <option value="">Selecciona quién paga</option>
+                            {users.map(user => (
+                                <option key={user.id} value={user.id}>
+                                    {user.username}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="relative">
+                        <Type className="absolute left-3 top-2 text-700" size={20} />
+                        <select
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                            className="labelForm"
+                        >
+                            <option value="">Selecciona una categoría</option>
+                            {!loadingCategories && categories.map((cat) => (
+                                <option key={cat.id} value={cat.id}>{cat.type}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="relative md:col-span-2">
+                        <FileText className="absolute left-3 top-3 text-700" size={20} />
+                        <input
+                            type="text"
+                            placeholder="Descripción"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            className="labelForm"
+                        />
+                    </div>
+                </div>
+
+                <div className="space-y-2">
+                    <label className="font-semibold dark:text-200 text-700 flex items-center gap-2 mb-2">
+                        <Users size={18} className="dark:text-100 text-950" /> Selección de usuarios:
+                    </label>
+
+                    <div className="space-y-3">
+                        {users.map((user, index) => (
+                            <div key={user.id} className="grid grid-cols-12 items-center gap-4">
+                                <label className="col-span-6 flex items-center gap-2 cursor-pointer select-none">
+                                    <span className="relative">
+                                        <input
+                                            type="checkbox"
+                                            checked={usersDivision[index]?.selected || false}
+                                            onChange={(e) =>
+                                                handleUserDivisionChange(index, "selected", e.target.checked)
+                                            }
+                                            className="peer appearance-none w-5 h-5 border-2 border-600 rounded-md bg-100 checked:bg-600 checked:border-400 transition-all duration-200 focus:outline-none"
+                                        />
+                                        <svg
+                                            className="pointer-events-none absolute left-0 top-0 w-5 h-5 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200"
+                                            viewBox="0 0 20 20"
+                                            fill="none"
+                                        >
+                                            <path
+                                                d="M6 10.5L9 13.5L14 8.5"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
+                                        </svg>
+                                    </span>
+                                    <span className="ml-2 text-900 dark:text-100 font-medium">
+                                        {user.username}
+                                    </span>
+                                </label>
+                                <input
+                                    type="number"
+                                    placeholder="Cantidad asignada"
+                                    value={
+                                        usersDivision[index]?.assigned_amount === 0
+                                            ? ""
+                                            : usersDivision[index]?.assigned_amount
+                                    }
+                                    onChange={(e) =>
+                                        handleUserDivisionChange(index, "assigned_amount", Number(e.target.value))
+                                    }
+                                    className="bg-100 text-950 px-4 py-2 rounded-xl col-span-6"
+                                    disabled={!usersDivision[index]?.selected}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    className="w-full clickButton py-2 font-semibold shadow-md mt-6"
+                >
+                    Crear Gasto
+                </button>
+            </form>
+        </div>
 
     );
 };

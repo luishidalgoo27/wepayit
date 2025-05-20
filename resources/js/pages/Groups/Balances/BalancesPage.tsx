@@ -16,7 +16,17 @@ export const BalancesPage = () => {
     const usersMap = Object.fromEntries(users.map((u) => [u.id, u]));
     const expensesMap = Object.fromEntries(expenses.map((e) => [e.id, e]));
 
-    const filteredDivisions = divisions.filter((d) => d.status === filter);
+    const filteredDivisions = divisions.filter((d) => {
+        if (d.status !== filter) return false;
+        if (
+            filter === "paid" &&
+            expensesMap[d.expense_id]?.paid_by === d.user_id
+        ) {
+            // No mostrar pagos a uno mismo en "Pagadas"
+            return false;
+        }
+        return true;
+    });
 
     return (
         <div className="space-y-4">
