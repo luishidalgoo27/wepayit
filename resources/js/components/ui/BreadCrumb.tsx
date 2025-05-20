@@ -28,7 +28,7 @@ export const BreadCrumb = () => {
   const segments = pathnames[0] === "groups" ? pathnames.slice(1) : pathnames;
 
   return (
-    <nav className="flex py-3 px-6" aria-label="Breadcrumb">
+    <nav className="flex py-2 px-4" aria-label="Breadcrumb">
       <ol className="flex flex-wrap items-center space-x-2 text-base font-medium">
         <li className="flex items-center">
           <span className="flex items-center text-500 dark:text-300">
