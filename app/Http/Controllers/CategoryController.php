@@ -12,7 +12,17 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = $this->categoryService->index();
-        return response()->json($categories);
+        try {
+            $categories = $this->categoryService->index();
+            return response()->json([
+                'success' => true,
+                'data' => $categories
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al obtener las categorías: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }
