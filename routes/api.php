@@ -42,6 +42,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::post('/deleteUser', [UserGroupController::class, 'deleteUser']);
     
+    Route::post('/create-test-user', [GroupController::class, 'createTestUser']);
+    
     Route::post('/invitation', [UserGroupController::class, 'sendInvitation']);
     Route::post('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
     
@@ -68,5 +70,3 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/converter', [ConverterController::class, 'convert']);
     Route::post('/search-users', [UserController::class, 'searchUsers']);
 });
-
-

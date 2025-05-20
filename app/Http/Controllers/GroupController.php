@@ -8,8 +8,11 @@ use App\Http\Requests\GroupCreateRequest;
 use App\Http\Requests\GroupDeleteRequest;
 use App\Http\Requests\GroupUpdateRequest;
 use App\Http\Requests\GroupGetUsersRequest;
+use App\Http\Requests\CreateTestUserRequest;
 
-
+/**
+ * GroupController
+ */
 class GroupController extends Controller
 {
     public function __construct(
@@ -51,5 +54,25 @@ class GroupController extends Controller
         $group = $this->groupService->getGroup($req);
         return response()->json($group, 200);
     }
-    
+
+    public function createTestUser(CreateTestUserRequest $request)
+    {
+        try {
+            $user = $this->groupService->createTestUser(
+                $request->group_id,
+                $request->username
+            );
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Usuario de prueba creado exitosamente',
+                'user' => $user
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 400);
+        }
+    }
 }
