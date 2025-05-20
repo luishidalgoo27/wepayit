@@ -22,6 +22,7 @@ Route::post('/register', [AuthController::class, 'createUser'])->name('auth.regi
 Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
 Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verification.verify');
 Route::post('/auth/exchange-token', [GoogleController::class, 'exchangeSessionForToken']);
+Route::get('/accept-invitation/{code}', [InvitationController::class, 'redirectToFrontend']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
@@ -45,7 +46,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::post('/create-test-user', [GroupController::class, 'createTestUser']);
     // Añadir esta ruta a tu archivo de rutas
-    Route::get('/accept-invitation/{code}', [InvitationController::class, 'redirectToFrontend']);
 
     Route::post('/invitation', [UserGroupController::class, 'sendInvitation']);
     Route::post('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
