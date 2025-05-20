@@ -20,7 +20,7 @@ export const GroupLayout = () => {
     const location = useLocation();
 
     return (
-        <div className="container max-w-4xl mx-auto py-2 space-y-10 text-950 dark:text-50 px-8">
+        <div className="container max-w-4xl mx-auto py-2 space-y-10 text-950 dark:text-50 px-6">
             {showBackButtonInGroupLayout(location.pathname) && <BackButton />}
             <div className="space-y-6">
                 {/* Header */}
