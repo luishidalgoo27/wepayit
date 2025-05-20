@@ -171,7 +171,7 @@ export const EditGroupPage = () => {
       {/* Botón */}
       <button
         type="submit"
-        className="w-full bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950 dark:text-50k rounded-xl py-2 font-semibold shadow-md hover:bg-emerald-200 transition"
+        className="clickButton w-full py-2 font-semibold shadow-md"
       >
         Editar Grupo
       </button>

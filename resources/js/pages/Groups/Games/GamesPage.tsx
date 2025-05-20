@@ -125,7 +125,8 @@ export const GamesPage = () => {
 
       <section className="w-full max-w-3xl mt-6">
         <h2 className="text-2xl font-semibold text-600 dark:text-200 mb-4 text-center">
-          Ruleta
+          ¿Quien paga hoy?
+          Gira la ruleta para descubrirlo
         </h2>
         <div className="p-4 max-w-xl mx-auto">
           <Wheel users={users} />
