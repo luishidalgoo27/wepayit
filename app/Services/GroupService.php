@@ -81,19 +81,23 @@ class GroupService
             return response()->json(['message', 'Group not found'], 404);
         } 
 
-        $imageData = $req->hasFile('image') 
-        ? $this->imageUploader->processImageUpload($req->file('image')) 
-        : ['url' => $group->photo, 'public_id' => $group->photo_public_id];
-        
-        $this->imageUploader->delete($group['photo_public_id']);
-        
-        $group->update([
+        $updateData = [
             'name' => $req->name ?? $group->name,
-            'photo' => $imageData['photo'],
-            'photo_public_id' => $imageData['photo_public_id'],
             'currency_type' => $req->currency_type ?? $group->currency_type,
             'description' => $req->description ?? $group->description,
-        ]);
+        ];
+
+        if ($req->hasFile('image')) {
+            if ($group->photo_public_id) {
+                $this->imageUploader->delete($group->photo_public_id);
+            }
+            
+            $uploaded = $this->imageUploader->processImageUpload($req->file('image'));
+            $updateData['photo'] = $uploaded['url'] ?? $group->photo;
+            $updateData['photo_public_id'] = $uploaded['public_id'] ?? $group->photo_public_id;
+        }
+
+        $group->update($updateData);
 
         return $group;
     }

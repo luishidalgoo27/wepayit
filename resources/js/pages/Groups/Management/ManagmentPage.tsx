@@ -1,11 +1,12 @@
 import { useGetGroup } from "@/hooks/useGetGroup";
 import { useGetUsers } from "@/hooks/useGetUsers";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { deleteGroup, inviteUserToGroup, searchUsers } from "@/services/groups";
+import { useState, useEffect, useContext } from "react";
+import { deleteGroup, inviteUserToGroup, removeUserFromGroup, searchUsers } from "@/services/groups";
 import { User } from "@/types/user";
 import { useDebounce } from "@/hooks/useDebounce";
 import Swal from "sweetalert2";
+import {Trash2} from "lucide-react";
 
 export const ManagementPage = () => {
   const { id } = useLoaderData() as { id: string };
@@ -41,8 +42,27 @@ export const ManagementPage = () => {
   }, [debouncedSearch]);
 
   const handleInvite = async (userEmail: string) => {
-    await inviteUserToGroup(id, userEmail);
-    await refreshUsers();
+    try {
+      await inviteUserToGroup(id, userEmail);
+      await refreshUsers();
+      setSearchTerm(""); // Clear search input
+      setSearchResults([]); // Clear search results
+      
+      await Swal.fire({
+        title: '¡Invitación enviada!',
+        text: `Se ha enviado una invitación a ${userEmail}`,
+        icon: 'success',
+        confirmButtonColor: '#3085d6',
+      });
+    } catch (error) {
+      console.error("Error al invitar al usuario:", error);
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo enviar la invitación',
+        icon: 'error',
+        confirmButtonColor: '#d33',
+      });
+    }
   };
 
   const handleRemoveGroup = async (id: number) => {
@@ -62,6 +82,11 @@ export const ManagementPage = () => {
       navigate("/");
     }
   }
+
+  const handleRemove = async (userId: string) => {
+    await removeUserFromGroup(id, userId);
+    await refreshUsers();
+  };
 
   const sortedUsers = [...(users || [])].sort((a) =>
     a.id === group?.owner_id ? -1 : 1
@@ -131,32 +156,35 @@ export const ManagementPage = () => {
           <ul className="space-y-2">
             {sortedUsers.map((user) => (
               <li
-                key={user.id}
-                className="flex justify-between items-center bg-[var(--color-100)] dark:bg-[var(--color-700)] p-3 rounded"
+              key={user.id}
+              className="flex justify-between items-center bg-[var(--color-100)] dark:bg-[var(--color-700)] p-3 rounded"
               >
                 <span className="text-[var(--color-900)] dark:text-white flex gap-4">
-                  {user.avatar ? (
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center ">
-                      <img
-                        src={user.avatar}
-                        className="rounded-full object-cover border-4 border-white shadow"
-                        alt="Avatar del usuario"
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-20 h-20 rounded-full flex items-center justify-center">
-                      <img
-                        src="https://res.cloudinary.com/dotw4uex6/image/upload/v1747049503/ChatGPT_Image_12_may_2025_13_30_34_x0b7aa.png"
-                        className="rounded-full object-cover border-4 border-white shadow"
-                        alt="Avatar del usuario"
-                      />
-                    </div>
-                  )}
+                  
 
-                  <div className="mt-2">
-                    {user.username} {user.id === group?.owner_id && <span className="italic text-sm">(Admin)</span>}
-                  </div>
+                    {user.avatar ? (
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center ">
+                        <img
+                          src={user.avatar}
+                          className="rounded-full object-cover border-4 border-white shadow"
+                          alt="Avatar del usuario"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-20 h-20 rounded-full flex items-center justify-center">
+                        <img
+                          src="https://res.cloudinary.com/dotw4uex6/image/upload/v1747049503/ChatGPT_Image_12_may_2025_13_30_34_x0b7aa.png"
+                          className="rounded-full object-cover border-4 border-white shadow"
+                          alt="Avatar del usuario"
+                        />
+                      </div>
+                    )}
+
+                    <div className="mt-2">
+                   {user.username} {user.id === group?.owner_id && <span className="italic text-sm  ">(Admin)</span>}
+                   </div>
                 </span>
+                <Trash2 size={20}/>
               </li>
             ))}
           </ul>
