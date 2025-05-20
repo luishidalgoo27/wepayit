@@ -18,36 +18,88 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class UserController extends Controller
 {
-
     public function __construct(private UserService $userService, private ImageUploader $imageUploader) {}
     
     public function update(UserUpdateRequest $req)
     {
-        $user = $this->userService->update($req);
-        return response()->json(['user' => $user,'message', 'User Updated Sucessfully']);
+        try {
+            $user = $this->userService->update($req);
+            return response()->json([
+                'success' => true,
+                'user' => $user,
+                'message' => 'User Updated Successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error updating user: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
-    public function getUser(Request $request){
-        $user = $this->userService->getUser($request);
-        return response()->json($user, 200);
+    public function getUser(Request $request)
+    {
+        try {
+            $user = $this->userService->getUser($request);
+            return response()->json([
+                'success' => true,
+                'user' => $user
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error getting user: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function updateAvatar(UserUpdateAvatarRequest $req)
     {
-        $user = $this->userService->updateAvatar($req);
-        return response()->json($user, 200);
+        try {
+            $user = $this->userService->updateAvatar($req);
+            return response()->json([
+                'success' => true,
+                'user' => $user,
+                'message' => 'Avatar updated successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error updating avatar: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function deleteImage()
     {
-        $user = $this->userService->deleteImage();
-        return response()->json($user, 200);
+        try {
+            $user = $this->userService->deleteImage();
+            return response()->json([
+                'success' => true,
+                'user' => $user,
+                'message' => 'Image deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error deleting image: ' . $e->getMessage()
+            ], 500);
+        }
     }
     
     public function searchUsers(SearchUsersRequest $req)
     {
-        $users = $this->userService->searchUsers($req);
-        return response()->json($users, 200);
+        try {
+            $users = $this->userService->searchUsers($req);
+            return response()->json([
+                'success' => true,
+                'users' => $users
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error searching users: ' . $e->getMessage()
+            ], 500);
+        }
     }
-
 }
