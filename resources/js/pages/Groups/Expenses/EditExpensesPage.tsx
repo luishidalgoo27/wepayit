@@ -25,6 +25,7 @@ export const EditExpensePage = () => {
     const { expense, loading: loadingExpense } = useGetExpense(expenseId);
     const { divisions, loading: loadingDivisions } = useGetDivisions(id);
 
+    const [payerId, setPayerId] = useState<number>(0);
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState(0);
     const [date, setDate] = useState("");
@@ -65,6 +66,7 @@ export const EditExpensePage = () => {
 
     useEffect(() => {
         if (expense && divisions) {
+            setPayerId(expense.paid_by);
             setTitle(expense.title);
             setAmount(expense.amount);
             setDate(expense.date);
@@ -161,8 +163,26 @@ export const EditExpensePage = () => {
             let inputValue = Math.max(0, Math.min(Number(value), amount));
             updated[index].assigned_amount = inputValue;
 
+            // Si el assigned_amount es 0, deselecciona el usuario
+            if (inputValue === 0) {
+                updated[index].selected = false;
+                updated[index].assigned_amount = 0;
+            }
+
+            // Recalcula los seleccionados después de posible deselección
+            const newSelectedIndexes = updated
+                .map((u, i) => (u.selected ? i : -1))
+                .filter(i => i !== -1);
+
+            // Si solo queda uno seleccionado, asigna todo el amount a ese
+            if (newSelectedIndexes.length === 1) {
+                updated[newSelectedIndexes[0]].assigned_amount = amount;
+                setUsersDivision(updated);
+                return;
+            }
+
             // Repartir el resto entre los demás seleccionados
-            const otherIndexes = selectedIndexes.filter(i => i !== index);
+            const otherIndexes = newSelectedIndexes.filter(i => i !== index);
             let remaining = amount - inputValue;
 
             if (remaining < 0) {
@@ -190,12 +210,12 @@ export const EditExpensePage = () => {
         }
     };
 
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
             await updateExpense({
+                paid_by: payerId,
                 expense_id: Number(expenseId),
                 title,
                 amount,
@@ -225,153 +245,172 @@ export const EditExpensePage = () => {
     }
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="container max-w-2xl mx-auto py-8 space-y-6 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20"
-        >
-            <h1 className="text-center text-3xl font-bold mb-6">Editar gasto</h1>
-
-            <div className="grid md:grid-cols-2 gap-4">
-                <div className="relative">
-                    <FolderKanban className="absolute left-3 top-3 text-700" size={20} />
-                    <input
-                        type="text"
-                        placeholder="Título del gasto"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        className="labelForm"
-                    />
-                </div>
-
-                <div className="relative">
-                    <BadgeEuro className="absolute left-3 top-3 text-700" size={20} />
-                    <input
-                        type="number"
-                        placeholder="Cantidad"
-                        value={amount === 0 ? "" : amount}
-                        onChange={(e) => setAmount(Number(e.target.value))}
-                        className="labelForm"
-                    />
-                </div>
-
-                <div className="relative">
-                    <Calendar className="absolute left-3 top-3 text-700" size={20} />
-                    <input
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        className="labelForm"
-                    />
-                </div>
-
-                <div className="relative">
-                    <BadgeEuro className="absolute left-3 top-2 text-700" size={20} />
-                    <select
-                        value={currency}
-                        onChange={(e) => handleCurrencyChange(e.target.value)}
-                        className="labelForm"
-                    >
-                        <option value="">Selecciona una moneda</option>
-                        {currencies.map((currency) => (
-                            <option key={currency.code} value={currency.code}>
-                                {currency.name}
-                            </option>
-                        ))}
-                        {!showAllCurrencies ? (
-                            <option value="show_more">Mostrar más monedas</option>
-                        ) : (
-                            <option value="show_less">Mostrar menos monedas</option>
-                        )}
-                    </select>
-                </div>
-
-                <div className="relative md:col-span-2">
-                    <Type className="absolute left-3 top-3 text-700" size={20} />
-                    <select
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                        className="labelForm"
-                    >
-                        <option value="">Selecciona una categoría</option>
-                        {!loadingCategories && categories.map((cat) => (
-                            <option key={cat.id} value={cat.id}>{cat.type}</option>
-                        ))}
-                    </select>
-                </div>
-
-                <div className="relative md:col-span-2">
-                    <FileText className="absolute left-3 top-3 text-700" size={20} />
-                    <input
-                        type="text"
-                        placeholder="Descripción"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        className="labelForm"
-                    />
-                </div>
-            </div>
-
-            <div className="space-y-2">
-                <label className="font-semibold dark:text-200 text-700 flex items-center gap-2 mb-2">
-                    <Users size={18} className="dark:text-100 text-950" /> Selección de usuarios:
-                </label>
-
-                <div className="space-y-3">
-                    {users.map((user, index) => (
-                        <div key={user.id} className="grid grid-cols-12 items-center gap-4">
-                            <label className="col-span-6 flex items-center gap-2 cursor-pointer select-none">
-                                <span className="relative">
-                                    <input
-                                        type="checkbox"
-                                        checked={usersDivision[index]?.selected || false}
-                                        onChange={(e) =>
-                                            handleUserDivisionChange(index, "selected", e.target.checked)
-                                        }
-                                        className="peer appearance-none w-5 h-5 border-2 border-600 rounded-md bg-100 checked:bg-600 checked:border-400 transition-all duration-200 focus:outline-none"
-                                    />
-                                    <svg
-                                        className="pointer-events-none absolute left-0 top-0 w-5 h-5 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200"
-                                        viewBox="0 0 20 20"
-                                        fill="none"
-                                    >
-                                        <path
-                                            d="M6 10.5L9 13.5L14 8.5"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                    </svg>
-                                </span>
-                                <span className="ml-2 text-900 dark:text-100 font-medium">
-                                    {user.username}
-                                </span>
-                            </label>
-                            <input
-                                type="number"
-                                placeholder="Cantidad asignada"
-                                value={
-                                    usersDivision[index]?.assigned_amount === 0
-                                        ? ""
-                                        : usersDivision[index]?.assigned_amount
-                                }
-                                onChange={(e) =>
-                                    handleUserDivisionChange(index, "assigned_amount", Number(e.target.value))
-                                }
-                                className="bg-100 text-950 px-4 py-2 rounded-xl col-span-6"
-                                disabled={!usersDivision[index]?.selected}
-                            />
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            <button
-                type="submit"
-                className="w-full clickButton py-2 font-semibold shadow-md mt-6"
+        <div className="flex items-center justify-center min-h-[75vh]">
+            <form
+                onSubmit={handleSubmit}
+                className="container max-w-2xl mx-auto py-8 space-y-6 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20"
             >
-                Guardar cambios
-            </button>
-        </form>
+                <h1 className="text-center text-3xl font-bold mb-6">Editar gasto</h1>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                    <div className="relative">
+                        <FolderKanban className="absolute left-3 top-3 text-700" size={20} />
+                        <input
+                            type="text"
+                            placeholder="Título del gasto"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            className="labelForm"
+                        />
+                    </div>
+
+                    <div className="relative">
+                        <Calendar className="absolute left-3 top-2 text-700" size={20} />
+                        <input
+                            type="date"
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
+                            className="labelForm"
+                        />
+                    </div>
+
+                    <div className="relative">
+                        <BadgeEuro className="absolute left-3 top-3 text-700" size={20} />
+                        <input
+                            type="number"
+                            placeholder="Cantidad"
+                            value={amount === 0 ? "" : amount}
+                            onChange={(e) => setAmount(Number(e.target.value))}
+                            className="labelForm"
+                        />
+                    </div>
+
+                    <div className="relative">
+                        <BadgeEuro className="absolute left-3 top-2 text-700" size={20} />
+                        <select
+                            value={currency}
+                            onChange={(e) => handleCurrencyChange(e.target.value)}
+                            className="labelForm"
+                        >
+                            <option value="">Selecciona una moneda</option>
+                            {currencies.map((currency) => (
+                                <option key={currency.code} value={currency.code}>
+                                    {currency.name}
+                                </option>
+                            ))}
+                            {!showAllCurrencies ? (
+                                <option value="show_more">Mostrar más monedas</option>
+                            ) : (
+                                <option value="show_less">Mostrar menos monedas</option>
+                            )}
+                        </select>
+                    </div>
+
+                    <div className="relative">
+                        <Users className="absolute left-3 top-2 text-700" size={20} />
+                        <select
+                            value={payerId ?? ""}
+                            onChange={e => setPayerId(Number(e.target.value))}
+                            className="labelForm"
+                            required
+                        >
+                            <option value="">Selecciona quién paga</option>
+                            {users.map(user => (
+                                <option key={user.id} value={user.id}>
+                                    {user.username}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="relative">
+                        <Type className="absolute left-3 top-2 text-700" size={20} />
+                        <select
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                            className="labelForm"
+                        >
+                            <option value="">Selecciona una categoría</option>
+                            {!loadingCategories && categories.map((cat) => (
+                                <option key={cat.id} value={cat.id}>{cat.type}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="relative md:col-span-2">
+                        <FileText className="absolute left-3 top-3 text-700" size={20} />
+                        <input
+                            type="text"
+                            placeholder="Descripción"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            className="labelForm"
+                        />
+                    </div>
+                </div>
+
+                <div className="space-y-2">
+                    <label className="font-semibold dark:text-200 text-700 flex items-center gap-2 mb-2">
+                        <Users size={18} className="dark:text-100 text-950" /> Selección de usuarios:
+                    </label>
+
+                    <div className="space-y-3">
+                        {users.map((user, index) => (
+                            <div key={user.id} className="grid grid-cols-12 items-center gap-4">
+                                <label className="col-span-6 flex items-center gap-2 cursor-pointer select-none">
+                                    <span className="relative">
+                                        <input
+                                            type="checkbox"
+                                            checked={usersDivision[index]?.selected || false}
+                                            onChange={(e) =>
+                                                handleUserDivisionChange(index, "selected", e.target.checked)
+                                            }
+                                            className="peer appearance-none w-5 h-5 border-2 border-600 rounded-md bg-100 checked:bg-600 checked:border-400 transition-all duration-200 focus:outline-none"
+                                        />
+                                        <svg
+                                            className="pointer-events-none absolute left-0 top-0 w-5 h-5 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200"
+                                            viewBox="0 0 20 20"
+                                            fill="none"
+                                        >
+                                            <path
+                                                d="M6 10.5L9 13.5L14 8.5"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
+                                        </svg>
+                                    </span>
+                                    <span className="ml-2 text-900 dark:text-100 font-medium">
+                                        {user.username}
+                                    </span>
+                                </label>
+                                <input
+                                    type="number"
+                                    placeholder="Cantidad asignada"
+                                    value={
+                                        usersDivision[index]?.assigned_amount === 0
+                                            ? ""
+                                            : usersDivision[index]?.assigned_amount
+                                    }
+                                    onChange={(e) =>
+                                        handleUserDivisionChange(index, "assigned_amount", Number(e.target.value))
+                                    }
+                                    className="bg-100 text-950 px-4 py-2 rounded-xl col-span-6"
+                                    disabled={!usersDivision[index]?.selected}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    className="w-full clickButton py-2 font-semibold shadow-md mt-6"
+                >
+                    Guardar cambios
+                </button>
+            </form>
+        </div>
     );
 };
