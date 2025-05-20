@@ -81,19 +81,23 @@ class GroupService
             return response()->json(['message', 'Group not found'], 404);
         } 
 
-        $imageData = $req->hasFile('image') 
-        ? $this->imageUploader->processImageUpload($req->file('image')) 
-        : ['url' => $group->photo, 'public_id' => $group->photo_public_id];
-        
-        $this->imageUploader->delete($group['photo_public_id']);
-        
-        $group->update([
+        $updateData = [
             'name' => $req->name ?? $group->name,
-            'photo' => $imageData['photo'],
-            'photo_public_id' => $imageData['photo_public_id'],
             'currency_type' => $req->currency_type ?? $group->currency_type,
             'description' => $req->description ?? $group->description,
-        ]);
+        ];
+
+        if ($req->hasFile('image')) {
+            if ($group->photo_public_id) {
+                $this->imageUploader->delete($group->photo_public_id);
+            }
+            
+            $uploaded = $this->imageUploader->processImageUpload($req->file('image'));
+            $updateData['photo'] = $uploaded['url'] ?? $group->photo;
+            $updateData['photo_public_id'] = $uploaded['public_id'] ?? $group->photo_public_id;
+        }
+
+        $group->update($updateData);
 
         return $group;
     }
@@ -132,5 +136,34 @@ class GroupService
         return $group;
     }
 
+    public function createTestUser($groupId, $username)
+    {
+        $group = $this->group->findOrFail($groupId);
+        
+        if ($group->owner_id !== Auth::id()) {
+            throw new \Exception('No tienes permiso para crear usuarios de prueba en este grupo');
+        }
+
+        $username = trim($username);
+        if (empty($username)) {
+            throw new \Exception('El nombre del usuario no puede estar vacío');
+        }
+
+        $user = User::create([
+            'name' => $username,
+            'username' => 'invitado_' . uniqid(),
+            'email' => 'invitado_' . uniqid() . '@wepayit.test',
+            'password' => bcrypt(uniqid()),
+            'email_verified_at' => now(),
+            'is_test_user' => true,
+        ]);
+
+        $this->user_group->create([
+            'group_id' => $groupId,
+            'user_id' => $user->id,
+        ]);
+
+        return $user;
+    }
 }
 ?>

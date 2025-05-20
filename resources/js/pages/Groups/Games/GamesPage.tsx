@@ -60,8 +60,8 @@ export const GamesPage = () => {
   ];
 
   return (
-    <div className="box-2 flex flex-col items-center gap-8 px-6 py-8">
-      <section className="w-full max-w-2xl mt-10 text-center">
+    <div className="box-2 flex flex-col items-center gap-8 px-6 py-2">
+      <section className="w-full max-w-2xl mt-4 text-center">
         <h2 className="text-xl font-bold text-600 dark:text-200">Generador de Excusas</h2>
         <p className="text-700 dark:text-300">
           ¿No quieres pagar? Genera una excusa creativa para evitarlo.
@@ -75,7 +75,7 @@ export const GamesPage = () => {
         </button>
 
         {excuse && (
-          <div className="bg-50 dark:bg-800 p-6 rounded-lg shadow-md mt-6 relative">
+          <div className="bg-50 dark:bg-800 p-6 rounded-lg shadow-md mt-4 relative">
             <h3 className="text-lg font-semibold text-700 dark:text-300">
               Tu excusa para hoy:
             </h3>
@@ -99,7 +99,8 @@ export const GamesPage = () => {
           </div>
         )}
       </section>
-      <section className="w-full max-w-3xl mt-6">
+
+      <section className="w-full max-w-3xl mt-4">
         <h2 className="text-2xl font-semibold text-600 dark:text-200 mb-4 text-center">
           Equivalencias divertidas
         </h2>
@@ -123,9 +124,10 @@ export const GamesPage = () => {
         </div>
       </section>
 
-      <section className="w-full max-w-3xl mt-6">
+      <section className="w-full max-w-3xl mt-4">
         <h2 className="text-2xl font-semibold text-600 dark:text-200 mb-4 text-center">
-          Ruleta
+          ¿Quien paga hoy?
+          Gira la ruleta para descubrirlo
         </h2>
         <div className="p-4 max-w-xl mx-auto">
           <Wheel users={users} />

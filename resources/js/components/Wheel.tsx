@@ -65,13 +65,14 @@ export function Wheel({ users }: WheelProps) {
             {/* Indicador */}
             <div className="relative w-80 h-80">
                 <div className="absolute top-[-38px] left-1/2 transform -translate-x-1/2 z-20">
-                    <div className="w-0 h-0 border-l-[22px] border-r-[22px] border-b-[44px] border-l-transparent border-r-transparent border-b-yellow-400 shadow-lg" />
+                    <div className="w-0 h-0 border-l-[22px] border-r-[22px] border-t-[44px] border-l-transparent border-r-transparent border-t-700 shadow-lg" />
+
                 </div>
 
                 {/* Rueda */}
                 <div
                     ref={wheelRef}
-                    className="w-full h-full rounded-full shadow-2xl border-8 border-white flex items-center justify-center relative transition-shadow duration-500"
+                    className="w-full h-full rounded-full shadow-2xl border-8 border-600 flex items-center justify-center relative transition-shadow duration-500"
                     style={{
                         background: `conic-gradient(${buildConicGradient()})`,
                         boxShadow: spinning
@@ -111,8 +112,8 @@ export function Wheel({ users }: WheelProps) {
                 onClick={spinWheel}
                 disabled={spinning}
                 className={`mt-6 px-8 py-3 text-white font-bold rounded-2xl text-lg transition-all duration-300 shadow-lg ${spinning
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-gradient-to-r from-green-400 to-yellow-400 hover:from-green-500 hover:to-yellow-500"
+                    ? "clickButton cursor-not-allowed"
+                    : "clickButton"
                     }`}
             >
                 {spinning ? "Girando..." : "Girar ruleta"}
@@ -120,7 +121,7 @@ export function Wheel({ users }: WheelProps) {
 
             {/* Resultado */}
             {selectedUser && !spinning && (
-                <div className="mt-6 text-center text-2xl font-extrabold text-yellow-600 animate-pulse drop-shadow-lg">
+                <div className="mt-6 text-center text-1xl font-extrabold dark:text-100 animate-pulse drop-shadow-lg">
                     🎉 ¡{selectedUser} ha sido elegido!
                 </div>
             )}
@@ -129,7 +130,7 @@ export function Wheel({ users }: WheelProps) {
             <style>
                 {`
           .glow-spin {
-            box-shadow: 0 0 80px 30px #facc15, 0 0 0 8px #fff inset !important;
+            box-shadow: 0 0 80px 30px #57bca3, 0 0 0 8px #fff inset !important;
           }
         `}
             </style>

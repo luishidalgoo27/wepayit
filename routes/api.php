@@ -13,6 +13,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\ConverterController;
 use App\Http\Controllers\UserGroupController;
+use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -21,6 +22,7 @@ Route::post('/register', [AuthController::class, 'createUser'])->name('auth.regi
 Route::post('/login', [AuthController::class, 'loginUser'])->name('auth.login');
 Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verification.verify');
 Route::post('/auth/exchange-token', [GoogleController::class, 'exchangeSessionForToken']);
+Route::get('/accept-invitation/{code}', [InvitationController::class, 'redirectToFrontend']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
@@ -33,7 +35,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/groups', [GroupController::class, 'getGroupsUser']);
     Route::post('/get-group', [GroupController::class, 'getGroup']);
     Route::post('/group', [GroupController::class, 'create']);
-    Route::put('/group', [GroupController::class, 'update']);
+    Route::post('/edit-group', [GroupController::class, 'update']);
     Route::post('/deleteGroup', [GroupController::class, 'delete']);
     Route::post('/deletePhoto', [GroupController::class, 'deleteImage']);
     Route::post('/userCount', [UserGroupController::class, 'userCount']);
@@ -42,6 +44,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::post('/deleteUser', [UserGroupController::class, 'deleteUser']);
     
+    Route::post('/create-test-user', [GroupController::class, 'createTestUser']);
+
     Route::post('/invitation', [UserGroupController::class, 'sendInvitation']);
     Route::post('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
     
@@ -62,11 +66,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/markPaidDiv', [ExpensesController::class, 'markPaidDiv']);
 
     Route::post('/divisions', [ExpensesController::class, 'getDivisions']);
-    
+    Route::post('/divisionsExp', [ExpensesController::class, 'getDivisionsExp']);
     Route::get('/categories', [CategoryController::class, 'index']);
     
     Route::post('/converter', [ConverterController::class, 'convert']);
     Route::post('/search-users', [UserController::class, 'searchUsers']);
 });
-
-

@@ -10,7 +10,7 @@ export const EditGroupPage = () => {
 
   const { id } = useLoaderData() as { id: string };
   const { group } = useGetGroup(id)
-  
+
   const [name, setName] = useState("");
   const [currency, setCurrency] = useState("");
   const [description, setDescription] = useState<string>("");
@@ -25,9 +25,9 @@ export const EditGroupPage = () => {
 
   useEffect(() => {
     if (group) {
-      setName(group.name);
-      setCurrency(group.currency_type);
-      setDescription(group.description);
+      setName(group.name ?? "");
+      setCurrency(group.currency_type ?? "");
+      setDescription(group.description ?? "");
     }
   }, [group]);
 
@@ -94,13 +94,13 @@ export const EditGroupPage = () => {
       errors.forEach((message: string) => toast.error(message));
     }
   };
-  
+
   return (
-      
-      <form
+
+    <form
       onSubmit={handleSubmit}
       className="container max-w-xl mx-auto py-8 space-y-6 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20 "
-      >
+    >
       <h1 className="text-center text-3xl font-bold mb-4">Editar grupo</h1>
 
       {/* Nombre del grupo */}
@@ -109,7 +109,7 @@ export const EditGroupPage = () => {
         <input
           type="text"
           placeholder="Nuevo nombre del grupo"
-          value={name}
+          value={name ?? ""}
           onChange={(e) => setName(e.target.value)}
           className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
         />
@@ -120,7 +120,7 @@ export const EditGroupPage = () => {
       <div className="relative">
         <BadgeEuro className="absolute left-3 top-2 text-emerald-700" size={20} />
         <select
-          value={currency}
+          value={currency ?? ""}
           onChange={(e) => handleCurrencyChange(e.target.value)}
           className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
         >
@@ -143,7 +143,7 @@ export const EditGroupPage = () => {
         <Type className="absolute left-3 top-2 text-emerald-700" size={20} />
         <textarea
           placeholder="Nueva descripción del grupo ..."
-          value={description}
+          value={description ?? ""}
           onChange={(e) => setDescription(e.target.value)}
           className="w-full pl-10 bg-emerald-100 text-black px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
           rows={4}
@@ -171,7 +171,7 @@ export const EditGroupPage = () => {
       {/* Botón */}
       <button
         type="submit"
-        className="w-full bg-gradient-to-b from-500 to-600 dark:bg-gradient-to-b dark:from-700 dark:to-950 dark:text-50k rounded-xl py-2 font-semibold shadow-md hover:bg-emerald-200 transition"
+        className="clickButton w-full py-2 font-semibold shadow-md"
       >
         Editar Grupo
       </button>

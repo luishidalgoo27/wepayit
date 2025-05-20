@@ -15,6 +15,7 @@ use App\Http\Requests\ExpensesCreateRequest;
 use App\Http\Requests\ExpensesDeleteRequest;
 use App\Http\Requests\ExpensesUpdateRequest;
 use App\Http\Requests\ExpensesDivisionsRequest;
+use App\Http\Requests\ExpenseDivisionsExpRequest;
 
 class ExpensesService
 {
@@ -26,7 +27,7 @@ class ExpensesService
             'title'         => $req->title,
             'amount'        => $req->amount,
             'currency_type' => $req->currency_type,
-            'paid_by'       => Auth::id(),
+            'paid_by'       => $req->paid_by,
             'group_id'      => $req->group_id,
             'date'          => $req->date,
             'description'   => $req->description,
@@ -40,7 +41,7 @@ class ExpensesService
                 'expense_id' => $expense->id,
                 'user_id' => $user['user_id'],
                 'assigned_amount' => $user['assigned_amount'],
-                'status' => $user['user_id'] == Auth::id() ? 'paid' : 'pending',
+                'status' => $user['user_id'] == $req->paid_by ? 'paid' : 'pending',
             ]);
         }
 
@@ -125,8 +126,10 @@ class ExpensesService
         $groupId = $req->group_id;
 
         $expenseIds = Expense::where('group_id', $groupId)->pluck('id');
-        $paymentUsers = Expense_division::where('user_id', Auth::id())->whereIn('expense_id', $expenseIds)->sum('assigned_amount');    
-
+        $paymentUsers = Expense_division::where('user_id', Auth::id())
+            ->whereIn('expense_id', $expenseIds)
+            ->where('status', 'paid')
+            ->sum('assigned_amount');    
 
         return $paymentUsers;
     }
@@ -139,6 +142,12 @@ class ExpensesService
         $paymentUsers = Expense::whereIn('id', $expenseIds)->sum('amount');    
 
         return $paymentUsers;
+    }
+
+    public function getDivisionsExp(ExpenseDivisionsExpRequest $req)
+    {
+        $divisions = Expense_division::where('expense_id', $req->expense_id)->get();
+        return $divisions;
     }
 }
 ?>
