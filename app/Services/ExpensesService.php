@@ -15,6 +15,7 @@ use App\Http\Requests\ExpensesCreateRequest;
 use App\Http\Requests\ExpensesDeleteRequest;
 use App\Http\Requests\ExpensesUpdateRequest;
 use App\Http\Requests\ExpensesDivisionsRequest;
+use App\Http\Requests\ExpenseDivisionsExpRequest;
 
 class ExpensesService
 {
@@ -141,6 +142,12 @@ class ExpensesService
         $paymentUsers = Expense::whereIn('id', $expenseIds)->sum('amount');    
 
         return $paymentUsers;
+    }
+
+    public function getDivisionsExp(ExpenseDivisionsExpRequest $req)
+    {
+        $divisions = Expense_division::where('expense_id', $req->expense_id)->get();
+        return $divisions;
     }
 }
 ?>

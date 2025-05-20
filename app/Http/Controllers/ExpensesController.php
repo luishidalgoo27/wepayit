@@ -14,6 +14,7 @@ use App\Http\Requests\ExpensesCreateRequest;
 use App\Http\Requests\ExpensesDeleteRequest;
 use App\Http\Requests\ExpensesUpdateRequest;
 use App\Http\Requests\ExpensesDivisionsRequest;
+use App\Http\Requests\ExpenseDivisionsExpRequest;
 
 class ExpensesController extends Controller
 {
@@ -77,6 +78,12 @@ class ExpensesController extends Controller
     {
         $payment = $this->expensesService->getPaymentUser($req);
         return response()->json($payment, 200);
+    }
+
+    public function getDivisionsExp(ExpenseDivisionsExpRequest $req)
+    {
+        $divisions = $this->expensesService->getDivisionsExp($req);
+        return response()->json($divisions, 200);
     }
 
 
