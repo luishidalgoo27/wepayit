@@ -13,6 +13,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\ConverterController;
 use App\Http\Controllers\UserGroupController;
+use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -43,7 +44,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/deleteUser', [UserGroupController::class, 'deleteUser']);
     
     Route::post('/create-test-user', [GroupController::class, 'createTestUser']);
-    
+    // Añadir esta ruta a tu archivo de rutas
+    Route::get('/accept-invitation/{code}', [InvitationController::class, 'redirectToFrontend']);
+
     Route::post('/invitation', [UserGroupController::class, 'sendInvitation']);
     Route::post('/invitations/accept/{code}', [UserGroupController::class, 'acceptInvitation']);
     
