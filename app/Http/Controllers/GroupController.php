@@ -55,6 +55,7 @@ class GroupController extends Controller
         return response()->json($group, 200);
     }
 
+
     public function createTestUser(CreateTestUserRequest $request)
     {
         try {
