@@ -27,7 +27,7 @@ class ExpensesCreateRequest extends FormRequest
             'title'         => 'required|string|max:255',
             'amount'        => 'required|numeric|min:0',
             'currency_type' => 'required|string|max:10',
-            'paid_by'       => 'sometimes|exists:users,id',
+            'paid_by'       => 'required|exists:users,id',
             'group_id'      => 'required|exists:groups,id',
             'date'          => 'sometimes|date',
             'description'   => 'nullable|string',
@@ -62,6 +62,7 @@ class ExpensesCreateRequest extends FormRequest
             'currency_type.string'   => 'El tipo de moneda debe ser una cadena de texto.',
             'currency_type.max'      => 'El tipo de moneda no puede tener más de 10 caracteres.',
 
+            'paid_by.required'         => 'Debe haber un usuario pagador.',
             'paid_by.exists'         => 'El usuario pagador seleccionado no existe.',
 
             'group_id.required'      => 'El grupo es obligatorio.',
