@@ -20,7 +20,7 @@ export const GroupLayout = () => {
     const location = useLocation();
 
     return (
-        <div className="container max-w-4xl mx-auto py-2 space-y-10 text-950 dark:text-50 px-8">
+        <div className="container max-w-4xl mx-auto py-2 space-y-10 text-950 dark:text-50 px-6">
             {showBackButtonInGroupLayout(location.pathname) && <BackButton />}
             <div className="space-y-6">
                 {/* Header */}
@@ -44,7 +44,7 @@ export const GroupLayout = () => {
                     )}
                     <div className="flex">
                         <h1 className="text-4xl font-bold tracking-tight ml-9">{group.name}</h1>
-                        <Link to="/groups/edit-group" className=" p-2">
+                        <Link to={`edit-group`} className=" p-2">
                         <Pencil />
                         </Link>
                     </div>

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useGetUsers } from "@/hooks/useGetUsers";
 import { useGetUserGroupExpenses } from "@/hooks/useGetUserGroupExpenses";
 import { generateRandomExcuse } from "@/utils/excuse";
+import { Wheel } from "@/components/Wheel";
 
 export const GamesPage = () => {
   const { id } = useLoaderData() as { id: string };
@@ -119,6 +120,15 @@ export const GamesPage = () => {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="w-full max-w-3xl mt-6">
+        <h2 className="text-2xl font-semibold text-600 dark:text-200 mb-4 text-center">
+          Ruleta
+        </h2>
+        <div className="p-4 max-w-xl mx-auto">
+          <Wheel users={users} />
         </div>
       </section>
 

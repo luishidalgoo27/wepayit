@@ -73,14 +73,17 @@ const router = createBrowserRouter([
         children: [
           { path: "/groups", element: <GroupsPage /> },
           { path: "/groups/create-group", element: <CreateGroupPage /> },
-          { path: "/groups/edit-group", element: <EditGroupPage /> },
-          { path: "/groups/:id/expenses/:idExp", element: <ExpenseDetallesPage /> },
-
+          
           {
             path: "/groups/:id",
             element: <GroupLayout />,
             loader: GroupLoader,
             children: [
+              { 
+                path: "edit-group", 
+                element: <EditGroupPage /> ,
+                loader: GroupLoader,
+              },
               {
                 path: "expenses",
                 element: <ExpensesPage />,
@@ -115,7 +118,8 @@ const router = createBrowserRouter([
           },
           { path: "/user/edit-profile", element: <EditProfilePage /> },
           { path: "/invitations/accept/:code", element: <InvitacionPage /> },
-
+          { path: "/groups/:id/expenses/:idExp", element: <ExpenseDetallesPage /> },
+          
         ],
       },
     ],

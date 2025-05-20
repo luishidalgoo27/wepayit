@@ -110,43 +110,64 @@ export const CreateExpensePage = () => {
         const updated = [...usersDivision];
         updated[index][field] = value as never;
 
-        if (field === "assigned_amount") {
-            const newAmount = value as number;
-            const selectedUsers = updated.filter(u => u.selected);
-            const selectedCount = selectedUsers.length;
+        const selectedUsers = updated.filter(u => u.selected);
+        const selectedCount = selectedUsers.length;
 
-            // No permitir si hay menos de 2 seleccionados
-            if (selectedCount <= 1) {
-                toast.error("Debe haber al menos 2 usuarios seleccionados para dividir el gasto.");
+        // Si se está cambiando el checkbox
+        if (field === "selected") {
+            // No permitir que quede solo uno seleccionado
+            if (!value && selectedCount <= 1) {
+                toast.error("Debe haber al menos 1 usuario seleccionado.");
                 return;
             }
 
-            // Verificar que no sea negativo
+            // Repartimos de nuevo
+            if (selectedCount > 0 && amount > 0) {
+                const divided = parseFloat((amount / selectedCount).toFixed(2));
+                const repartidos = updated.map((u, i) => {
+                    if (u.selected) {
+                        return { ...u, assigned_amount: divided };
+                    }
+                    return { ...u, assigned_amount: 0 };
+                });
+
+                setUsersDivision(repartidos);
+            } else {
+                setUsersDivision(updated);
+            }
+
+            return;
+        }
+
+        // Si se está editando el assigned_amount manualmente
+        if (field === "assigned_amount") {
+            const newAmount = value as number;
+
             if (newAmount < 0) {
                 toast.error("La cantidad no puede ser negativa.");
                 return;
             }
 
-            // Establecer el nuevo valor al usuario editado
+            const selectedCount = selectedUsers.length;
+            if (selectedCount <= 1) {
+                toast.error("Debe haber al menos 2 usuarios seleccionados para dividir el gasto.");
+                return;
+            }
+
             updated[index].assigned_amount = newAmount;
 
-            // Calcular el total restante
             const remainingAmount = amount - newAmount;
 
-            // Obtener índices de los otros usuarios seleccionados (excepto el que se editó)
-            const otherSelectedIndexes = updated
-                .map((u, i) => ({ ...u, index: i }))
-                .filter((u, i) => u.selected && i !== index);
-
-            const remainingCount = otherSelectedIndexes.length;
-
-            // Verificar que no se supere el total
             if (remainingAmount < 0) {
                 toast.error("La suma de las cantidades no puede superar el monto total.");
                 return;
             }
 
-            // Repartir el resto equitativamente entre los demás
+            const otherSelectedIndexes = updated
+                .map((u, i) => ({ ...u, index: i }))
+                .filter((u, i) => u.selected && i !== index);
+
+            const remainingCount = otherSelectedIndexes.length;
             const share = parseFloat((remainingAmount / remainingCount).toFixed(2));
 
             otherSelectedIndexes.forEach(({ index: i }) => {
@@ -156,7 +177,6 @@ export const CreateExpensePage = () => {
             setUsersDivision(updated);
             return;
         }
-
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -180,12 +200,12 @@ export const CreateExpensePage = () => {
             await createExpense(newExpense);
             toast.success("Gasto creado correctamente");
             navigate(`/groups/${id}/expenses`);
-            
+
         } catch (err: any) {
             const errors = err.response?.data?.errors
-            ? Object.values(err.response.data.errors).flat()
-            : [err.response?.data?.message || "Error desconocido. Inténtalo de nuevo."];
-            
+                ? Object.values(err.response.data.errors).flat()
+                : [err.response?.data?.message || "Error desconocido. Inténtalo de nuevo."];
+
             errors.forEach((message: string) => toast.error(message));
             setUploading(false);
         }
@@ -200,7 +220,7 @@ export const CreateExpensePage = () => {
             onSubmit={handleSubmit}
             className="container max-w-2xl mx-auto py-8 space-y-6 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/20"
         >
-        <LoadingOverlay show={uploading} message="Creando Gasto..."/>
+            <LoadingOverlay show={uploading} message="Creando Gasto..." />
 
             <h1 className="text-center text-3xl font-bold mb-6">Crear nuevo gasto</h1>
 

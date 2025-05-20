@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->integer('amount');       
+            $table->float('amount');       
             $table->string('currency_type')->default('EUR');     
             $table->unsignedBigInteger('paid_by');
             $table->unsignedBigInteger('group_id');
