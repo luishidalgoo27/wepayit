@@ -12,18 +12,7 @@ class NotificationController extends Controller
 
     public function sendNotification(NotificationRequest $req)
     {
-        try {
-            $result = $this->notificationService->sendNotification($req);
-            return response()->json([
-                'success' => true,
-                'message' => 'Notificación enviada correctamente',
-                'data' => $result
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al enviar la notificación: ' . $e->getMessage()
-            ], 500);
-        }
+        $this->notificationService->sendNotification($req);
+        return response()->json(['message' => 'Notification sent succesfully']);
     }
 }

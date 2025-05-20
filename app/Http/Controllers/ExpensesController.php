@@ -21,164 +21,66 @@ class ExpensesController extends Controller
 
     public function getExpenses(ExpensesGetRequest $req)
     {
-        try {
-            $expenses = $this->expensesService->getExpenses($req);
-            return response()->json([
-                'success' => true,
-                'data' => $expenses
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al obtener los gastos: ' . $e->getMessage()
-            ], 500);
-        }
+        $expenses = $this->expensesService->getExpenses($req);
+        return response()->json($expenses);
     }
 
     public function getExpense(ExpenseGetRequest $req)
     {
-        try {
-            $expense = $this->expensesService->getExpense($req);
-            return response()->json([
-                'success' => true,
-                'data' => $expense
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al obtener el gasto: ' . $e->getMessage()
-            ], 500);
-        }
+        $expense = $this->expensesService->getExpense($req);
+        return response()->json($expense, 200);
     }
 
     public function create(ExpensesCreateRequest $req)
     {
-        try {
-            $expense = $this->expensesService->create($req);
-            return response()->json([
-                'success' => true,
-                'message' => 'Gasto creado correctamente',
-                'data' => $expense
-            ], 201);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al crear el gasto: ' . $e->getMessage()
-            ], 500);
-        }
+        $expense = $this->expensesService->create($req);
+        return response()->json($expense);
     }
 
     public function update(ExpensesUpdateRequest $req)
     {
-        try {
-            $expense = $this->expensesService->update($req);
-            return response()->json([
-                'success' => true,
-                'message' => 'Gasto actualizado correctamente',
-                'data' => $expense
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al actualizar el gasto: ' . $e->getMessage()
-            ], 500);
-        }
+        $expense = $this->expensesService->update($req);
+        return response()->json($expense, 200);
     }
 
     public function delete(ExpensesDeleteRequest $req)
     {
-        try {
-            $result = $this->expensesService->delete($req);
-            return response()->json([
-                'success' => true,
-                'message' => 'Gasto eliminado correctamente',
-                'data' => $result
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al eliminar el gasto: ' . $e->getMessage()
-            ], 500);
-        }
+        $expense = $this->expensesService->delete($req);
+        return response()->json($expense, 200);
     }
 
     public function getDivisions(ExpensesDivisionsRequest $req)
     {
-        try {
-            $divisions = $this->expensesService->getDivisions($req);
-            return response()->json([
-                'success' => true,
-                'data' => $divisions
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al obtener las divisiones: ' . $e->getMessage()
-            ], 500);
-        }
+        $divisions = $this->expensesService->getDivisions($req);
+        return response()->json($divisions, 200);
     }
-
+    
     public function markPaidExp(MarkPaidExpRequest $req)
     {
-        try {
-            $this->expensesService->markPaidExp($req);
-            return response()->json([
-                'success' => true,
-                'message' => 'Gasto marcado como pagado correctamente'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al marcar el gasto como pagado: ' . $e->getMessage()
-            ], 500);
-        }
+        $this->expensesService->markPaidExp($req);
+        return response()->json(['message', 'Gasto marcado como completado']);
     }
 
     public function markPaidDiv(MarkPaidDivRequest $req)
     {
-        try {
-            $this->expensesService->markPaidDiv($req);
-            return response()->json([
-                'success' => true,
-                'message' => 'División de gasto marcada como pagada correctamente'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al marcar la división como pagada: ' . $e->getMessage()
-            ], 500);
-        }
+        $this->expensesService->markPaidDiv($req);
+        return response()->json(['message', 'Gasto marcado como completado']);
     }
 
     public function getPaymentGroup(PaymentRequest $req)
     {
-        try {
-            $payment = $this->expensesService->getPaymentGroup($req);
-            return response()->json([
-                'success' => true,
-                'data' => $payment
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al obtener el pago del grupo: ' . $e->getMessage()
-            ], 500);
-        }
+        $payment = $this->expensesService->getPaymentGroup($req);
+        return response()->json($payment, 200);
     }
-
+    
     public function getPaymentUser(PaymentRequest $req)
     {
-        try {
-            $payment = $this->expensesService->getPaymentUser($req);
-            return response()->json([
-                'success' => true,
-                'data' => $payment
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al obtener el pago del usuario: ' . $e->getMessage()
-            ], 500);
-        }
+        $payment = $this->expensesService->getPaymentUser($req);
+        return response()->json($payment, 200);
     }
+
+
+    
+
+
 }
