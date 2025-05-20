@@ -33,14 +33,14 @@ export const BreadCrumb = () => {
   const segments = pathnames[0] === "groups" ? pathnames.slice(1) : pathnames;
 
   return (
-    <nav className="flex py-2 px-4" aria-label="Breadcrumb">
-      <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
-        <li className="inline-flex items-center">
+    <nav className="flex py-3 px-6" aria-label="Breadcrumb">
+      <ol className="flex flex-wrap items-center space-x-2 text-base font-medium">
+        <li>
           <Link
             to="/groups"
-            className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
+            className="flex items-center text-500 dark:text-300 hover:text-400 dark:hover:text-400 transition-colors"
           >
-            <svg className="w-3 h-3 me-2.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+            <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
               <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
             </svg>
             Grupos
@@ -50,24 +50,20 @@ export const BreadCrumb = () => {
           accumulatedPath += `/${pathnames[0] === "groups" ? "groups/" : ""}${segments.slice(0, idx + 1).join("/")}`;
           const isLast = idx === segments.length - 1;
           return (
-            <li key={idx} aria-current={isLast ? "page" : undefined}>
-              <div className="flex items-center">
-                <svg className="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" fill="none" viewBox="0 0 6 10">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
-                </svg>
-                {isLast ? (
-                  <span className="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">
-                    {getBreadcrumbName(segment)}
-                  </span>
-                ) : (
-                  <Link
-                    to={accumulatedPath}
-                    className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
-                  >
-                    {getBreadcrumbName(segment)}
-                  </Link>
-                )}
-              </div>
+            <li key={idx} className="flex items-center">
+              <svg className="w-4 h-4 mx-2 text-400 dark:text-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+              {isLast ? (
+                <span className="text-700 dark:text-50 font-semibold">{getBreadcrumbName(segment)}</span>
+              ) : (
+                <Link
+                  to={accumulatedPath}
+                  className="text-500 dark:text-300 hover:text-400 dark:hover:text-400 transition-colors"
+                >
+                  {getBreadcrumbName(segment)}
+                </Link>
+              )}
             </li>
           );
         })}

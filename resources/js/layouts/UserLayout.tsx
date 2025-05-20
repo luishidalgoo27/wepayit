@@ -21,9 +21,11 @@ export const UserLayout = () => {
             <Toaster position="top-right" reverseOrder={false} />
             
             <Header />
-            <BreadCrumb />
+            <div className="flex items-center justify-center">
+                <BreadCrumb />
+            </div>
             
-            <main className="flex-1 container mx-auto py-4">
+            <main className="flex-1 container mx-auto">
                 {showBackButton && <BackButton />}
                 <Outlet />
             </main>
