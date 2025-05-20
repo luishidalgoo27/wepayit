@@ -6,12 +6,14 @@ import { deleteGroup, inviteUserToGroup, removeUserFromGroup, searchUsers } from
 import { User } from "@/types/user";
 import { useDebounce } from "@/hooks/useDebounce";
 import Swal from "sweetalert2";
+import { useAuth } from "@/context/AuthContext";
 import {Trash2} from "lucide-react";
 
 export const ManagementPage = () => {
   const { id } = useLoaderData() as { id: string };
   const { group } = useGetGroup(id);
   const { users, refetch: refreshUsers } = useGetUsers(id);
+  const { user: currentUser } = useAuth();
   
   const navigate = useNavigate();
 
@@ -42,32 +44,70 @@ export const ManagementPage = () => {
   }, [debouncedSearch]);
 
   const handleInvite = async (userEmail: string) => {
-    await inviteUserToGroup(id, userEmail);
-    await refreshUsers();
+    try {
+      await inviteUserToGroup(id, userEmail);
+      await refreshUsers();
+      setSearchTerm(""); // Clear search input
+      setSearchResults([]); // Clear search results
+      
+      await Swal.fire({
+        title: '¡Invitación enviada!',
+        text: `Se ha enviado una invitación a ${userEmail}`,
+        icon: 'success',
+        confirmButtonColor: '#3085d6',
+      });
+    } catch (error) {
+      console.error("Error al invitar al usuario:", error);
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo enviar la invitación',
+        icon: 'error',
+        confirmButtonColor: '#d33',
+      });
+    }
   };
 
   const handleRemoveGroup = async (id: number) => {
-    const result = await Swal.fire({
-      title: "¿Estás seguro?",
-      text: "Esta acción eliminará el grupo y no se puede deshacer.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Sí, borrar grupo",
-      cancelButtonText: "Cancelar"
-    });
+    try {
+      const result = await Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Esta acción eliminará el grupo y no se puede deshacer.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, borrar grupo",
+        cancelButtonText: "Cancelar"
+      });
 
-    if (result.isConfirmed) {
-      await deleteGroup(id);
-      navigate("/");
+      if (result.isConfirmed) {
+        await deleteGroup(id);
+        await Swal.fire({
+          title: '¡Grupo eliminado!',
+          text: 'El grupo se ha eliminado correctamente',
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+        });
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error al eliminar el grupo:", error);
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo eliminar el grupo. Por favor, inténtalo de nuevo.',
+        icon: 'error',
+        confirmButtonColor: '#d33',
+      });
     }
-  }
+  };
 
   const handleRemove = async (userId: string) => {
     await removeUserFromGroup(id, userId);
     await refreshUsers();
   };
+
+  // Check if current user is the group admin
+  const isAdmin = currentUser?.id === group?.owner_id;
 
   const sortedUsers = [...(users || [])].sort((a) =>
     a.id === group?.owner_id ? -1 : 1
@@ -165,7 +205,6 @@ export const ManagementPage = () => {
                    {user.username} {user.id === group?.owner_id && <span className="italic text-sm  ">(Admin)</span>}
                    </div>
                 </span>
-                <Trash2 size={20}/>
               </li>
             ))}
           </ul>
@@ -174,13 +213,15 @@ export const ManagementPage = () => {
         )}
       </section>
 
-      {/* Botón borrar grupo */}
-      <button
-        onClick={() => handleRemoveGroup(Number(id))}
-        className="mt-8 bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-xl shadow transition"
-      >
-        Borrar grupo
-      </button>
+      {/* Botón borrar grupo - Solo visible para admin */}
+      {isAdmin && (
+        <button
+          onClick={() => handleRemoveGroup(Number(id))}
+          className="mt-8 bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-xl shadow transition"
+        >
+          Borrar grupo
+        </button>
+      )}
     </div>
   );
 };
