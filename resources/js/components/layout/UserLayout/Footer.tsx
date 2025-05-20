@@ -38,8 +38,13 @@ export const Footer = () => {
                     <h3 className="text-lg font-semibold mb-2 flex flex-col items-center md:items-end">
                         <span>Síguenos</span>
                         <div className="flex mt-2 gap-1">
+                        <a href="https://getallmylinks.com/wepayit">
                         <Instagram className="dark:bg-600 bg-400 rounded-full dark:text-50 text-900 p-0.5" size={35} />
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=61576678376376&sk=about">
                         <Facebook className="dark:bg-600 bg-400 rounded-full dark:text-50 text-900 p-0.5" size={35} />
+                        </a>
+                        
                         </div>
 
                     </h3>

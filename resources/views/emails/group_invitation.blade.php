@@ -33,6 +33,7 @@
       </div>
 
       <div style="text-align:center;margin:35px 0;">
+        <h1 style="font-size:26px;font-weight:800;color:#257C6A;margin:0 0 15px;">IMPORTANTE Abrir con Google Chrome</h1>
         <!-- Usar la ruta de backend para redirección -->
         <a href="{{ $apiUrl }}/accept-invitation/{{$invitation->invitation_code}}" style="background:#57BCA3;color:#ffffff;text-decoration:none;padding:14px 30px;font-size:16px;font-weight:600;border-radius:8px;display:inline-block;cursor:pointer;-webkit-text-size-adjust:none;mso-hide:all;">Unirme al grupo</a>
       </div>
