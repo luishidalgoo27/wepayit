@@ -103,7 +103,7 @@ export const ManagementPage = () => {
   );
 
   return (
-    <div className="box-2 max-w-4xl mx-auto px-6 py-6 flex flex-col gap-6">
+    <div className="box-2 max-w-5xl mx-auto px-6 py-6 flex flex-col gap-6">
       {/* Buscar e invitar */}
       <section className="bg-[var(--color-50)] dark:bg-[var(--color-800)] p-6 rounded shadow">
         <h2 className="text-xl font-semibold text-[var(--color-400)] dark:text-[var(--color-200)] mb-4">

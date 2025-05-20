@@ -82,7 +82,7 @@ export const GamesPage = () => {
             <blockquote className="text-xl italic mt-4 text-[var(--color-900)] dark:text-[var(--color-50)] bg-[var(--color-100)] dark:bg-[var(--color-700)] p-4 rounded-md border-l-4 border-[var(--color-400)]">
               “{excuse}”
             </blockquote>
-            <div className="flex justify-center gap-4 mt-4">
+            <div className="flex justify-center gap-4 mt-2">
               <button
                 onClick={copyExcuseToClipboard}
                 className="clickButton px-4 py-2"
@@ -100,11 +100,11 @@ export const GamesPage = () => {
         )}
       </section>
 
-      <section className="w-full max-w-3xl mt-4">
+      <section className="w-full max-w-3xl mt-2">
         <h2 className="text-2xl font-semibold text-600 dark:text-200 mb-4 text-center">
           Equivalencias divertidas
         </h2>
-        <div className="grid sm:grid-cols-2 gap-6">
+        <div className="grid sm:grid-cols-2 gap-3">
           {statsData.map(({ icon, label, value }) => (
             <div
               key={label}
@@ -124,7 +124,7 @@ export const GamesPage = () => {
         </div>
       </section>
 
-      <section className="w-full max-w-3xl mt-4">
+      <section className="w-full max-w-3xl mt-2">
         <h2 className="text-2xl font-semibold text-600 dark:text-200 mb-4 text-center">
           ¿Quien paga hoy?
           Gira la ruleta para descubrirlo
