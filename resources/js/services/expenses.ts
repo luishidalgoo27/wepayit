@@ -45,16 +45,46 @@ export const getExpensesDivisions = async (id: string):Promise<ExpenseDivision[]
     return res.data
 }
 
-export const totalUserExpenses = async (id:string): Promise<number> => {
+export const getExpensesDivisionsByExpense = async (expense_id: string):Promise<ExpenseDivision[]> => {
+    const res = await api.post(`${API_URL}/divisions`, {
+        expense_id
+    })
+    return res.data
+}
+
+export const totalUserExpenses = async (id: string): Promise<number> => {
     const res = await api.post(`${API_URL}/payments`, {
         group_id: id
     });
     return res.data;
 };
 
-export const totalGroupExpenses = async (id:string): Promise<number> => {
+export const totalGroupExpenses = async (id: string): Promise<number> => {
     const res = await api.post(`${API_URL}/paymentGroup`, {
         group_id: id
+    });
+    return res.data;
+};
+
+export const markAsPaid = async (division_id: number): Promise<number> => {
+    const res = await api.post(`${API_URL}/markPaidDiv`, {
+        division_id
+    });
+    return res.data;
+};
+
+export const markAllAsPaid = async (expense_id: string): Promise<number> => {
+    const res = await api.post(`${API_URL}/markPaidExp`, {
+        expense_id
+    });
+    return res.data;
+};
+
+export const notifyPayment = async (group_id: string, guest_email: string, expense_id: string): Promise<number> => {
+    const res = await api.post(`${API_URL}/notification`, {
+        group_id,
+        guest_email,
+        expense_id
     });
     return res.data;
 };
