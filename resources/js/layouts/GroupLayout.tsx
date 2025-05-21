@@ -85,7 +85,7 @@ export const GroupLayout = () => {
                   alt={u.username}
                   className="w-8 h-8 rounded-full object-cover border-2 border-white shadow"
                 />
-                <span className="text-sm text-center max-w-[60px]">@{u.username}</span>
+                <span className="text-sm ml-1  max-w-[60px]">@{u.username}</span>
               </div>
             ))}
           </div>

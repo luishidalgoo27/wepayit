@@ -30,7 +30,7 @@ export const GroupsPage = () => {
                 {/* Panel izquierdo: Ruleta */}
                 <div className="hidden lg:flex flex-col justify-center items-center w-80 bg-[var(--color-400)] text-900 dark:bg-[var(--color-800)] dark:text-50 rounded-2xl shadow-lg p-6 sticky top-24 self-start">
                     <img
-                        src="/public/ruletaGroup.png"
+                        src="/ruletaGroup.png"
                         alt="Ruleta"
                         className=" mb-4"
                     />
@@ -125,7 +125,7 @@ export const GroupsPage = () => {
                 {/* Panel derecho: Trofeo */}
                 <div className="hidden lg:flex flex-col justify-center items-center w-80 bg-[var(--color-400)] text-900 dark:bg-[var(--color-800)] dark:text-50 rounded-2xl shadow-lg p-6 sticky top-24 self-start">
                     <img
-                        src="/public/trofeoGroup2.png"
+                        src="/trofeoGroup2.png"
                         alt="Trofeo"
                         className=" mb-4"
                     />
