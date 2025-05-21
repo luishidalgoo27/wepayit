@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('expenses_divisions', function (Blueprint $table) {
-            //
+            $table->decimal('assigned_amount', 10, 2)->change();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('expenses_divisions', function (Blueprint $table) {
-            //
+            $table->float('assigned_amount')->change();
         });
     }
 };
