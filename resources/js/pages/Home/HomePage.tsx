@@ -82,7 +82,7 @@ export const HomePage = () => {
                     </p>
                 </div>
                 <motion.img
-                    src="/pago-card1.webp"
+                    src="/cajasurMovil.png"
                     alt="Pago con tarjeta"
                     className="w-full h-auto rounded-2xl md:rounded-3xl"
                     variants={zoomIn}
@@ -95,7 +95,7 @@ export const HomePage = () => {
                 variants={fadeInFromTop}
             >
                 <motion.img
-                    src="/movilYDinero.png"
+                    src="/equivalencias.png"
                     alt="Dinero en el móvil"
                     className="w-full h-auto rounded-2xl md:rounded-3xl"
                     variants={zoomIn}
@@ -130,8 +130,8 @@ export const HomePage = () => {
                 </motion.div>
 
                 <motion.img
-                    src="/public/fotoGastosHomeP.png"
-                    className="ml-10 pt-8  w-full  h-auto rounded-2xl md:rounded-3xl"
+                    src="/moviles.png"
+                    className="ml-40 pt-8  w-50  h-auto rounded-2xl md:rounded-3xl"
                     alt="Vista de grupos en la app"
                     variants={zoomIn}
                 />
