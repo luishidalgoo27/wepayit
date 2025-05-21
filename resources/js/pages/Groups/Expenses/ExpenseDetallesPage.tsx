@@ -3,7 +3,7 @@ import { useGetUsers } from "@/hooks/useGetUsers";
 import { ArrowLeft, CheckCircle, Bell, Pencil } from "lucide-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { markAllAsPaid, markAsPaid, notifyPayment } from "@/services/expenses";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetDivisionsByExpense } from "@/hooks/useGetDivisionsByExpense";
 
 export const ExpenseDetallesPage = () => {
@@ -11,34 +11,49 @@ export const ExpenseDetallesPage = () => {
     const { expense } = useGetExpense(idExp!);
     const { users } = useGetUsers(id!);
     const { divisions } = useGetDivisionsByExpense(idExp!);
-    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     if (!expense) return <p className="text-center mt-10">Gasto no encontrado</p>;
 
     const payer = users?.find(u => u.id === expense.paid_by);
-
+    
     const debts = divisions
-        ?.filter(d => d.user_id !== expense.paid_by)
-        .map(d => {
-            const user = users?.find(u => u.id === d.user_id);
-            return { ...d, user };
-        }) || [];
-
-    const hasPending = debts.some(d => d.status === "pending");
-
+    ?.filter(d => d.user_id !== expense.paid_by)
+    .map(d => {
+        const user = users?.find(u => u.id === d.user_id);
+        return { ...d, user };
+    }) || [];
+    
+    // Todos los divisions pagados
+    const allPaid = debts.length > 0 && debts.every(d => d.status === "paid");
+    
+    useEffect(() => {
+        if (allPaid && expense.state !== "closed") {
+            markAllAsPaid(idExp!)
+        }
+    }, [allPaid, expense.state, idExp, navigate]);
+    
     const handleMarkAsPaid = async (divisionId: number) => {
         setLoading(true);
         await markAsPaid(divisionId);
+
         setLoading(false);
-        navigate(0);
+        navigate(-1)
     };
 
     const handleMarkAllAsPaid = async () => {
         setLoading(true);
         await markAllAsPaid(idExp!);
+
+        divisions.map((d) => {
+            if (d.expense_id === Number(idExp!)) {
+                markAsPaid(d.id)
+            }
+        })
+
         setLoading(false);
-        navigate(0);
+        navigate(-1)
     };
 
     const handleNotification = async (guest_email: string) => {
@@ -94,14 +109,17 @@ export const ExpenseDetallesPage = () => {
                         <span className="text-3xl font-bold text-[var(--color-700)] dark:text-[var(--color-100)]">
                             {expense.amount} {expense.currency_type}
                         </span>
-                        {hasPending && (
-                            <button
-                                className="mt-2 px-4 py-2 rounded-xl font-semibold shadow bg-[var(--color-500)] hover:bg-[var(--color-700)] text-white transition"
-                                onClick={handleMarkAllAsPaid}
-                                disabled={loading}
-                            >
-                                Marcar todo como pagado
-                            </button>
+                        <button
+                            className="mt-2 px-4 py-2 rounded-xl font-semibold shadow bg-[var(--color-500)] hover:bg-[var(--color-700)] text-white transition"
+                            onClick={handleMarkAllAsPaid}
+                            disabled={loading || allPaid}
+                        >
+                            Marcar todo como pagado
+                        </button>
+                        {allPaid && (
+                            <span className="mt-2 px-3 py-1 rounded-lg bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 font-semibold">
+                                Gasto completado
+                            </span>
                         )}
                     </div>
                 </div>
