@@ -42,38 +42,4 @@ class ConverterController extends Controller
         ]);
     }
 
-    public function convertUser(ConvertUserRequest $req)
-    {
-        $division = Expense_division::find($req->id_division);
-        $expense = Expense::find($division->expense_id);
-        $group = Group::find($expense->group_id);
-        $expenseCurrency = $expense->value('currency_type');
-        $groupCurrency = $group->value('currency_type');
-        $amount = $division->value('assigned_amount');
-
-        if ($expenseCurrency === $groupCurrency) {
-            return response()->json([
-                'converted_amount' => $amount,
-                'currency' => $expenseCurrency
-            ]);
-        }
-
-        $response = Http::withoutVerifying()->get('https://api.exchangerate.host/convert', [
-            'from' => $groupCurrency,
-            'to' => $expenseCurrency,
-            'amount' => $amount,
-            'access_key' => env('EXCHANGE_API_KEY'), 
-        ]);
-
-        if ($response->failed()) {
-            return response()->json(['error' => 'API request failed'], 500);
-        }
-
-        return response()->json([
-            'converted_amount' => $response->json()['result'],
-            'currency' => $groupCurrency
-        ]);
-
-
-    }
 }
