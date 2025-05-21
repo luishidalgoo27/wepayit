@@ -38,7 +38,7 @@ class ExpensesCreateRequest extends FormRequest
             'frecuency'     => 'nullable|string|max:50',
             'users_division' => 'required|array|min:1',
             'users_division.*.user_id' => 'required|exists:users,id',
-            'users_division.*.assigned_amount' => 'required|decimal',
+            'users_division.*.assigned_amount' => 'required|numeric',
         ];
     }
 
