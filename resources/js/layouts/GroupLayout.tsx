@@ -74,8 +74,8 @@ export const GroupLayout = () => {
   return (
     <div className="relative min-h-screen w-full flex justify-center">
       {/* Panel izquierdo: miembros del grupo */}
-      <aside className="hidden lg:flex flex-col items-center gap-4 w-56 py-8 px-2">
-        <div className="bg-white dark:bg-[var(--color-800)] rounded-2xl shadow-lg p-4 w-full">
+      <aside className="hidden lg:flex flex-col items-center gap-4 w-64 py-8 px-2">
+        <div className="bg-white dark:bg-[var(--color-800)] rounded-2xl shadow-lg p-3 w-full">
           <h3 className="text-lg text-center font-bold mb-2 text-[var(--color-700)] dark:text-[var(--color-200)]">Miembros</h3>
           <div className="flex flex-col flex-wrap gap-2">
             {users.map(u => (
@@ -83,7 +83,7 @@ export const GroupLayout = () => {
                 <img
                   src={u.avatar || "https://res.cloudinary.com/dotw4uex6/image/upload/v1747049503/ChatGPT_Image_12_may_2025_13_30_34_x0b7aa.png"}
                   alt={u.username}
-                  className="w-10 h-10 rounded-full object-cover border-2 border-white shadow"
+                  className="w-8 h-8 rounded-full object-cover border-2 border-white shadow"
                 />
                 <span className="text-sm text-center max-w-[60px]">@{u.username}</span>
               </div>
@@ -93,7 +93,7 @@ export const GroupLayout = () => {
       </aside>
 
       {/* Contenido principal */}
-      <main className="container max-w-5xl mx-auto py-1 space-y-3 text-950 dark:text-50 px-6 z-10">
+      <div className="container max-w-5xl mx-auto py-1 space-y-3 text-950 dark:text-50 px-4 z-10">
         {showBackButtonInGroupLayout(location.pathname) && <BackButton />}
 
         {/* Header */}
@@ -156,11 +156,11 @@ export const GroupLayout = () => {
 
         {/* Subrutas */}
         <Outlet />
-      </main>
+      </div>
 
       {/* Panel derecho: tip del día */}
-      <aside className="hidden lg:flex flex-col items-center gap-4 w-56 py-8 px-2">
-        <div className="bg-white dark:bg-[var(--color-800)] rounded-2xl shadow-lg p-4 w-full flex flex-col items-center">
+      <aside className="hidden lg:flex flex-col items-center gap-4 w-64 py-8 px-2">
+        <div className="bg-white dark:bg-[var(--color-800)] rounded-2xl shadow-lg p-3 w-full flex flex-col items-center">
           <Info className="w-7 h-7 text-[var(--color-500)] mb-2" />
           <h3 className="text-base font-bold mb-2 text-[var(--color-700)] dark:text-[var(--color-200)]">Consejo WePayIt</h3>
           <p className="text-sm text-[var(--color-700)] dark:text-[var(--color-200)] text-center">{getRandomTip()}</p>

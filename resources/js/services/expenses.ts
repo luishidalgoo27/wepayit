@@ -88,3 +88,12 @@ export const notifyPayment = async (group_id: string, guest_email: string, expen
     });
     return res.data;
 };
+
+export const convertToCurrency = async (amount: number, from: string, to: string): Promise<number> => {
+    const res = await api.post(`${API_URL}/converter`, {
+        amount,
+        from,
+        to
+    });
+    return res.data;
+}
