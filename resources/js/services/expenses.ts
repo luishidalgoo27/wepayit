@@ -95,3 +95,10 @@ export const convertAmount = async (expenseId: string): Promise<{converted_amoun
     });
     return res.data;
 };
+
+export const convertUser = async (divisionId: number): Promise<{converted_amount: number, currency: string}> => {
+    const res = await api.post(`${API_URL}/convert-user`, {
+        id_division: divisionId
+    });
+    return res.data;
+};

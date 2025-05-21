@@ -2,19 +2,17 @@ import { useEffect, useState } from "react";
 import { LoaderFunctionArgs, useLoaderData, useNavigate } from "react-router-dom";
 import { FolderKanban, BadgeEuro, Calendar, Type, FileText, Users } from "lucide-react";
 import toast from "react-hot-toast";
-import { convertToCurrency, createExpense } from "@/services/expenses";
+import { createExpense } from "@/services/expenses";
 import { useGetUsers } from "@/hooks/useGetUsers";
 import { CreateExpense, UserDivision } from "@/types/expense";
 import { useGetCategories } from "@/hooks/useGetCategories";
 import { LoadingOverlay } from "@/components/LoadingOverlay";
-import { useGetGroup } from "@/hooks/useGetGroup";
 
 export const CreateExpensePage = () => {
     const navigate = useNavigate();
     const { id } = useLoaderData() as { id: string };
 
     const { users, loading: loadingUsers } = useGetUsers(id);
-    const { group } = useGetGroup(id);
     const { categories, loading: loadingCategories } = useGetCategories();
     const [uploading, setUploading] = useState(false);
 
@@ -208,9 +206,6 @@ export const CreateExpensePage = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const converted_amount = await convertToCurrency(amount, currency, group.currency_type)
-
-        setAmount(converted_amount);
 
         const newExpense: CreateExpense = {
             paid_by: payerId,
