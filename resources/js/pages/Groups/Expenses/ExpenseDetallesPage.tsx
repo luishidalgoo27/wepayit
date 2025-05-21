@@ -2,7 +2,7 @@ import { useGetExpense } from "@/hooks/useGetExpense";
 import { useGetUsers } from "@/hooks/useGetUsers";
 import { ArrowLeft, CheckCircle, Bell, Pencil } from "lucide-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { markAllAsPaid, markAsPaid, notifyPayment, convertAmount, convertUser } from "@/services/expenses";
+import { markAllAsPaid, markAsPaid, notifyPayment } from "@/services/expenses";
 import { useState, useEffect } from "react";
 import { useGetDivisionsByExpense } from "@/hooks/useGetDivisionsByExpense";
 
@@ -13,60 +13,17 @@ export const ExpenseDetallesPage = () => {
     const { divisions } = useGetDivisionsByExpense(idExp!);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const [convertedAmount, setConvertedAmount] = useState<{amount: number, currency: string} | null>(null);
-    const [convertedUserAmounts, setConvertedUserAmounts] = useState<Record<number, {amount: number, currency: string}>>({});
-
-    useEffect(() => {
-        const fetchConvertedAmount = async () => {
-            if (expense?.id) {  
-                try {
-                    const [expenseResult, ...userResults] = await Promise.all([
-                        convertAmount(expense.id.toString()),
-                        ...(divisions?.map(division => 
-                            convertUser(division.id)
-                                .then(res => ({ divisionId: division.id, result: res }))
-                                .catch(error => {
-                                    console.error(`Error convirtiendo importe para división ${division.id}:`, error);
-                                    return null;
-                                })
-                        ) || [])
-                    ]);
-
-                    setConvertedAmount({
-                        amount: expenseResult.converted_amount,
-                        currency: expenseResult.currency
-                    });
-
-                    const userAmounts = userResults.reduce((acc, curr) => {
-                        if (curr && curr.result) {
-                            acc[curr.divisionId] = {
-                                amount: curr.result.converted_amount,
-                                currency: curr.result.currency
-                            };
-                        }
-                        return acc;
-                    }, {} as Record<number, {amount: number, currency: string}>);
-
-                    setConvertedUserAmounts(userAmounts);
-                } catch (error) {
-                    console.error('Error convirtiendo moneda:', error);
-                }
-            }
-        };
-    
-        fetchConvertedAmount();
-    }, [expense, divisions]);  
 
     if (!expense) return <p className="text-center mt-10">Gasto no encontrado</p>;
 
     const payer = users?.find(u => u.id === expense.paid_by);
     
     const debts = divisions
-    ?.filter(d => d.user_id !== expense.paid_by)
-    .map(d => {
-        const user = users?.find(u => u.id === d.user_id);
-        return { ...d, user };
-    }) || [];
+        ?.filter(d => d.user_id !== expense.paid_by)
+        .map(d => {
+            const user = users?.find(u => u.id === d.user_id);
+            return { ...d, user };
+        }) || [];
     
     const allPaid = debts.length > 0 && debts.every(d => d.status === "paid");
     const hasPending = debts.some(d => d.status === "pending");
@@ -150,16 +107,9 @@ export const ExpenseDetallesPage = () => {
                         )}
                     </div>
                     <div className="flex flex-col items-end">
-                        <div className="flex flex-col items-end">
-                            <span className="text-3xl font-bold text-[var(--color-700)] dark:text-[var(--color-100)]">
-                                {expense.amount} {expense.currency_type}
-                            </span>
-                            {convertedAmount && convertedAmount.currency !== expense.currency_type && (
-                                <span className="text-sm text-[var(--color-500)] dark:text-[var(--color-400)] mt-1">
-                                    ≈ {convertedAmount.amount.toFixed(2)} {convertedAmount.currency}
-                                </span>
-                            )}
-                        </div>
+                        <span className="text-3xl font-bold text-[var(--color-700)] dark:text-[var(--color-100)]">
+                            {expense.amount} {expense.currency_type}
+                        </span>
                         {hasPending && (
                             <button
                                 className="mt-2 px-4 py-2 rounded-xl font-semibold shadow bg-[var(--color-500)] hover:bg-[var(--color-700)] text-white transition"
@@ -202,11 +152,6 @@ export const ExpenseDetallesPage = () => {
                                         {d.user?.username} debe{" "}
                                         <span className="font-bold">
                                             {d.assigned_amount} {expense.currency_type}
-                                            {convertedUserAmounts[d.id] && convertedUserAmounts[d.id].currency !== expense.currency_type && (
-                                                <span className="text-sm text-[var(--color-500)] dark:text-[var(--color-400)] ml-1">
-                                                    (≈ {convertedUserAmounts[d.id].amount.toFixed(2)} {convertedUserAmounts[d.id].currency})
-                                                </span>
-                                            )}
                                         </span>{" "}
                                         a <span className="font-semibold">{payer?.username}</span>
                                     </span>
