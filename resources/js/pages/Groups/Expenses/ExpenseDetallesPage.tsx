@@ -2,8 +2,8 @@ import { useGetExpense } from "@/hooks/useGetExpense";
 import { useGetUsers } from "@/hooks/useGetUsers";
 import { ArrowLeft, CheckCircle, Bell, Pencil } from "lucide-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { markAllAsPaid, markAsPaid, notifyPayment } from "@/services/expenses";
-import { useState } from "react";
+import { markAllAsPaid, markAsPaid, notifyPayment, convertAmount } from "@/services/expenses";
+import { useState, useEffect } from "react";
 import { useGetDivisionsByExpense } from "@/hooks/useGetDivisionsByExpense";
 
 export const ExpenseDetallesPage = () => {
@@ -13,6 +13,25 @@ export const ExpenseDetallesPage = () => {
     const { divisions } = useGetDivisionsByExpense(idExp!);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [convertedAmount, setConvertedAmount] = useState<{amount: number, currency: string} | null>(null);
+
+    useEffect(() => {
+        const fetchConvertedAmount = async () => {
+            if (expense) {  
+                try {
+                    const result = await convertAmount(expense.id.toString());
+                    setConvertedAmount({
+                        amount: result.converted_amount,
+                        currency: result.currency
+                    });
+                } catch (error) {
+                    console.error('Error convirtiendo moneda:', error);
+                }
+            }
+        };
+    
+        fetchConvertedAmount();
+    }, [expense]);  
 
     if (!expense) return <p className="text-center mt-10">Gasto no encontrado</p>;
 
@@ -91,9 +110,16 @@ export const ExpenseDetallesPage = () => {
                         )}
                     </div>
                     <div className="flex flex-col items-end">
-                        <span className="text-3xl font-bold text-[var(--color-700)] dark:text-[var(--color-100)]">
-                            {expense.amount} {expense.currency_type}
-                        </span>
+                        <div className="flex flex-col items-end">
+                            <span className="text-3xl font-bold text-[var(--color-700)] dark:text-[var(--color-100)]">
+                                {expense.amount} {expense.currency_type}
+                            </span>
+                            {convertedAmount && convertedAmount.currency !== expense.currency_type && (
+                                <span className="text-sm text-[var(--color-500)] dark:text-[var(--color-400)] mt-1">
+                                    ≈ {convertedAmount.amount.toFixed(2)} {convertedAmount.currency}
+                                </span>
+                            )}
+                        </div>
                         {hasPending && (
                             <button
                                 className="mt-2 px-4 py-2 rounded-xl font-semibold shadow bg-[var(--color-500)] hover:bg-[var(--color-700)] text-white transition"
