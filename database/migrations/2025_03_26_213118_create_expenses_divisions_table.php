@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->references('id')->on('users');
             $table->foreign('expense_id')->references('id')->on('expenses')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->float('assigned_amount');
+            $table->decimal('assigned_amount', 10, 2)->change();
             $table->enum('status', ['pending', 'paid'])->default('pending');
             $table->timestamps();
         });
