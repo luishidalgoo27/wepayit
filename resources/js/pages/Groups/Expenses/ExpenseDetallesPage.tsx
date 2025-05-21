@@ -3,7 +3,7 @@ import { useGetUsers } from "@/hooks/useGetUsers";
 import { ArrowLeft, CheckCircle, Bell, Pencil } from "lucide-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { markAllAsPaid, markAsPaid, notifyPayment } from "@/services/expenses";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useGetDivisionsByExpense } from "@/hooks/useGetDivisionsByExpense";
 
 export const ExpenseDetallesPage = () => {
@@ -11,39 +11,55 @@ export const ExpenseDetallesPage = () => {
     const { expense } = useGetExpense(idExp!);
     const { users } = useGetUsers(id!);
     const { divisions } = useGetDivisionsByExpense(idExp!);
-    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     if (!expense) return <p className="text-center mt-10">Gasto no encontrado</p>;
 
     const payer = users?.find(u => u.id === expense.paid_by);
-
+    
     const debts = divisions
         ?.filter(d => d.user_id !== expense.paid_by)
         .map(d => {
             const user = users?.find(u => u.id === d.user_id);
             return { ...d, user };
         }) || [];
-
+    
+    const allPaid = debts.length > 0 && debts.every(d => d.status === "paid");
     const hasPending = debts.some(d => d.status === "pending");
-
+    
+    useEffect(() => {
+        if (allPaid && expense.state !== "closed") {
+            markAllAsPaid(idExp!);
+        }
+    }, [allPaid, expense?.state, idExp]);
+    
     const handleMarkAsPaid = async (divisionId: number) => {
         setLoading(true);
         await markAsPaid(divisionId);
         setLoading(false);
-        navigate(0);
+        navigate(-1);
     };
 
     const handleMarkAllAsPaid = async () => {
         setLoading(true);
-        await markAllAsPaid(idExp!);
-        setLoading(false);
-        navigate(0);
+        try {
+            await markAllAsPaid(idExp!);
+            setLoading(false);
+            navigate(-1);
+        } catch (error) {
+            console.error('Error al marcar todo como pagado:', error);
+            setLoading(false);
+        }
     };
 
     const handleNotification = async (guest_email: string) => {
         setLoading(true);
-        await notifyPayment(id!, guest_email, idExp!);
+        try {
+            await notifyPayment(id!, guest_email, idExp!);
+        } catch (error) {
+            console.error('Error al enviar notificación:', error);
+        }
         setLoading(false);
     };
 
@@ -98,10 +114,15 @@ export const ExpenseDetallesPage = () => {
                             <button
                                 className="mt-2 px-4 py-2 rounded-xl font-semibold shadow bg-[var(--color-500)] hover:bg-[var(--color-700)] text-white transition"
                                 onClick={handleMarkAllAsPaid}
-                                disabled={loading}
+                                disabled={loading || allPaid}
                             >
-                                Marcar todo como pagado
+                                {loading ? 'Procesando...' : 'Marcar todo como pagado'}
                             </button>
+                        )}
+                        {allPaid && (
+                            <span className="mt-2 px-3 py-1 rounded-lg bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 font-semibold">
+                                Gasto completado
+                            </span>
                         )}
                     </div>
                 </div>
@@ -129,31 +150,34 @@ export const ExpenseDetallesPage = () => {
                                     />
                                     <span className="font-medium text-base md:text-lg text-[var(--color-950)] dark:text-white">
                                         {d.user?.username} debe{" "}
-                                        <span className="font-bold">{d.assigned_amount} {expense.currency_type}</span>{" "}
+                                        <span className="font-bold">
+                                            {d.assigned_amount} {expense.currency_type}
+                                        </span>{" "}
                                         a <span className="font-semibold">{payer?.username}</span>
                                     </span>
                                 </div>
                                 <div className="flex gap-2 mt-2 md:mt-0">
-                                    {d.status === "pending" && (
+                                    {d.status === "pending" ? (
                                         <>
                                             <button
                                                 className="flex items-center gap-1 px-3 py-1 rounded-lg bg-yellow-100 text-yellow-900 hover:bg-yellow-200 dark:bg-yellow-900 dark:text-yellow-100 dark:hover:bg-yellow-800 transition"
                                                 onClick={() => d.user?.email && handleNotification(d.user.email)}
                                                 disabled={loading || !d.user?.email}
                                             >
-                                                <Bell size={16} /> Notificar
+                                                <Bell size={16} />
+                                                Recordar
                                             </button>
                                             <button
-                                                className="flex items-center gap-1 px-3 py-1 rounded-lg font-semibold bg-[var(--color-500)] hover:bg-[var(--color-700)] text-white transition"
+                                                className="flex items-center gap-1 px-3 py-1 rounded-lg bg-green-100 text-green-900 hover:bg-green-200 dark:bg-green-900 dark:text-green-100 dark:hover:bg-green-800 transition"
                                                 onClick={() => handleMarkAsPaid(d.id)}
                                                 disabled={loading}
                                             >
-                                                <CheckCircle size={16} /> Marcar como pagado
+                                                <CheckCircle size={16} />
+                                                Pagado
                                             </button>
                                         </>
-                                    )}
-                                    {d.status === "paid" && (
-                                        <span className="px-3 py-1 rounded-lg bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 font-semibold">
+                                    ) : (
+                                        <span className="px-3 py-1 rounded-lg bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 font-medium">
                                             Pagado
                                         </span>
                                     )}

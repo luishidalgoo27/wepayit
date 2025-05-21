@@ -12,8 +12,10 @@ export const UserLayout = () => {
         location.pathname === "/groups/create-group" ||
         location.pathname === "/groups/edit-group" ||
         /^\/groups\/\d+\/create-expense$/.test(location.pathname) ||
-        location.pathname === "/user/edit-profile"
+        location.pathname === "/user/edit-profile" ||
+        /^\/groups\/\d+\/edit-expense\/\d+$/.test(location.pathname)
     );
+
     
 
     return(

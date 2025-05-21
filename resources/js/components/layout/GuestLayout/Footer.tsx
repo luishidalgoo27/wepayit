@@ -1,3 +1,5 @@
+import {Facebook, Instagram} from "lucide-react";
+
 export const Footer = () => {
     return (
         <footer className="bg-footer-light dark:bg-footer-dark dark:text-100 text-950 pt-4 pb-2 px-6">
@@ -28,12 +30,11 @@ export const Footer = () => {
                 <div className="text-center md:text-right">
                     <h3 className="text-lg font-semibold mb-2 flex flex-col items-center md:items-end">
                         <span>Síguenos</span>
-                        <a href="https://getallmylinks.com/wepayit" target="_blank" rel="noopener noreferrer" className="mt-1 hover:opacity-80 transition">
-                            <img
-                                src="https://img.icons8.com/?size=512&id=44907&format=png"
-                                alt="Instagram"
-                                className="w-10 h-10 inline-block dark:invert"
-                            />
+                        <a href="https://getallmylinks.com/wepayit">
+                        <Instagram className="dark:bg-600 bg-400 rounded-full dark:text-50 text-900 p-0.5" size={35} />
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=61576678376376&sk=about">
+                        <Facebook className="dark:bg-600 bg-400 rounded-full dark:text-50 text-900 p-0.5" size={35} />
                         </a>
                     </h3>
                 </div>

@@ -2,23 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Group;
+use App\Models\Expense;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Http\Requests\ConverterRequest;
+use App\Http\Requests\ConvertUserRequest;
+use App\Models\Expense_division;
 
 class ConverterController extends Controller
 {
-    public function convert(Request $req)
+    public function convert(ConverterRequest $req)
     {
-        $from = $req->input('from');
-        $to = $req->input('to');
-        $amount = $req->input('amount');
-        $apiKey = env('EXCHANGE_API_KEY'); 
+        $expense = Expense::findOrFail($req->id_expense);
+        
+        $currencyGroup = Group::where('id', $expense->group_id)->value('currency_type');
+        
+        if ($expense->currency_type === $currencyGroup) {
+            return response()->json([
+                'converted_amount' => $expense->amount,
+                'currency' => $expense->currency_type
+            ]);
+        }
 
         $response = Http::withoutVerifying()->get('https://api.exchangerate.host/convert', [
-            'from' => $from,
-            'to' => $to,
-            'amount' => $amount,
-            'access_key' => $apiKey, 
+            'from' => $expense->currency_type,
+            'to' => $currencyGroup,
+            'amount' => $expense->amount,
+            'access_key' => env('EXCHANGE_API_KEY'), 
         ]);
 
         if ($response->failed()) {
@@ -26,10 +37,9 @@ class ConverterController extends Controller
         }
 
         return response()->json([
-            'from' => $from,
-            'to' => $to,
-            'original_amount' => $amount,
-            'converted_amount' => $response->json()['result'] ?? null,
+            'converted_amount' => $response->json()['result'],
+            'currency' => $currencyGroup
         ]);
     }
+
 }
