@@ -71,7 +71,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);
 
     Route::post('/converter', [ConverterController::class, 'convert']);
-    Route::post('/convertUser', [ConverterController::class, 'convertUser']);
     
     Route::post('/search-users', [UserController::class, 'searchUsers']);
 });
