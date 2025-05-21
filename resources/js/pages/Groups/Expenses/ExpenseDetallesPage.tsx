@@ -2,7 +2,7 @@ import { useGetExpense } from "@/hooks/useGetExpense";
 import { useGetUsers } from "@/hooks/useGetUsers";
 import { ArrowLeft, CheckCircle, Bell, Pencil } from "lucide-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { markAllAsPaid, markAsPaid, notifyPayment, convertAmount } from "@/services/expenses";
+import { markAllAsPaid, markAsPaid, notifyPayment, convertAmount, convertUser } from "@/services/expenses";
 import { useState, useEffect } from "react";
 import { useGetDivisionsByExpense } from "@/hooks/useGetDivisionsByExpense";
 
@@ -14,16 +14,40 @@ export const ExpenseDetallesPage = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [convertedAmount, setConvertedAmount] = useState<{amount: number, currency: string} | null>(null);
+    const [convertedUserAmounts, setConvertedUserAmounts] = useState<Record<number, {amount: number, currency: string}>>({});
 
     useEffect(() => {
         const fetchConvertedAmount = async () => {
             if (expense?.id) {  
                 try {
-                    const result = await convertAmount(expense.id.toString());
+                    const [expenseResult, ...userResults] = await Promise.all([
+                        convertAmount(expense.id.toString()),
+                        ...(divisions?.map(division => 
+                            convertUser(division.id)
+                                .then(res => ({ divisionId: division.id, result: res }))
+                                .catch(error => {
+                                    console.error(`Error convirtiendo importe para división ${division.id}:`, error);
+                                    return null;
+                                })
+                        ) || [])
+                    ]);
+
                     setConvertedAmount({
-                        amount: result.converted_amount,
-                        currency: result.currency
+                        amount: expenseResult.converted_amount,
+                        currency: expenseResult.currency
                     });
+
+                    const userAmounts = userResults.reduce((acc, curr) => {
+                        if (curr && curr.result) {
+                            acc[curr.divisionId] = {
+                                amount: curr.result.converted_amount,
+                                currency: curr.result.currency
+                            };
+                        }
+                        return acc;
+                    }, {} as Record<number, {amount: number, currency: string}>);
+
+                    setConvertedUserAmounts(userAmounts);
                 } catch (error) {
                     console.error('Error convirtiendo moneda:', error);
                 }
@@ -31,7 +55,7 @@ export const ExpenseDetallesPage = () => {
         };
     
         fetchConvertedAmount();
-    }, [expense]);  
+    }, [expense, divisions]);  
 
     if (!expense) return <p className="text-center mt-10">Gasto no encontrado</p>;
 
@@ -178,6 +202,11 @@ export const ExpenseDetallesPage = () => {
                                         {d.user?.username} debe{" "}
                                         <span className="font-bold">
                                             {d.assigned_amount} {expense.currency_type}
+                                            {convertedUserAmounts[d.id] && convertedUserAmounts[d.id].currency !== expense.currency_type && (
+                                                <span className="text-sm text-[var(--color-500)] dark:text-[var(--color-400)] ml-1">
+                                                    (≈ {convertedUserAmounts[d.id].amount.toFixed(2)} {convertedUserAmounts[d.id].currency})
+                                                </span>
+                                            )}
                                         </span>{" "}
                                         a <span className="font-semibold">{payer?.username}</span>
                                     </span>
