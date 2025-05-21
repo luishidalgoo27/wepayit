@@ -17,6 +17,10 @@ class Expense_division extends Model {
         'status',
     ];
 
+    protected $casts = [
+        'assigned_amount' => 'decimal:2',
+    ];
+
     public function expense()
     {
         return $this->belongsTo(Expense::class);
