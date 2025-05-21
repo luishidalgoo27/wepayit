@@ -21,9 +21,23 @@ export const BackButton = () => {
     return (
         <button
             onClick={handleBack}
-            className="fixed ml-2 mt-5 left-4 z-50 bg-[var(--color-500)] text-white dark:bg-[var(--color-700)] dark:text-[var(--color-100)] px-5 py-2 rounded-full shadow-lg transition hover:bg-[var(--color-600)]"
+            aria-label="Volver atrás"
+            title="Volver atrás"
+            className="fixed z-50 bg-[var(--color-500)] dark:bg-[var(--color-700)] text-white dark:text-[var(--color-100)] p-3 rounded-full shadow-xl transition-all duration-200 hover:bg-[var(--color-600)] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[var(--color-400)]"
         >
-            ← 
+            <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2.5}
+                viewBox="0 0 24 24"
+            >
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 19.5L8.25 12l7.5-7.5"
+                />
+            </svg>
         </button>
     );
 };

@@ -52,8 +52,10 @@ class PayNotificationMail extends Mailable
         ];
 
         $fraseAleatoria = $frases[array_rand($frases)];
+        
+        $api = env('VITE_URL');
 
-        $url = url("/groups/$this->groupId/expenses/$this->expenseId/");
+        $url = $api."/groups/$this->groupId/expenses/$this->expenseId/";
         
         $expense = Expense::find($this->expenseId);
 

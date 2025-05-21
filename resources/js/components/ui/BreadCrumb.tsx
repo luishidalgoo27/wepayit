@@ -25,7 +25,10 @@ export const BreadCrumb = () => {
   if (pathnames.length === 0) return null;
 
   // Si el primer segmento es "groups", no lo repitas en el breadcrumb
-  const segments = pathnames[0] === "groups" ? pathnames.slice(1) : pathnames;
+  let segments = pathnames[0] === "groups" ? pathnames.slice(1) : pathnames;
+
+  // Filtra los segmentos que sean solo números (IDs)
+  segments = segments.filter(segment => isNaN(Number(segment)));
 
   return (
     <nav className="flex py-2 px-4" aria-label="Breadcrumb">

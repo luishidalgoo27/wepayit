@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Services\UserGroupService;
-use App\Http\Requests\UserGroupDeleteRequest;
-use App\Http\Requests\UserGroupSendInvitationRequest;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+use App\Http\Requests\UserGroupDeleteRequest;
+use App\Http\Requests\UserGroupSendInvitationRequest;
+use App\Http\Requests\UserGroupGenerateInvitationRequest;
 
 class UserGroupController extends Controller
 {
@@ -21,6 +22,11 @@ class UserGroupController extends Controller
         return response()->json($user, 201);
     }
 
+    public function generateInvitation(UserGroupGenerateInvitationRequest $req)
+    {
+        
+    }
+    
     public function acceptInvitation(String $code, Request $request)
     {
         // Verificar si el usuario está autenticado

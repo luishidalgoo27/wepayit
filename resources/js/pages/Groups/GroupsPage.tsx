@@ -25,7 +25,7 @@ export const GroupsPage = () => {
     }, [groups]);
 
     return (
-        <div className="container max-w-6xl mx-auto px-2 py-8">
+        <div className="container mx-auto px-2 py-8">
             <div className="flex flex-col lg:flex-row gap-8 items-stretch">
                 {/* Panel izquierdo: Ruleta */}
                 <div className="hidden lg:flex flex-col justify-center items-center w-80 bg-[var(--color-400)] text-900 dark:bg-[var(--color-800)] dark:text-50 rounded-2xl shadow-lg p-6 sticky top-24 self-start">

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserGroupDeleteRequest;
 use App\Http\Requests\UserGroupSendInvitationRequest;
+use App\Http\Requests\UserGroupGenerateInvitationRequest;
 
 class UserGroupService
 {
@@ -42,6 +43,18 @@ class UserGroupService
         }
         
         return $invitation;
+    }
+
+    public function generateInvitation(UserGroupGenerateInvitationRequest $req)
+    {
+        $code = Str::uuid();
+
+        $invitation = $this->invitation::create([
+            'group_id'  => $req->group_id,
+            'user_id'   => Auth::id(),
+            'guest_email'   => null,
+            'invitation_code'   => $code,
+        ]);
     }
 
     public function acceptInvitation(String $code)
