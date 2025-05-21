@@ -40,13 +40,13 @@ const ExpenseSummary = ({
     <div>
       <p className="dark:text-300 text-700 text-sm">Mis gastos</p>
       <p className="text-xl font-semibold">
-        {userExpense.toFixed(2)} {currency}
+        {typeof userExpense === 'number' ? userExpense.toFixed(2) : '0.00'} {currency}
       </p>
     </div>
     <div>
       <p className="dark:text-300 text-700 text-sm">Gastos totales</p>
       <p className="text-xl font-semibold">
-        {totalExpenses.toFixed(2)} {currency}
+        {typeof totalExpenses === 'number' ? totalExpenses.toFixed(2) : '0.00'} {currency}
       </p>
     </div>
   </div>

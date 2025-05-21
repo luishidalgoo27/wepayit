@@ -409,7 +409,7 @@ export const CreateExpensePage = () => {
                 >
                     Crear Gasto
                 </button>
-            </form>
+            </form> 
         </div>
 
     );
