@@ -80,7 +80,9 @@ export const BalancesPage = () => {
                                         <p className="text-base text-yellow-900 dark:text-yellow-100">
                                             <span className="font-semibold">{user.name}</span> debe{" "}
                                             <span className="font-semibold">
-                                                {d.assigned_amount.toFixed(2)}€ 💸
+                                                {typeof d.assigned_amount === 'number' 
+                                                    ? d.assigned_amount.toFixed(2)
+                                                    : parseFloat(d.assigned_amount || '0').toFixed(2)}€ 💸
                                             </span>{" "}
                                             a <span className="font-semibold">{pagador.name}</span> por{" "}
                                             <span className="italic">"{expense.title}"</span>
@@ -89,7 +91,9 @@ export const BalancesPage = () => {
                                         <p className="text-base text-green-900 dark:text-green-100">
                                             <span className="font-semibold">{user.name}</span> pagó{" "}
                                             <span className="font-semibold">
-                                                {d.assigned_amount.toFixed(2)}€ ✅
+                                                {typeof d.assigned_amount === 'number'
+                                                    ? d.assigned_amount.toFixed(2)
+                                                    : parseFloat(d.assigned_amount || '0').toFixed(2)}€ ✅
                                             </span>{" "}
                                             a <span className="font-semibold">{pagador.name}</span> por{" "}
                                             <span className="italic">"{expense.title}"</span>

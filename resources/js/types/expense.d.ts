@@ -18,7 +18,7 @@ export interface ExpenseDivision {
     id: number
     expense_id: number
     user_id: number
-    assigned_amount: number
+    assigned_amount: number | string
     status: string
 }
 
