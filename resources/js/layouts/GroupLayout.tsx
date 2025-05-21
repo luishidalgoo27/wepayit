@@ -4,6 +4,7 @@ import { useGetUsers } from "@/hooks/useGetUsers";
 import { Link, LoaderFunctionArgs, NavLink, Outlet, useLoaderData, useLocation } from "react-router-dom";
 import { BackButton } from "@/components/ui/BackButton";
 import { Pencil, Info } from "lucide-react";
+import { number } from "framer-motion";
 
 function showBackButtonInGroupLayout(pathname: string) {
   return !(pathname === "/groups" || pathname === "/groups/");
@@ -40,13 +41,13 @@ const ExpenseSummary = ({
     <div>
       <p className="dark:text-300 text-700 text-sm">Mis gastos</p>
       <p className="text-xl font-semibold">
-        {typeof userExpense === 'number' ? userExpense.toFixed(2) : '0.00'} {currency}
+        {Number(userExpense).toFixed(2)}
       </p>
     </div>
     <div>
       <p className="dark:text-300 text-700 text-sm">Gastos totales</p>
       <p className="text-xl font-semibold">
-        {typeof totalExpenses === 'number' ? totalExpenses.toFixed(2) : '0.00'} {currency}
+        {Number(totalExpenses).toFixed(2)}
       </p>
     </div>
   </div>
