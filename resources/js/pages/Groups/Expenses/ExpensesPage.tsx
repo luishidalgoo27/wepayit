@@ -1,6 +1,6 @@
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { useGetExpenses } from "@/hooks/useGetExpenses";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Filter } from "lucide-react";
 import { useEffect, useMemo } from "react";
 
 export const ExpensesPage = () => {
@@ -39,6 +39,9 @@ export const ExpensesPage = () => {
       {/* Filtros y totales */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div className="flex items-center gap-4 w-full sm:w-auto">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Filter className="w-5 h-5 text-gray-400" />
+          </div>
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
