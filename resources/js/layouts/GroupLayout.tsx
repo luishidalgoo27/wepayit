@@ -4,6 +4,7 @@ import { useGetUsers } from "@/hooks/useGetUsers";
 import { Link, LoaderFunctionArgs, NavLink, Outlet, useLoaderData, useLocation } from "react-router-dom";
 import { BackButton } from "@/components/ui/BackButton";
 import { Pencil, Info } from "lucide-react";
+import { number } from "framer-motion";
 
 function showBackButtonInGroupLayout(pathname: string) {
   return !(pathname === "/groups" || pathname === "/groups/");
@@ -30,23 +31,23 @@ const GroupAvatar = ({ photo, alt }: { photo?: string; alt: string }) => (
 const ExpenseSummary = ({
   userExpense,
   totalExpenses,
-  currency,
+  currency = '€', 
 }: {
   userExpense: number;
   totalExpenses: number;
-  currency: string;
+  currency?: string;
 }) => (
   <div className="flex justify-around text-center bg-100 dark:bg-800 p-2 rounded-xl shadow-sm">
     <div>
       <p className="dark:text-300 text-700 text-sm">Mis gastos</p>
       <p className="text-xl font-semibold">
-        {userExpense.toFixed(2)} {currency}
+        {Number(userExpense).toFixed(2)} <span className="text-sm text-gray-500">{currency}</span>
       </p>
     </div>
     <div>
       <p className="dark:text-300 text-700 text-sm">Gastos totales</p>
       <p className="text-xl font-semibold">
-        {totalExpenses.toFixed(2)} {currency}
+        {Number(totalExpenses).toFixed(2)} <span className="text-sm text-gray-500">{currency}</span>
       </p>
     </div>
   </div>
@@ -74,7 +75,7 @@ export const GroupLayout = () => {
   return (
     <div className="relative min-h-screen w-full flex justify-center">
       {/* Panel izquierdo: miembros del grupo */}
-      <aside className="hidden lg:flex flex-col items-center gap-4 w-64 py-8 px-2">
+      <aside className="hidden lg:flex flex-col items-center gap-4 w-80 py-8 px-2">
         <div className="bg-white dark:bg-[var(--color-800)] rounded-2xl shadow-lg p-3 w-full">
           <h3 className="text-lg text-center font-bold mb-2 text-[var(--color-700)] dark:text-[var(--color-200)]">Miembros</h3>
           <div className="flex flex-col flex-wrap gap-2">
@@ -159,7 +160,7 @@ export const GroupLayout = () => {
       </div>
 
       {/* Panel derecho: tip del día */}
-      <aside className="hidden lg:flex flex-col items-center gap-4 w-64 py-8 px-2">
+      <aside className="hidden lg:flex flex-col items-center gap-4 w-80 py-8 px-2">
         <div className="bg-white dark:bg-[var(--color-800)] rounded-2xl shadow-lg p-3 w-full flex flex-col items-center">
           <Info className="w-7 h-7 text-[var(--color-500)] mb-2" />
           <h3 className="text-base font-bold mb-2 text-[var(--color-700)] dark:text-[var(--color-200)]">Consejo WePayIt</h3>

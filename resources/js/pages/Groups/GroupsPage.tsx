@@ -30,7 +30,7 @@ export const GroupsPage = () => {
                 {/* Panel izquierdo: Ruleta */}
                 <div className="hidden lg:flex flex-col justify-center items-center w-80 bg-[var(--color-400)] text-900 dark:bg-[var(--color-800)] dark:text-50 rounded-2xl shadow-lg p-6 sticky top-24 self-start">
                     <img
-                        src="/ruletaGroup.png"
+                        src="/ruletaHomePage.png"
                         alt="Ruleta"
                         className=" mb-4"
                     />
@@ -125,13 +125,13 @@ export const GroupsPage = () => {
                 {/* Panel derecho: Trofeo */}
                 <div className="hidden lg:flex flex-col justify-center items-center w-80 bg-[var(--color-400)] text-900 dark:bg-[var(--color-800)] dark:text-50 rounded-2xl shadow-lg p-6 sticky top-24 self-start">
                     <img
-                        src="/trofeoGroup2.png"
+                        src="/noExcusas-removebg-preview.png"
                         alt="Trofeo"
                         className=" mb-4"
                     />
-                    <h3 className="text-xl font-bold  mb-1">Retos del grupo</h3>
+                    <h3 className="text-xl font-bold  mb-1">No más excusas</h3>
                     <p className=" text-center text-sm">
-                        Completa desafíos divertidos con amigos
+                        ¡Con WePayIt se acabó el ‘ya te lo paso’… y el ‘me pillas sin suelto’!
                     </p>
                 </div>
             </div>
