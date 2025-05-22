@@ -46,7 +46,7 @@ export const ExpensesPage = () => {
           >
             <option value="all">Todos</option>
             <option value="pending">Pendientes</option>
-            <option value="paid">Pagados</option>
+            <option value="closed">Pagados</option>
           </select>
         </div>
         
