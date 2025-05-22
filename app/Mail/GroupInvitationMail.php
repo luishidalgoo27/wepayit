@@ -25,23 +25,23 @@ class GroupInvitationMail extends Mailable
     }
 
     public function build()
-{
-    $apiUrl = env('VITE_API_URL');
-    $api = env('VITE_URL');
-
-    $userInvited = User::where('email', $this->invitation->guest_email)->first();
-    $user = User::where('id', $this->invitation->user_id)->first();
-    $group = Group::where('id', $this->invitation->group_id)->first();
-    
-    return $this->subject('Has sido invitado a un grupo')
-        ->view('emails.group_invitation')
-        ->with([
-            'apiUrl' => $apiUrl,
-            'invitation' => $this->invitation,
-            'userInvited' => $userInvited,
-            'user' => $user,
-            'group' => $group
-    ]);
-}
+    {   
+        $apiUrl = env('VITE_API_URL');
+        $api = env('VITE_URL'); 
+        
+        $userInvited = User::where('email', $this->invitation->guest_email)->first();
+        $user = User::where('id', $this->invitation->user_id)->first();
+        $group = Group::where('id', $this->invitation->group_id)->first();
+        
+        return $this->subject('Has sido invitado a un grupo')
+            ->view('emails.group_invitation')
+            ->with([
+                'apiUrl' => $apiUrl,
+                'invitation' => $this->invitation,
+                'userInvited' => $userInvited,
+                'user' => $user,
+                'group' => $group
+        ]);
+    }
 
 }
