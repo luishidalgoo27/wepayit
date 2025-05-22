@@ -37,7 +37,7 @@ export const ExpensesPage = () => {
   return (
     <div className="py-2">
       {/* Filtros y totales */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-3">
         <div className="flex items-center gap-4 w-full sm:w-auto">
           <div className="relative w-full sm:w-auto">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -55,7 +55,7 @@ export const ExpensesPage = () => {
           </div>
         </div>
         
-        <div className="bg-white dark:bg-[var(--color-800)] rounded-xl shadow-md p-4 w-full sm:w-auto">
+        <div className="bg-white dark:bg-[var(--color-800)] rounded-xl shadow-md p-2 w-full sm:w-auto">
           <p className="text-sm text-gray-600 dark:text-gray-300">Total gastos:</p>
           <p className="text-2xl font-bold text-[var(--color-700)] dark:text-[var(--color-200)]">
             {totalAmount} <span className="text-sm text-gray-500">{currency}</span>
@@ -69,7 +69,7 @@ export const ExpensesPage = () => {
         onKeyDown={(e) => e.key === "Enter" && navigate(`/groups/${id}/create-expense`)}
         role="button"
         tabIndex={0}
-        className="mb-6 flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--color-500)] to-[var(--color-700)] text-white font-semibold py-3 px-6 shadow-lg cursor-pointer rounded-full text-lg transition hover:scale-105 hover:shadow-xl"
+        className="mb-3 flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--color-500)] to-[var(--color-700)] text-white font-semibold py-3 px-6 shadow-lg cursor-pointer rounded-full text-lg transition hover:scale-105 hover:shadow-xl"
       >
         <PlusCircle className="w-6 h-6" /> Añadir gasto
       </div>
