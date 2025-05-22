@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import toast from "react-hot-toast";
 import { ExpenseDivision } from "@/types/expense";
 import { getExpensesDivisions } from "@/services/expenses";
@@ -6,6 +6,7 @@ import { getExpensesDivisions } from "@/services/expenses";
 export const useGetDivisions = (id: string) => {
     const [divisions, setDivisions] = useState<ExpenseDivision[]>([]);
     const [loading, setLoading] = useState(true);
+    const [filter, setFilter] = useState<"pending" | "paid" | "all">("pending");
 
     const fetchDivisions = useCallback(async () => {
         setLoading(true);
@@ -20,9 +21,22 @@ export const useGetDivisions = (id: string) => {
         }
     }, [id]);
 
+    const filteredDivisions = useMemo(() => {
+        return divisions.filter(d => {
+            if (filter === "all") return true;
+            return d.status === filter;
+        });
+    }, [divisions, filter]);
+
     useEffect(() => {
         fetchDivisions();
     }, [fetchDivisions]);
 
-    return { divisions, loading, refetch: fetchDivisions };
+    return { 
+        divisions: filteredDivisions, 
+        loading, 
+        refetch: fetchDivisions,
+        filter,
+        setFilter
+    };
 };
