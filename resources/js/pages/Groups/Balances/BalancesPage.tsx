@@ -40,8 +40,8 @@ export const BalancesPage = () => {
     return (
         <div className="py-2">
             {/* Filtros y totales */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                <div className="flex items-center gap-4 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row justify-between items-start  gap-4 mb-3">
+                <div className="flex gap-4 w-full sm:w-auto">
                     <div className="relative w-full sm:w-auto">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <Filter className="w-5 h-5 text-gray-400" />
@@ -58,7 +58,7 @@ export const BalancesPage = () => {
                     </div>
                 </div>
                 
-                <div className="bg-white dark:bg-[var(--color-800)] rounded-xl shadow-md p-4 w-full sm:w-auto">
+                <div className="bg-white dark:bg-[var(--color-800)] rounded-xl shadow-md p-2 w-full sm:w-auto">
                     <p className="text-sm text-gray-600 dark:text-gray-300">Total {filter === 'paid' ? 'pagado' : 'pendiente'}:</p>
                     <p className="text-2xl font-bold text-[var(--color-700)] dark:text-[var(--color-200)]">
                         {totalAmount} <span className="text-sm text-gray-500">{currency}</span>
