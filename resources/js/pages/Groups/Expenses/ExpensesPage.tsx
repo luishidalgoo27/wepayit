@@ -1,11 +1,11 @@
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { useGetExpenses } from "@/hooks/useGetExpenses";
 import { PlusCircle } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 export const ExpensesPage = () => {
   const { id } = useLoaderData() as { id: string };
-  const { expenses } = useGetExpenses(id);
+  const { expenses, setFilter, filter } = useGetExpenses(id);
   const navigate = useNavigate();
 
   const categoryIcons: Record<number, string> = {
@@ -15,17 +15,56 @@ export const ExpensesPage = () => {
     16: "🎉", 17: "🧹", 18: "🛠️", 19: "💰", 20: "❓"
   };
 
+  // Calcular totales
+  const { totalAmount, currency } = useMemo(() => {
+    if (!expenses || expenses.length === 0) return { totalAmount: 0, currency: '€' };
+    
+    const total = expenses.reduce((sum, expense) => {
+      return sum + parseFloat(expense.amount.toString());
+    }, 0);
+    
+    // Usamos la moneda del primer gasto o € por defecto
+    const mainCurrency = expenses[0]?.currency_type || '€';
+    
+    return { 
+      totalAmount: total.toFixed(2), 
+      currency: mainCurrency 
+    };
+  }, [expenses]);
+
   if (!expenses) return <p className="text-center text-gray-500 mt-6">Cargando gastos...</p>;
 
   return (
     <div className="py-2">
+      {/* Filtros y totales */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div className="flex items-center gap-4 w-full sm:w-auto">
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="px-4 py-2 rounded-xl bg-white dark:bg-[var(--color-800)] text-gray-800 dark:text-white shadow border border-gray-300 dark:border-[var(--color-700)] text-base font-medium focus:outline-none focus:ring-2 focus:ring-[var(--color-400)] transition w-full sm:w-auto"
+          >
+            <option value="all">Todos</option>
+            <option value="pending">Pendientes</option>
+            <option value="paid">Pagados</option>
+          </select>
+        </div>
+        
+        <div className="bg-white dark:bg-[var(--color-800)] rounded-xl shadow-md p-4 w-full sm:w-auto">
+          <p className="text-sm text-gray-600 dark:text-gray-300">Total gastos:</p>
+          <p className="text-2xl font-bold text-[var(--color-700)] dark:text-[var(--color-200)]">
+            {totalAmount} {currency}
+          </p>
+        </div>
+      </div>
+
       {/* Botón para añadir gasto */}
       <div
         onClick={() => navigate(`/groups/${id}/create-expense`)}
         onKeyDown={(e) => e.key === "Enter" && navigate(`/groups/${id}/create-expense`)}
         role="button"
         tabIndex={0}
-        className="mb-2 flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--color-500)] to-[var(--color-700)] text-white font-semibold py-3 px-6 shadow-lg cursor-pointer rounded-full text-lg transition hover:scale-105 hover:shadow-xl"
+        className="mb-6 flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--color-500)] to-[var(--color-700)] text-white font-semibold py-3 px-6 shadow-lg cursor-pointer rounded-full text-lg transition hover:scale-105 hover:shadow-xl"
       >
         <PlusCircle className="w-6 h-6" /> Añadir gasto
       </div>
@@ -51,12 +90,12 @@ export const ExpensesPage = () => {
                   {expense.category_id
                     ? categoryIcons[expense.category_id]
                     : (
-                      <img
-                        src="https://res.cloudinary.com/dotw4uex6/image/upload/v1747049502/ChatGPT_Image_12_may_2025_13_31_33_lc1quj.png"
-                        alt="Avatar del usuario"
-                        className="w-full h-full object-cover rounded-full"
-                      />
-                    )}
+                        <img
+                          src="https://res.cloudinary.com/dotw4uex6/image/upload/v1747049502/ChatGPT_Image_12_may_2025_13_31_33_lc1quj.png"
+                          alt="Avatar del usuario"
+                          className="w-full h-full object-cover rounded-full"
+                        />
+                      )}
                 </div>
                 <div className="flex-1">
                   <p className="font-bold text-lg text-[var(--color-950)] dark:text-white truncate">
@@ -78,7 +117,7 @@ export const ExpensesPage = () => {
                     <span
                       className={`inline-block text-xs px-3 py-1 rounded-full font-semibold shadow-sm ${
                         expense.state === "pending"
-                          ? "bg-yellow-100 text-yellow-700"
+                          ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-200"
                           : "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
                       }`}
                     >

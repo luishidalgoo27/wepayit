@@ -31,23 +31,23 @@ const GroupAvatar = ({ photo, alt }: { photo?: string; alt: string }) => (
 const ExpenseSummary = ({
   userExpense,
   totalExpenses,
-  currency,
+  currency = '€', 
 }: {
   userExpense: number;
   totalExpenses: number;
-  currency: string;
+  currency?: string;
 }) => (
   <div className="flex justify-around text-center bg-100 dark:bg-800 p-2 rounded-xl shadow-sm">
     <div>
       <p className="dark:text-300 text-700 text-sm">Mis gastos</p>
       <p className="text-xl font-semibold">
-        {Number(userExpense).toFixed(2)}
+        {Number(userExpense).toFixed(2)} <span className="text-sm text-gray-500">{currency}</span>
       </p>
     </div>
     <div>
       <p className="dark:text-300 text-700 text-sm">Gastos totales</p>
       <p className="text-xl font-semibold">
-        {Number(totalExpenses).toFixed(2)}
+        {Number(totalExpenses).toFixed(2)} <span className="text-sm text-gray-500">{currency}</span>
       </p>
     </div>
   </div>
