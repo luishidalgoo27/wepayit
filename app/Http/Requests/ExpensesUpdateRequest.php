@@ -81,7 +81,7 @@ class ExpensesUpdateRequest extends FormRequest
 
     /**
      * Manejo personalizado del error de validación.
-     */
+     */ 
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
