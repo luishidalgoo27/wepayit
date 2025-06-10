@@ -89,7 +89,7 @@ class ExpensesCreateRequest extends FormRequest
             'users_division.*.user_id.required' => 'Cada entrada debe tener un user_id.',
             'users_division.*.user_id.exists' => 'El user_id debe existir en la base de datos.',
             'users_division.*.assigned_amount.required' => 'Cada entrada debe tener una cantidad asignada.',
-            'users_division.*.assigned_amount.integer' => 'La cantidad debe ser un número entero.',
+            'users_division.*.assigned_amount.numeric' => 'La cantidad debe ser un número.',
         ];
     }
 

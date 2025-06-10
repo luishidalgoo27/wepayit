@@ -36,7 +36,7 @@ class ExpensesUpdateRequest extends FormRequest
             'frecuency'     => 'nullable|string|max:50',
             'users_division' => 'sometimes|array|min:1',
             'users_division.*.user_id' => 'required_with:users_division|exists:users,id',
-            'users_division.*.assigned_amount' => 'required_with:users_division|integer',
+            'users_division.*.assigned_amount' => 'required_with:users_division|numeric',
         ];
     }
 
@@ -75,7 +75,7 @@ class ExpensesUpdateRequest extends FormRequest
             'users_division.*.user_id.required_with' => 'Cada división necesita un user_id.',
             'users_division.*.user_id.exists' => 'El user_id debe existir.',
             'users_division.*.assigned_amount.required_with' => 'Cada división necesita un monto asignado.',
-            'users_division.*.assigned_amount.integer' => 'El monto debe ser un número entero.',
+            'users_division.*.assigned_amount.numeric' => 'El monto debe ser un número.',
         ];
     }
 
