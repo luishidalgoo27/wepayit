@@ -109,11 +109,6 @@ export const ExpensesPage = () => {
                   <p className="text-xs text-[var(--color-600)] dark:text-[var(--color-400)]">
                     {new Date(expense.date).toLocaleDateString()}
                   </p>
-                  {expense.description && (
-                    <p className="text-xs text-[var(--color-500)] dark:text-[var(--color-300)] mt-1 truncate">
-                      {expense.description}
-                    </p>
-                  )}
                 </div>
               </div>
               <div className="flex items-end justify-between mt-4">

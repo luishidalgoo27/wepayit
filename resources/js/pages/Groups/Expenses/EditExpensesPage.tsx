@@ -79,7 +79,7 @@ export const EditExpensePage = () => {
                     return {
                         user_id: user.id,
                         selected: !!match,
-                        assigned_amount: match?.assigned_amount ?? 0,
+                        assigned_amount: typeof match?.assigned_amount === "number" ? match.assigned_amount : Number(match?.assigned_amount) || 0,
                     };
                 })
             );
@@ -162,12 +162,6 @@ export const EditExpensePage = () => {
             // Limitar el valor máximo posible
             let inputValue = Math.max(0, Math.min(Number(value), amount));
             updated[index].assigned_amount = inputValue;
-
-            // Si el assigned_amount es 0, deselecciona el usuario
-            if (inputValue === 0) {
-                updated[index].selected = false;
-                updated[index].assigned_amount = 0;
-            }
 
             // Recalcula los seleccionados después de posible deselección
             const newSelectedIndexes = updated
@@ -313,6 +307,7 @@ export const EditExpensePage = () => {
                             onChange={e => setPayerId(Number(e.target.value))}
                             className="labelForm"
                             required
+                            disabled
                         >
                             <option value="">Selecciona quién paga</option>
                             {users.map(user => (
@@ -388,14 +383,11 @@ export const EditExpensePage = () => {
                                 <input
                                     type="number"
                                     placeholder="Cantidad asignada"
-                                    value={
-                                        usersDivision[index]?.assigned_amount === 0
-                                            ? ""
-                                            : usersDivision[index]?.assigned_amount
-                                    }
+                                    value={usersDivision[index]?.assigned_amount ?? ""}
                                     onChange={(e) =>
                                         handleUserDivisionChange(index, "assigned_amount", Number(e.target.value))
                                     }
+                                    // Quita el onBlur que deselecciona automáticamente
                                     className="bg-100 text-950 px-4 py-2 rounded-xl col-span-6"
                                     disabled={!usersDivision[index]?.selected}
                                 />

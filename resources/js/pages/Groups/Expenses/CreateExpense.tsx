@@ -109,11 +109,9 @@ export const CreateExpensePage = () => {
         field: "assigned_amount" | "selected",
         value: number | boolean
     ) => {
-        // Copia profunda para evitar problemas de referencia
         const updated = usersDivision.map(u => ({ ...u }));
 
         if (field === "selected") {
-            // Cambia la selección
             updated[index].selected = value as boolean;
 
             // No permitir que quede ninguno seleccionado
@@ -151,6 +149,13 @@ export const CreateExpensePage = () => {
         }
 
         if (field === "assigned_amount") {
+            // Permitir campo vacío para edición cómoda
+            if (value === null || value === undefined) {
+                updated[index].assigned_amount = 0;
+                setUsersDivision(updated);
+                return;
+            }
+
             // Solo usuarios seleccionados
             const selectedIndexes = updated
                 .map((u, i) => (u.selected ? i : -1))
@@ -164,12 +169,6 @@ export const CreateExpensePage = () => {
             // Limitar el valor máximo posible
             let inputValue = Math.max(0, Math.min(Number(value), amount));
             updated[index].assigned_amount = inputValue;
-
-            // Si el assigned es igual al amount o está vacío, deselecciona el usuario
-            if (inputValue === amount || !inputValue) {
-                updated[index].selected = false;
-                updated[index].assigned_amount = 0;
-            }
 
             // Repartir el resto entre los demás seleccionados
             const otherIndexes = updated
@@ -388,12 +387,12 @@ export const CreateExpensePage = () => {
                                     type="number"
                                     placeholder="Cantidad asignada"
                                     value={
-                                        usersDivision[index]?.assigned_amount === 0
+                                        usersDivision[index]?.assigned_amount === undefined || usersDivision[index]?.assigned_amount === null
                                             ? ""
                                             : usersDivision[index]?.assigned_amount
                                     }
                                     onChange={(e) =>
-                                        handleUserDivisionChange(index, "assigned_amount", Number(e.target.value))
+                                        handleUserDivisionChange(index, "assigned_amount", e.target.value === "" ? 0 : Number(e.target.value))
                                     }
                                     className="bg-100 text-950 px-4 py-2 rounded-xl col-span-6"
                                     disabled={!usersDivision[index]?.selected}
@@ -409,7 +408,7 @@ export const CreateExpensePage = () => {
                 >
                     Crear Gasto
                 </button>
-            </form> 
+            </form>
         </div>
 
     );
