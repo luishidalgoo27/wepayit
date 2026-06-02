@@ -34,7 +34,7 @@ export const RegisterPage = () => {
   };
   
   const handleGoogleLogin = () => {
-    window.location.href = "https://wepayit.es/auth/google";    
+    window.location.href = "https://wepayit.vercel.app/auth/google";    
   };
 
   const handleRedirectToLogin = () => {

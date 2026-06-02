@@ -31,7 +31,7 @@ class UserGroupController extends Controller
     {
         // Verificar si el usuario está autenticado
         if (!Auth::check()) {
-            $webUrl = config('app.frontend_url', env('VITE_URL', 'https://wepayit.es'));
+            $webUrl = config('app.frontend_url', env('VITE_URL', 'https://wepayit.vercel.app'));
             $loginUrl = "{$webUrl}/login?redirect=" . urlencode("/accept-invitation/{$code}");
             
             if ($request->expectsJson()) {
@@ -55,7 +55,7 @@ class UserGroupController extends Controller
         }
         
         // Redirigir al dashboard con el mensaje apropiado
-        $webUrl = config('app.frontend_url', env('VITE_URL', 'https://wepayit.es'));
+        $webUrl = config('app.frontend_url', env('VITE_URL', 'https://wepayit.vercel.app'));
         $redirectUrl = "{$webUrl}/dashboard?";
         $redirectUrl .= $data['success'] ? 'success=' : 'error=';
         $redirectUrl .= urlencode($data['message']);

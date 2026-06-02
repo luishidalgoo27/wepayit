@@ -112,7 +112,7 @@ class GoogleController extends Controller
             Cache::put('auth_token_' . $sessionId, $token, now()->addMinutes(5));
             
             // Obtener la URL del frontend desde las variables de entorno
-            $frontendUrl = env('FRONTEND_URL', 'https://wepayit.es');
+            $frontendUrl = env('FRONTEND_URL', 'https://wepayit.vercel.app');
             
             // Registrar la URL de redirección para depuración
             Log::info('Redirigiendo al frontend', [
@@ -131,7 +131,7 @@ class GoogleController extends Controller
             ]);
             
             // Redirigir al frontend con el mensaje de error
-            $frontendUrl = env('FRONTEND_URL', 'https://wepayit.es');
+            $frontendUrl = env('FRONTEND_URL', 'https://wepayit.vercel.app');
             return redirect($frontendUrl . '/login?error=' . urlencode('Error de autenticación: ' . $e->getMessage()));
         }
     }

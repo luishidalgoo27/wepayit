@@ -1,0 +1,495 @@
+{
+	"info": {
+		"_postman_id": "dd39b7c8-a59a-46f5-8636-9d550efd492c",
+		"name": "WePayIT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42850629",
+		"_collection_link": "https://wepayit-8595.postman.co/workspace/8c81196a-71b0-4212-84f8-83f9c0099e28/collection/42850629-dd39b7c8-a59a-46f5-8636-9d550efd492c?action=share&source=collection_link&creator=42850629"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/register?name=admin&email=admin@admin.com&password=admin",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"register"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "admin"
+						},
+						{
+							"key": "email",
+							"value": "admin@admin.com"
+						},
+						{
+							"key": "password",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|VuR7oUH5oc9B9uNAfIyby0vm1p7aZitTwLOLm7DMa4cc0438",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/register?name=admin&email=lhs0003@alu.medac.es&password=admin",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"register"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "admin"
+						},
+						{
+							"key": "email",
+							"value": "lhs0003@alu.medac.es"
+						},
+						{
+							"key": "password",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Group",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|VuR7oUH5oc9B9uNAfIyby0vm1p7aZitTwLOLm7DMa4cc0438",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/group?coin=euro",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"group"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Grupo1",
+							"disabled": true
+						},
+						{
+							"key": "coin",
+							"value": "euro"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Groups of Authenticated User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "3|S8n9g9aBBz3uRx3s7w9ke0yethuvYD9CXY3qyTa1f14b02bc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/groups",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Group",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|VuR7oUH5oc9B9uNAfIyby0vm1p7aZitTwLOLm7DMa4cc0438",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/group?name=HolaBuena&group_id=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"group"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "HolaBuena"
+						},
+						{
+							"key": "group_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Group",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|VuR7oUH5oc9B9uNAfIyby0vm1p7aZitTwLOLm7DMa4cc0438",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/group?group_id=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"group"
+					],
+					"query": [
+						{
+							"key": "group_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Invitation Group",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|VuR7oUH5oc9B9uNAfIyby0vm1p7aZitTwLOLm7DMa4cc0438",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/invitation?group_id=2&guest_email=lhs0003@alu.medac.es",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"invitation"
+					],
+					"query": [
+						{
+							"key": "group_id",
+							"value": "2"
+						},
+						{
+							"key": "guest_email",
+							"value": "lhs0003@alu.medac.es"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Accept Invitation Group",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "3|S8n9g9aBBz3uRx3s7w9ke0yethuvYD9CXY3qyTa1f14b02bc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/invitations/accept/a7ce9e10-ca0d-4a62-a667-30ff8dbfcebe",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"invitations",
+						"accept",
+						"a7ce9e10-ca0d-4a62-a667-30ff8dbfcebe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User Group",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|VuR7oUH5oc9B9uNAfIyby0vm1p7aZitTwLOLm7DMa4cc0438",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/deleteUser?group_id=1&user_id=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"deleteUser"
+					],
+					"query": [
+						{
+							"key": "group_id",
+							"value": "1"
+						},
+						{
+							"key": "user_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|VuR7oUH5oc9B9uNAfIyby0vm1p7aZitTwLOLm7DMa4cc0438",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/updateUser?name=Luisillooo2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"updateUser"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Luisillooo2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Expense",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "3|S8n9g9aBBz3uRx3s7w9ke0yethuvYD9CXY3qyTa1f14b02bc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/expense?title=hola&amount=10&currency_type=eur&group_id=2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"expense"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "hola"
+						},
+						{
+							"key": "amount",
+							"value": "10"
+						},
+						{
+							"key": "currency_type",
+							"value": "eur"
+						},
+						{
+							"key": "paid_by",
+							"value": "3",
+							"disabled": true
+						},
+						{
+							"key": "group_id",
+							"value": "2"
+						},
+						{
+							"key": "date",
+							"value": "2025/04/25",
+							"disabled": true
+						},
+						{
+							"key": "recurrent",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "pending",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Expenses of Group",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "3|S8n9g9aBBz3uRx3s7w9ke0yethuvYD9CXY3qyTa1f14b02bc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/expense?group_id=2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"expense"
+					],
+					"query": [
+						{
+							"key": "group_id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

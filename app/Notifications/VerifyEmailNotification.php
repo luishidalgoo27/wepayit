@@ -21,7 +21,7 @@ class VerifyEmailNotification extends BaseVerifyEmail
     {
 
         $baseUrl = app()->environment('production') 
-            ? 'https://www.wepayit.es' 
+            ? 'https://www.wepayit.vercel.app' 
             : config('app.url');
         
         $routePath = app()->environment('production')

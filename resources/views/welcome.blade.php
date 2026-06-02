@@ -9,17 +9,17 @@
     <meta name="keywords" content="wepayit, dividir gastos, pagos en grupo, finanzas personales, app de pagos">
     <meta name="author" content="WePayIt" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://wepayit.es/" />
+    <link rel="canonical" href="https://wepayit.vercel.app/" />
     <meta property="og:title" content="WePayIt - Gestiona tus pagos en grupo" />
     <meta property="og:description" content="Divide gastos con amigos, rápido y sin líos. Gratis y fácil." />
-    <meta property="og:image" content="https://wepayit.es/assets/og-image.png" />
-    <meta property="og:url" content="https://wepayit.es/" />
+    <meta property="og:image" content="https://wepayit.vercel.app/assets/og-image.png" />
+    <meta property="og:url" content="https://wepayit.vercel.app/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="WePayIt" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="WePayIt - Gestiona tus pagos en grupo" />
     <meta name="twitter:description" content="Divide gastos con amigos, rápido y sin líos. Gratis y fácil." />
-    <meta name="twitter:image" content="https://wepayit.es/assets/og-image.png" />
+    <meta name="twitter:image" content="https://wepayit.vercel.app/assets/og-image.png" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#67BCA3" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

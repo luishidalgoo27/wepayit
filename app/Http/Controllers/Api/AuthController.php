@@ -121,7 +121,7 @@ class AuthController extends Controller
         if ($request->wantsJson()) {
             return response()->json(['message' => 'Correo verificado correctamente']);
         } else {
-            return redirect('https://wepayit.es/login?verified=1');
+            return redirect('https://wepayit.vercel.app/login?verified=1');
         }
     }
 }

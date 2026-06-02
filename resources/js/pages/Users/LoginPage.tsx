@@ -14,7 +14,7 @@ export const LoginPage = () => {
   const { login } = useAuth();
 
   const handleGoogleLogin = () => {
-    window.location.href = "https://wepayit.es/auth/google";    
+    window.location.href = "https://wepayit.vercel.app/auth/google";    
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
